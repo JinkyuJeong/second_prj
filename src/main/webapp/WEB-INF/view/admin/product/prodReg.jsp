@@ -112,8 +112,8 @@
 <body>
 <br><br>
     <div class="container w3-white pt-1">
-      <h3><i class="fa fa-caret-square-o-right text-primary" aria-hidden="true"></i> 상품등록</h3>
-      <p class="mb-3">상품을 등록하는 페이지 입니다.</p>
+      <h3><i class="fa fa-caret-square-o-right text-primary" aria-hidden="true"></i> 제품등록</h3>
+      <p class="mb-3">제품을 등록하는 페이지 입니다.</p>
       <form:form modelAttribute="product" action="reg" method="post" name="f" onsubmit="return inputChk(this)" enctype="multipart/form-data">
         <table class="table align-middle">
           <tr>
@@ -196,8 +196,8 @@
         </table>
 
         <div class="text-center">
-          <button type="submit" class="btn btn-dark">상품등록</button>
-          <button type="button" class="btn btn-dark">목록</button>
+          <button type="submit" class="btn btn-dark">제품등록</button>
+          <a href="prodList" class="btn btn-dark">목록</a>
         </div>
       </form:form>
       <br>

@@ -31,7 +31,7 @@
   <!-- 상단 Nav -->
   <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top" id="topNav">
     <div class="container-fluid">
-      <a class="navbar-brand ms-5" href="#"><span class="text-danger">호미짐</span> 관리자</a>
+      <a class="navbar-brand ms-5" href="${path }/admin/main"><span class="text-danger">호미짐</span> 관리자</a>
       <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
         <ul class="navbar-nav ml-auto mr-4">
           <li class="nav-item">
@@ -61,7 +61,7 @@
     <div class="w3-bar-block">
       <ul class="navbar-nav ml-auto mr-4">
         <li class="nav-item dropdown-item w3-blue">
-          <h4><a href=""><i class="fa fa-shopping-bag" aria-hidden="true"></i> 상품관리</a></h4>
+          <h4><a href="${path }/admin/product/prodList"><i class="fa fa-shopping-bag" aria-hidden="true"></i> 제품관리</a></h4>
         </li>
         <li class="nav-item dropdown-item">
           <h4><a href=""><i class="fa fa-cube" aria-hidden="true"></i> 재고관리</a></h4>

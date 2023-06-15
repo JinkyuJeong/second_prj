@@ -1,6 +1,7 @@
 package admin.dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -18,10 +19,35 @@ public class AdminProductDao {
 	private Map<String, Object> param = new HashMap<>();
 	private final Class<AdminProductMapper> cls = AdminProductMapper.class;
 	
-//	public int maxNumber() {
-//		return template.getMapper(cls).maxNumber();
-//	}
-	public void regProduct(Product product) {
-		template.getMapper(cls).regProduct(product);
+	public boolean regProduct(Product product) {
+		return template.getMapper(cls).regProduct(product);
+	}
+
+	public List<Product> getProdList(Integer pageNum, String query) {
+		param.clear();
+		param.put("query", query);
+		param.put("start", (pageNum -1) * 10);
+		param.put("limit", 10);
+		
+		return template.getMapper(cls).getProdList(param);
+	}
+
+	public int getProdCnt(Integer pageNum, String query) {
+		param.clear();
+		param.put("query", query);
+		
+		return template.getMapper(cls).getProdCnt(param);
+	}
+
+	public Product getProd(Integer product_number) {
+		return template.getMapper(cls).getProd(product_number);
+	}
+
+	public boolean deleteProduct(int product_number) {
+		return template.getMapper(cls).deleteProduct(product_number);
+	}
+
+	public boolean updateProduct(Product product) {
+		return template.getMapper(cls).updateProduct(product);
 	}
 }
