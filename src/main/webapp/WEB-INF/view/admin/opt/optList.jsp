@@ -37,8 +37,8 @@
 		            <th width="10%">옵션 번호</th>
 		            <th width="10%">제품 이미지</th>
 		            <th width="50%">제품명(옵션명)</th>
-		            <th width="20%">수량</th>
-		            <th width="10%">&nbsp;</th>
+		            <th width="15%">수량</th>
+		            <th width="15%">&nbsp;</th>
 		          </tr>
 		          <c:forEach var="opt" items="${optList }">
 			          <tr>

@@ -38,8 +38,8 @@
 		            <th width="10%">제품 이미지</th>
 		            <th width="40%">제품명(옵션명)</th>
 		            <th width="10%">입고 수량</th>
-		            <th width="20%">입고 날짜</th>
-		            <th width="10%">&nbsp;</th>
+		            <th width="15%">입고 날짜</th>
+		            <th width="15%">&nbsp;</th>
 		          </tr>
 		          <c:forEach var="stock" items="${stockList }">
 			          <tr>

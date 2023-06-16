@@ -1,5 +1,7 @@
 @charset "UTF-8";
- *, .container *, footer * { font-family: 'Do Hyeon', sans-serif;}
+body,h1,h2,h3,h4,h5,p,a {
+    font-family: 'IBM Plex Sans KR', sans-serif !important;
+ }
  .navbar-nav .nav-item {
     margin-right: 30px; /* 원하는 간격으로 조정 */
   }
@@ -51,6 +53,3 @@
     box-shadow: 0 2px 3px rgba(0, 0, 0, 1);
   }
 
-  #button-addon2 {
-    font-family: sans-serif;
-  }
