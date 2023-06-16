@@ -201,7 +201,7 @@
         </table>
 
         <div class="text-center">
-          <button type="submit" class="btn btn-dark">제품 수정</button>
+          <button type="submit" class="btn btn-dark">수정</button>
           <a href="prodList" class="btn btn-dark">목록</a>
         </div>
       </form:form>

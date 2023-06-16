@@ -28,7 +28,7 @@ public interface AdminOptMapper {
 	@Update("update opt set opt_quantity = opt_quantity + #{stock_quantity} where opt_number=#{opt_number}")
 	boolean updateQuantity(Map<String, Object> param);
 
-	@Update("update opt set opt_name = #{opt_name} where opt_number = #{opt_number}")
+	@Update("update opt set opt_name = #{opt_name}, opt_quantity=#{opt_quantity} where opt_number = #{opt_number}")
 	boolean updateOpt(Opt opt);
 
 	@Delete("delete from opt where opt_number=#{value}")

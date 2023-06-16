@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import admin.service.AdminShopService;
+import dto.Opt;
 import dto.ProductOptView;
 import dto.Stock;
 import exception.ShopException;
@@ -73,5 +74,29 @@ public class AdminStockController {
 		mv.addObject("endPage", endPage);
 		mv.addObject("maxPage", maxPage);
 		return mv;
+	}
+	
+	@GetMapping("stockChg")
+	public ModelAndView adminStockChg(Integer stock_number, HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		Stock stock = service.getStock(stock_number);
+		
+		if(stock == null) {
+			throw new ShopException("해당 재고 내역은 존재하지 않습니다.", "stockList");
+		}
+		
+		mv.addObject("stock",stock);
+		return mv;
+	}
+	
+	@PostMapping("stockChg")
+	public ModelAndView adminStockChg(Stock stock, HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(service.updateStock(stock)) {
+			mv.setViewName("redirect:stockList");
+			return mv;
+		}else {
+			throw new ShopException("옵션 변경 실패", "redirect:stockList");
+		}
 	}
 }

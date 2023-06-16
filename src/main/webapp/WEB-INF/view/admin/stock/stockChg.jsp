@@ -9,14 +9,8 @@
 <title>호미짐 관리자</title>
 <script>
   function inputChk(f) {
-	  if($.trim(f.opt_name.value) == "") {
-	    alert("옵션명을 입력하세요.");
-	    f.opt_name.focus();
-	    return false;
-	  }
-	  
-	  if($.trim(f.opt_quantity.value) == "") {
-		    alert("수량을 입력하세요.");
+	  if($.trim(f.stock_quantity.value) == "") {
+		    alert("입고 수량을 입력하세요.");
 		    f.opt_quantity.focus();
 		    return false;
 		  }
@@ -49,23 +43,21 @@
 <body>
 	<br><br>
     <div class="container w3-white pt-1">
-      <h3><i class="fa fa-caret-square-o-right text-primary" aria-hidden="true"></i> 제품 옵션 수정</h3>
-      <p class="mb-3">제품 옵션을 수정하는 페이지 입니다.</p>
-      <form action="optChg" method="post" name="f" onsubmit="return inputChk(this)">
-      	<input type="hidden" value="${opt.opt_number }" name="opt_number">
+      <h3><i class="fa fa-caret-square-o-right text-primary" aria-hidden="true"></i> 재고 등록 내역 수정</h3>
+      <p class="mb-3">재고 등록 내역을 수정하는 페이지 입니다.</p>
+      <form action="stockChg" method="post" name="f" onsubmit="return inputChk(this)">
+      	<input type="hidden" value="${stock.stock_number }" name="stock_number">
         <table class="table align-middle">
           <tr class="text-center">
-            <td width="15%" class="table-dark text-center">제품명</td>
-            <td width="35%">${opt.product_name }</td>
+            <td width="15%" class="table-dark text-center">제품명(옵션)</td>
+            <td width="35%">${stock.stock_prodName }</td>
             <td width="15%" class="table-dark text-center">제품 이미지</td>
-            <td width="35%"><img src="${path }/img/thumb/${opt.product_thumb }" width="200" height="130"></td>
+            <td width="35%"><img src="${path }/img/thumb/${stock.stock_prodThumb }" width="200" height="130"></td>
           </tr>
           <tr>
-            <td class="table-dark text-center">옵션명</td>
-            <td><input type="text" name="opt_name" class="form-control" value="${opt.opt_name }"></td>
             <td class="table-dark text-center">수량</td>
             <td>
-            	<input type="number" name="opt_quantity" id="quantity" class="form-control" onkeyup="validQuantity()" value="${opt.opt_quantity }">
+            	<input type="number" name="stock_quantity" id="quantity" class="form-control" onkeyup="validQuantity()" value="${stock.stock_quantity }">
               <span class="mt-1" id="quantityMsg">&nbsp;</span>
               <input type="hidden" value="1" id="isQuantityValid">  
             </td>
@@ -74,7 +66,7 @@
 
         <div class="text-center">
           <button type="submit" class="btn btn-dark">수정</button>
-          <a href="optList" class="btn btn-dark">목록</a>
+          <a href="stockList" class="btn btn-dark">목록</a>
         </div>
       </form>
       <br>

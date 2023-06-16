@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import dto.Stock;
 
@@ -18,5 +19,11 @@ public interface AdminStockMapper {
 
 	@Select("select * from stock where stock_prodName like '%${query}%' ORDER BY stock_number DESC LIMIT #{start}, 10")
 	List<Stock> getStockList(Map<String, Object> param);
+
+	@Select("select * from stock where stock_number = #{value}")
+	Stock getStock(Integer stock_number);
+
+	@Update("update stock set stock_quantity = #{stock_quantity} where stock_number = #{stock_number}")
+	boolean updateStock(Stock stock);
 
 }

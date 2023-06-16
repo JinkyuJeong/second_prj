@@ -128,4 +128,12 @@ public class AdminShopService {
 		return stockDao.getStockList(pageNum, query);
 	}
 
+	public Stock getStock(Integer stock_number) {
+		return stockDao.getStock(stock_number);
+	}
+
+	public boolean updateStock(Stock stock) {
+		return stockDao.updateStock(stock);
+	}
+
 }

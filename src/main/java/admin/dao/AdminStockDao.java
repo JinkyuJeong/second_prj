@@ -35,4 +35,12 @@ public class AdminStockDao {
 		
 		return template.getMapper(cls).getStockList(param);
 	}
+
+	public Stock getStock(Integer stock_number) {
+		return template.getMapper(cls).getStock(stock_number);
+	}
+
+	public boolean updateStock(Stock stock) {
+		return template.getMapper(cls).updateStock(stock);
+	}
 }

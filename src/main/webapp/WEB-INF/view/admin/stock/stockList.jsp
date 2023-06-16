@@ -51,24 +51,6 @@
 			            <td>
 			            	<input type="hidden" name="stock_number" value="${stock.stock_number }">
 			            	<a class="btn btn-sm btn-dark" href="stockChg?stock_number=${stock.stock_number}">수정</a>
-					          <a type="button" class="btn btn-sm btn-dark" data-bs-toggle="modal" data-bs-target="#staticBackdrop${stock.stock_number }">삭제</a>
-																	
-										<%-- Modal --%>
-										<div class="modal fade" id="staticBackdrop${stock.stock_number}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-										  <div class="modal-dialog">
-										    <div class="modal-content">
-										      <div class="modal-header">
-										        <h5 class="modal-title" id="staticBackdropLabel">삭제</h5>
-										        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-										      </div> 
-										      <div class="modal-body">해당 제품 옵션을 삭제 하시겠습니까?</div>
-										      <div class="modal-footer">
-										        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-										        <button type="submit" class="btn btn-dark">삭제</button>
-										      </div>
-										    </div>
-										  </div>
-										</div>
 			            </td>
 			          </tr>
 		          </c:forEach>
