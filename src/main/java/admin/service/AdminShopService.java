@@ -12,8 +12,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import admin.dao.AdminOptDao;
 import admin.dao.AdminProductDao;
+import admin.dao.AdminStockDao;
 import dto.Opt;
 import dto.Product;
+import dto.ProductOptView;
+import dto.Stock;
 
 @Service
 public class AdminShopService {
@@ -22,6 +25,8 @@ public class AdminShopService {
 	private AdminProductDao productDao;
 	@Autowired
 	private AdminOptDao optDao;
+	@Autowired
+	private AdminStockDao stockDao;
 
 	public void uploadFileCreate(MultipartFile file, String path) {
 		String orgFile = file.getOriginalFilename();
@@ -72,20 +77,55 @@ public class AdminShopService {
 		return productDao.getProdList(pageNum, query);
 	}
 
-	public int getProdCnt(Integer pageNum, String query) {
-		return  productDao.getProdCnt(pageNum, query);
+	public int getProdCnt(String query) {
+		return  productDao.getProdCnt(query);
 	}
 
 	public Product getProd(Integer product_number) {
 		return productDao.getProd(product_number);
 	}
 	
-	public boolean deleteProduct(int product_number) {
+	public boolean deleteProduct(Integer product_number) {
 		return productDao.deleteProduct(product_number);
 	}
 	
 	public boolean regProductOpt(Opt opt) {
 		return optDao.regProductOpt(opt);
+	}
+
+	public List<ProductOptView> getOptList(Integer pageNum, String query) {
+		return optDao.getOptList(pageNum, query);
+	}
+
+	public int getOptCnt(String query) {
+		return optDao.getOptCnt(query);
+	}
+
+	public ProductOptView getProdOpt(Integer opt_number) {
+		return optDao.getProdOpt(opt_number);
+	}
+
+	public boolean updateOpt(Opt opt) {
+		return optDao.updateOpt(opt);
+	}
+	
+	public boolean deleteOpt(Integer opt_number) {
+		return optDao.deleteOpt(opt_number);
+	}
+	
+	@Transactional
+	public boolean regProdStock(Stock stock) {
+		boolean b1 = stockDao.regProdStock(stock);
+		boolean b2 = optDao.updateQuantity(stock.getOpt_number() ,stock.getStock_quantity());
+		return b1 && b2;
+	}
+
+	public int getStockCnt(String query) {
+		return stockDao.getStockCnt(query);
+	}
+
+	public List<Stock> getStockList(Integer pageNum, String query) {
+		return stockDao.getStockList(pageNum, query);
 	}
 
 }

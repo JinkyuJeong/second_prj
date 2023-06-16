@@ -21,13 +21,13 @@ public interface AdminProductMapper {
 	List<Product> getProdList(Map<String, Object> param);
 
 	@Select("select count(*) from product  where product_name like '%${query}%'")
-	int getProdCnt(Map<String, Object> param);
+	int getProdCnt(String query);
 
 	@Select("select * from product where product_number=#{product_number}")
 	Product getProd(Integer product_number);
 
 	@Delete("delete from product where product_number=#{product_number}")
-	boolean deleteProduct(int product_number);
+	boolean deleteProduct(Integer product_number);
 
 	@Update("update product set"
 			+ " product_name=#{product_name}, product_type=#{product_type}, product_price=#{product_price}, product_desc=#{product_desc}, "

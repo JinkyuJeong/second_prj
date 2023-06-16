@@ -44,8 +44,8 @@ public class AdminProductController {
 		}
 	}
 	
-	@GetMapping("prod{url}")
-	public ModelAndView adminProd(int product_number, @PathVariable String url, HttpSession session) {
+	@GetMapping("prod{uri}")
+	public ModelAndView adminProd(Integer product_number, @PathVariable String uri, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		Product product = service.getProd(product_number);
 		
@@ -53,7 +53,7 @@ public class AdminProductController {
 			throw new ShopException("해당 제품은 존재하지 않습니다.", "prodList");
 		}
 		
-		if(url.equals("Detail")) {
+		if(uri.equals("Detail")) {
 			String[] prodPics = product.getProduct_pictures().split(",");
 			mv.addObject("prodPics",prodPics);
 		}
@@ -68,18 +68,18 @@ public class AdminProductController {
 			mv.setViewName("redirect:prodList");
 			return mv;
 		}else {
-			throw new ShopException("제품변경 실패", "redirect:prodList");
+			throw new ShopException("제품 변경 실패", "redirect:prodList");
 		}
 	}
 	
 	@PostMapping("prodDel")
-	public ModelAndView adminProdDel(int product_number, HttpSession session) {
+	public ModelAndView adminProdDel(Integer product_number, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		if(service.deleteProduct(product_number)) {
 			mv.setViewName("redirect:prodList");
 			return mv;
 		}else {
-			throw new ShopException("제품삭제 실패", "redirect:prodList");
+			throw new ShopException("제품 삭제 실패", "redirect:prodList");
 		}
 	}
 	
@@ -94,7 +94,7 @@ public class AdminProductController {
 			query = "";
 		}
 		
-		int prodCnt = service.getProdCnt(pageNum, query);
+		int prodCnt = service.getProdCnt(query);
 		
 		int limit = 10;
 		int maxPage = (int)((double)prodCnt/limit +0.95);

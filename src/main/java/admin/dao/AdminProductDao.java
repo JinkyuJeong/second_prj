@@ -32,18 +32,15 @@ public class AdminProductDao {
 		return template.getMapper(cls).getProdList(param);
 	}
 
-	public int getProdCnt(Integer pageNum, String query) {
-		param.clear();
-		param.put("query", query);
-		
-		return template.getMapper(cls).getProdCnt(param);
+	public int getProdCnt(String query) {
+		return template.getMapper(cls).getProdCnt(query);
 	}
 
 	public Product getProd(Integer product_number) {
 		return template.getMapper(cls).getProd(product_number);
 	}
 
-	public boolean deleteProduct(int product_number) {
+	public boolean deleteProduct(Integer product_number) {
 		return template.getMapper(cls).deleteProduct(product_number);
 	}
 

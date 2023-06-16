@@ -12,7 +12,7 @@
 <body>
 	<br><br>
     <div class="container w3-white pt-1">
-      <h3><i class="fa fa-caret-square-o-right text-primary" aria-hidden="true"></i> 제품목록</h3>
+      <h3><i class="fa fa-caret-square-o-right text-primary" aria-hidden="true"></i> 제품 목록</h3>
       <p class="mb-3">제품 목록을 보여주는 페이지 입니다.</p>
       
       <div class="container">
@@ -33,12 +33,12 @@
         <c:if test="${!empty prodList }">
 	        <table class="table table-hover table-bordered text-center align-middle">
 	          <tr class="table-secondary">
-	            <th width="10%">제품번호</th>
-	            <th width="10%">제품이미지</th>
+	            <th width="10%">제품 번호</th>
+	            <th width="10%">제품 이미지</th>
 	            <th width="20%">제품명</th>
 	            <th width="10%">카테고리</th>
 	            <th width="15%">가격(할인율)</th>
-	            <th width="15%">등록날짜</th>
+	            <th width="15%">등록일</th>
 	            <th width="10%">&nbsp;</th>
 	          </tr>
 	          <c:forEach var="prod" items="${prodList }">

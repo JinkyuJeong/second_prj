@@ -12,7 +12,7 @@
 <body>
 <br><br>
     <div class="container w3-white pt-1">
-      <h3><i class="fa fa-caret-square-o-right text-primary" aria-hidden="true"></i> 제품상세</h3>
+      <h3><i class="fa fa-caret-square-o-right text-primary" aria-hidden="true"></i> 제품 상세</h3>
       <p class="mb-3">제품 상세정보를 확인하는 페이지 입니다.</p>
       <form action="prodDel" method="post">
         <input type="hidden" name="product_number" value="${product.product_number }">
@@ -35,17 +35,17 @@
             <td class="table-dark">할인율</td>
             <td>
             	<c:if test="${product.product_discountRate > 0}">${product.product_discountRate}%</c:if>
-            	<c:if test="${product.product_discountRate eq 0}">할인없음</c:if>
+            	<c:if test="${product.product_discountRate eq 0}">할인 없음</c:if>
             </td>
           </tr>
           <tr>
-            <td class="table-dark">제품썸네일</td>
+            <td class="table-dark">제품 썸네일</td>
             <td colspan="3"><img src="${path }/img/thumb/${product.product_thumb }" style="max-width: 300px;"></td>
           </tr>
           <tr>
-            <td class="table-dark">제품사진</td>
+            <td class="table-dark">제품 사진</td>
             <td colspan="3" >
-              <c:if test="${empty prodPics}">제품사진 없음</c:if>
+              <c:if test="${empty prodPics}">제품 사진 없음</c:if>
               <c:if test="${!empty prodPics}">
               	<c:forEach var="pic" items="${prodPics}">
               		<img src="${path }/img/product/${pic}" style="max-width: 100px;">&nbsp;&nbsp;
@@ -54,7 +54,7 @@
             </td>
           </tr>
           <tr>
-            <td class="table-dark">제품설명</td>
+            <td class="table-dark">제품 설명</td>
             <td colspan="3">${prod.product_desc}</td>
           </tr>
         </table>

@@ -35,10 +35,10 @@
       <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
         <ul class="navbar-nav ml-auto mr-4">
           <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fa fa-users" aria-hidden="true"></i> 회원관리</a></a>
+            <a class="nav-link" href="#"><i class="fa fa-users" aria-hidden="true"></i> 회원 관리</a></a>
           </li>
           <li class="nav-item dropdown" style="margin-right: 100px;">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><i class="fa fa-list-ul" aria-hidden="true"></i> 게시판관리</a>
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><i class="fa fa-list-ul" aria-hidden="true"></i> 게시판 관리</a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#">공지사항</a></li>
               <li><a class="dropdown-item" href="#">자주하는 질문</a></li>
@@ -60,23 +60,26 @@
     <hr>
     <div class="w3-bar-block">
       <ul class="navbar-nav ml-auto mr-4">
-        <li class="nav-item dropdown-item w3-blue">
-          <h4><a href="${path }/admin/product/prodList"><i class="fa fa-shopping-bag" aria-hidden="true"></i> 제품관리</a></h4>
+        <li class="nav-item dropdown-item <c:if test='${url == "product"}'>w3-blue</c:if>">
+          <h4><a href="${path }/admin/product/prodList"><i class="fa fa-shopping-bag" aria-hidden="true"></i> 제품 관리</a></h4>
+        </li>
+        <li class="nav-item dropdown-item <c:if test='${url == "opt"}'>w3-blue</c:if>">
+          <h4><a href="${path }/admin/opt/optList"><i class="fa fa-cog" aria-hidden="true"></i> 제품 옵션/재고 관리</a></h4>
+        </li>
+        <li class="nav-item dropdown-item <c:if test='${url == "stock"}'>w3-blue</c:if>">
+          <h4><a href="${path }/admin/stock/stockList"><i class="fa fa-cube" aria-hidden="true"></i> 재고 등록 내역</a></h4>
         </li>
         <li class="nav-item dropdown-item">
-          <h4><a href=""><i class="fa fa-cube" aria-hidden="true"></i> 재고관리</a></h4>
-        </li>
-        <li class="nav-item dropdown-item">
-          <h4><a href="" ><i class="fa fa-paper-plane-o" aria-hidden="true"></i> 주문관리</a></h4>
+          <h4><a href="" ><i class="fa fa-paper-plane-o" aria-hidden="true"></i> 주문 관리</a></h4>
         </li>
         <li class="nav-item dropdown-item">
           <h4><a href="" ><i class="fa fa-line-chart" aria-hidden="true"></i> 통계분석</a></h4>
         </li>
         <li class="nav-item dropdown-item">
-          <h4><a href="" ><i class="fa fa-question-circle" aria-hidden="true"></i> 상품문의</a></h4>
+          <h4><a href="" ><i class="fa fa-question-circle" aria-hidden="true"></i> 제품 문의</a></h4>
         </li>
         <li class="nav-item dropdown-item">
-          <h4><a href=""><i class="fa fa-ticket" aria-hidden="true"></i> 쿠폰관리</a></h4>
+          <h4><a href=""><i class="fa fa-ticket" aria-hidden="true"></i> 쿠폰 관리</a></h4>
         </li>
       </ul>
     </div>

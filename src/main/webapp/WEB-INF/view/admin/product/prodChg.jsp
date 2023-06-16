@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>호미짐</title>
+<title>호미짐 관리자</title>
 <script>
   $(()=>{
     $('input[name="product_isDiscount"]').change(function() {
@@ -114,7 +114,7 @@
 <body>
 <br><br>
     <div class="container w3-white pt-1">
-      <h3><i class="fa fa-caret-square-o-right text-primary" aria-hidden="true"></i> 제품수정</h3>
+      <h3><i class="fa fa-caret-square-o-right text-primary" aria-hidden="true"></i> 제품 수정</h3>
       <p class="mb-3">제품을 수정하는 페이지 입니다.</p>
       <form:form modelAttribute="product" action="prodChg" method="post" name="f" onsubmit="return inputChk(this)" enctype="multipart/form-data">
       	<input type="hidden" name="product_number" value="${product.product_number }">
@@ -156,7 +156,7 @@
             </td>
           </tr>
           <tr>
-            <td class="table-dark text-center">제품설명</td>
+            <td class="table-dark text-center">제품 설명</td>
             <td colspan="3">
               <textarea rows="15" name="product_desc" class="form-control" id="desc">${product.product_desc}</textarea>
             </td>
@@ -182,17 +182,17 @@
             </script>
           </tr>
           <tr>
-            <td class="table-dark text-center">제품썸네일</td>
+            <td class="table-dark text-center">제품 썸네일</td>
             <td colspan="3">
               <input class="form-control mb-3" type="file" name="thumbFile" id="productThumbInput">
               <input type="hidden" value="${product.product_thumb}">
               <img id="thumbPreview" src="${path }/img/thumb/${product.product_thumb }" style="max-width: 300px;">
-              <input type="hidden" id="isPicValid" value="0">
+              <input type="hidden" id="isPicValid" value="1">
               <span id="thumbError" class="text-danger">&nbsp;</span>
             </td>
           </tr>
           <tr>
-            <td class="table-dark text-center">제품사진</td>
+            <td class="table-dark text-center">제품 사진</td>
             <td colspan="3" >
               <input class="form-control" type="file" name="picFiles[]" multiple>
               <input type="hidden" value="${product.product_pictures}">
@@ -201,7 +201,7 @@
         </table>
 
         <div class="text-center">
-          <button type="submit" class="btn btn-dark">제품수정</button>
+          <button type="submit" class="btn btn-dark">제품 수정</button>
           <a href="prodList" class="btn btn-dark">목록</a>
         </div>
       </form:form>
