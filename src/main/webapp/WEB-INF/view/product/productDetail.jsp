@@ -44,6 +44,7 @@
 		    containerElement.remove();
 		    addSum();
 		});
+		//수량 변경(-)
 		$(document).on("click", ".minus", function() {
 	        var quantityInput = $(this).siblings("input[name='quantity']");
 	        var currentQuantity = parseInt(quantityInput.val());
@@ -52,11 +53,70 @@
 	        }
 	        addSum();
 	    });
+		//수량 변경(+)
 	    $(document).on("click", ".plus", function() {
 	        var quantityInput = $(this).siblings("input[name='quantity']");
 	        var currentQuantity = parseInt(quantityInput.val());
 	        quantityInput.val(currentQuantity + 1);
 	        addSum();
+	    });
+	    $("#cartBtn").click(function(e) {
+	        e.preventDefault();
+	        var selectedOption = $("#optionSelect").val();
+	        if (selectedOption === "optionNotSelected") {
+	            $("#staticBackdrop .modal-body").text("옵션이 선택되지 않았습니다. 장바구니로 이동하시겠습니까?");
+	        } else {
+	        	// FormData 객체 생성
+	            var formData = new FormData(document.getElementById("cart"));
+	            
+	            // 선택한 옵션의 수량과 옵션 번호를 배열로 추가
+	            var quantities = [];
+	            var optNumbers = [];
+	            
+	            $(".quantityInput").each(function() {
+	                quantities.push($(this).val());
+	            });
+
+	            $(".hiddenOpt_number").each(function() {
+	                optNumbers.push($(this).val());
+	            });
+
+	            // FormData에 배열로 추가
+	            for (var i = 0; i < quantities.length; i++) {
+	                formData.append("quantities[]", quantities[i]);
+	            }
+
+	            for (var i = 0; i < optNumbers.length; i++) {
+	                formData.append("optNumbers[]", optNumbers[i]);
+	            }
+	            //장바구니 db에 정보 insert, update
+	        	 $.ajax({    	
+	        			url : "${path}/ajax/cartAdd",
+	        			type : "POST",
+	        			data: formData,
+	        			processData: false,
+	        		    contentType: false,
+	        			success : function(result) {
+	        				console.log(result)
+	        			},
+	        			error : function(e) {
+	        				alert("장바구니 담기 에러 : " + e.status)
+	        			}
+	        	})
+	            $("#staticBackdrop").modal("show");
+	        }
+	    });
+	    //장바구니로 이동 버튼 클릭
+	    $("#moveToCart").click(function() {
+	        window.location.href = "../cart/cartAdd"; // 장바구니 페이지 URL로 수정해주세요.
+	    });
+	    $("#moveToList").click(function() {
+	    	 $("#staticBackdrop").modal("hide");
+	    })
+	    $("#buyBtn").click(function(e) {
+	    	$("#cart").submit();
+	        // 제품 구매를 위한 추가 로직을 작성할 수 있습니다.
+	        // 필요한 값들을 form 데이터에서 읽어와 Ajax 요청 등의 처리를 수행할 수 있습니다.
 	    });
 	})
 	//옵션 선택 시 동작하는 함수
@@ -123,6 +183,7 @@
 		  // 총 상품 금액 업데이트
 		  document.getElementById("totalAmount").textContent = totalAmount.toLocaleString() + "원";
 		}
+	
 </script>
 </head>
 <body>
@@ -164,7 +225,7 @@
                   <div class="col text-secondary">제주 추가 4,000원, 제주 외 도서지역 추가 4,000원</div>
                 </div>
                 <hr>
-           <form action="../cart/cartAdd" method="post" name="cart">
+           <form action="../cart/checkout" method="post" name="cart" id="cart">
            	  <input type="hidden" value="${param.product_number }" name="product_number">
               <div>
                 <div class="row">
@@ -196,12 +257,32 @@
                 </div>
                 <div class="row mt-5">
                   <div class="col-6">
-                    <button type="submit" class="btn-light btn-lg" style="width:100%">
+                    <button type="button" id="cartBtn" class="btn-light btn-lg" style="width:100%" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                       <i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;&nbsp; 장바구니
                     </button>
+                    
+                    <!-- 모달창 -->
+               <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                   <div class="modal-content">
+                     <div class="modal-header">
+                       <h5 class="modal-title" id="staticBackdropLabel">호미짐</h5>
+                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                     </div>
+                     <div class="modal-body">
+                       장바구니에 상품이 추가되었습니다.
+                     </div>
+                     <div class="modal-footer">
+                       <button type="button" id="moveToCart" class="btn btn-secondary" data-bs-dismiss="modal">장바구니로 이동</button>
+                       <button type="button" id="moveToList" class="btn btn-primary">계속쇼핑하기</button>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+                                   
                   </div>
                   <div class="col-6">
-                    <button type="button" class="btn-danger btn-lg"  style="width:100%">
+                    <button type="submit" class="btn-danger btn-lg"  id="buyBtn" style="width:100%">
                       <i class="fa fa-credit-card" aria-hidden="true"></i>&nbsp;&nbsp; 구매하기
                     </button>
                   </div>                  

@@ -11,7 +11,7 @@ import dto.Manager;
 import exception.ShopException;
 
 @Component
-// @Aspect
+@Aspect
 public class AdminAspect {
 
 	@Around("execution(* admin.controller.Admin*.admin*(..)) && args(..,session)")	

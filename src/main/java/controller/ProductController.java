@@ -39,6 +39,12 @@ public class ProductController {
 		if(product_type == null || product_type.equals("")) {
 			product_type = null;
 			product_type_name = "전체 상품";
+		} else if(product_type.equals("1")) {
+			product_type_name = "덤벨, 바벨, 원판";
+		} else if(product_type.equals("2")) {
+			product_type_name = "머신";
+		} else if(product_type.equals("3")) {
+			product_type_name = "보조용품";
 		}
 //		product_type_name = service.getProduct_type_name(product_type); //카테고리 테이블 만들면 추가
 		if(searchContent == null || searchContent.equals("")) searchContent="";

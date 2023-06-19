@@ -32,6 +32,7 @@ public class SiteMeshFilter extends ConfigurableSiteMeshFilter{
 		if(uri.contains("/admin/product/")) uri = "product";
 		else if(uri.contains("/admin/opt/")) uri="opt";
 		else if(uri.contains("/admin/stock/")) uri="stock";
+		else if (uri.contains( "/product/productList")) uri = "productList";
 		else uri="";
 		request.setAttribute("url", uri);	
 		super.doFilter(servletRequest, servletResponse, filterChain);	// 다음 프로세스 진행

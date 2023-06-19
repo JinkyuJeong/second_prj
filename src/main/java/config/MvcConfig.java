@@ -55,6 +55,8 @@ public class MvcConfig implements WebMvcConfigurer{
 		SimpleMappingExceptionResolver ser = new SimpleMappingExceptionResolver();
 		Properties p = new Properties();
 		p.put("exception.ShopException", "exception");	// 예외클래스, 페이지
+		p.put("exception.CloseException", "self_close");	// 예외클래스, 페이지		
+		p.put("exception.OpenerException", "opener");	// 예외클래스, 페이지
 		ser.setExceptionMappings(p);
 		return ser;
 	}

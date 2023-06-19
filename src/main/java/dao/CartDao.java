@@ -44,4 +44,32 @@ public class CartDao {
 	public List<Cart> getCartList(String mem_id) {
 		return template.getMapper(cls).getCartListId(mem_id);
 	}
+
+	public boolean cartDelete(Integer opt_number, String mem_id) {
+		param.clear();
+		param.put("opt_number", opt_number);
+		param.put("mem_id", mem_id);
+		return template.getMapper(cls).cartDelete(param);
+	}
+
+	public boolean cartMinus(Integer opt_number, String mem_id) {
+		param.clear();
+		param.put("opt_number", opt_number);
+		param.put("mem_id", mem_id);
+		return template.getMapper(cls).cartMinus(param);
+	}
+
+	public boolean cartPlus(Integer opt_number, String mem_id) {
+		param.clear();
+		param.put("opt_number", opt_number);
+		param.put("mem_id", mem_id);
+		return template.getMapper(cls).cartPlus(param);
+	}
+
+	public Cart getCart(String mem_id, Integer opt_number) {
+		param.clear();
+		param.put("opt_number", opt_number);
+		param.put("mem_id", mem_id);
+		return template.getMapper(cls).getCart(param);
+	}
 }

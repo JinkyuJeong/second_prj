@@ -89,7 +89,7 @@
 	   		listHtml += "</div>";
 	   		listHtml += "<div class='modal-body'>해당 게시글을 삭제하시겠습니까?</div>";
 	   		listHtml += "<div class='modal-footer'>";
-	   		listHtml += "<button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>닫기</button>";
+	   		listHtml += "<button type='button' class='btn btn-secondary btn-sm' data-bs-dismiss='modal'>닫기</button>";
 	   		listHtml += "<button onclick='qnaDel("+qna.qna_number + ", \"" + type + "\", " + json.pageNum +")' class='btn btn-dark btn-sm'>삭제</button>";
 	   		listHtml += "</div>";
 	   		listHtml += "</div>";

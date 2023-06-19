@@ -10,7 +10,7 @@
 <div class="options">
 <div class="row mt-3">
 	<div class="col" style="font-size: 20px;">${opt_name }</div>
-	<input type="hidden" value="${opt_number }" name="opt_number">
+	<input type="hidden" value="${opt_number }" name="opt_number" id="hiddenOpt_number">
 </div>
 <div class="row mt-3">
 	<div class="col-8">

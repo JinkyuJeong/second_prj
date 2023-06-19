@@ -6,10 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import dao.CartDao;
+import dao.DeliveryDao;
+import dao.MemDao;
 import dao.OptDao;
 import dao.ProductDao;
 import dao.QnaDao;
 import dto.Cart;
+import dto.Delivery;
+import dto.Mem;
 import dto.Opt;
 import dto.Product;
 import dto.ProductOptView;
@@ -24,6 +28,12 @@ public class ShopService {
 	
 	@Autowired
 	private CartDao cartDao;
+	
+	@Autowired
+	private MemDao memDao;
+	
+	@Autowired
+	private DeliveryDao deliveryDao;
 	
 	@Autowired
 	private QnaDao qnaDao;
@@ -67,19 +77,57 @@ public class ShopService {
 		return optDao.getProductOptView(opt_number);
 	}
 
+	public boolean userInsert(Mem mem) {
+		return memDao.userInsert(mem);
+	}
+
+	public Mem getMemEmail(String email) {
+		return memDao.getMemEmail(email);
+	}
+
+	public int maxMemNum() {
+		return memDao.maxMemNum();
+	}
+
+	public boolean cartDelete(Integer opt_number, String mem_id) {
+		return cartDao.cartDelete(opt_number, mem_id);
+	}
+
+	public boolean cartMinus(Integer opt_number, String mem_id) {
+		return cartDao.cartMinus(opt_number, mem_id);
+	}
+
+	public boolean cartPlus(Integer opt_number, String mem_id) {
+		return cartDao.cartPlus(opt_number, mem_id);
+	}
+
+	public Cart getCart(String mem_id, Integer opt_number) {
+		return cartDao.getCart(mem_id, opt_number);
+	}
+
+	public boolean addDelivery(Delivery delivery, String mem_id) {
+		return deliveryDao.addDelivery(delivery, mem_id);
+	}
+
+	public List<Delivery> getDeliveryList(String mem_id) {
+		return deliveryDao.getDeliveryList(mem_id);
+	}
+
+	public Delivery getDelivery(Integer selectedOption) {
+		return deliveryDao.getDelivery(selectedOption);
+	}
+	
 	public int getQnaCnt(String type) {
 		return qnaDao.getQnaCnt(type);
 	}
-
 	public List<Qna> getQnaList(Integer pageNum, String type) {
 		return qnaDao.getQnaList(pageNum, type);
 	}
-
 	public Qna getQna(Integer qna_number) {
 		return qnaDao.getQna(qna_number);
 	}
-
 	public void addQnaHits(Integer qna_number) {
 		qnaDao.addQnaHits(qna_number);
 	}
+
 }

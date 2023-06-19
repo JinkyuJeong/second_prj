@@ -18,7 +18,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-  $(()=> {
+/*  $(()=> {
     $('#prodMenu .nav-link').click(function(event) {
       event.preventDefault();
       // Remove active class from all nav links
@@ -26,7 +26,7 @@
       // Add active class to the clicked nav link
       $(this).addClass('active');
     });
-  });
+  }); */
 </script>
 <sitemesh:write property="head"/>
 </head>
@@ -38,13 +38,24 @@
       <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
         <ul class="navbar-nav ml-auto mr-4">
           <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fa fa-user-plus" aria-hidden="true"></i> 회원가입 / <i class="fa fa-user" aria-hidden="true"></i> 마이페이지</a>
+          	<c:if test="${sessionScope.loginMem == null }">
+          		<a class="nav-link" href="${path }/mem/join"><i class="fa fa-user-plus" aria-hidden="true"></i> 회원가입</a>
+          	</c:if>
+            <c:if test="${sessionScope.loginMem != null }">
+            	<a class="nav-link" href="${path }/mem/mypage?mem_id=${sessionScope.loginUser.mem_id}"><i class="fa fa-user" aria-hidden="true"></i> 마이페이지</a>
+            </c:if>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fa fa-sign-in" aria-hidden="true"></i> 로그인 / <i class="fa fa-sign-out" aria-hidden="true"></i> 로그아웃</a>
+          	<c:if test="${sessionScope.loginMem == null }">
+          		<a class="nav-link" href="${path }/mem/login"><i class="fa fa-sign-in" aria-hidden="true"></i> 로그인</a>
+          	</c:if>
+          	<c:if test="${sessionScope.loginMem != null }">
+          		<a class="nav-link" href="${path }/mem/logout"><i class="fa fa-sign-out" aria-hidden="true"></i> 로그아웃</a>
+          	</c:if>
+            
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> 장바구니</a>
+            <a class="nav-link" href="${path }/cart/cartAdd"><i class="fa fa-shopping-cart" aria-hidden="true"></i> 장바구니</a>
           </li>  
           <li class="nav-item dropdown" style="margin-right: 100px;">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><i class="fa fa-question-circle" aria-hidden="true"></i> 고객센터</a>
@@ -61,7 +72,7 @@
   <div class="container mt-1" id="header">
     <div id="logoSearch">
       <div>
-        <img src="${path }/images/mainLogo.JPG" id="logo">
+        <a href="${path }/index"><img src="${path }/images/homieGymLogo.png" id="logo" ></a>
       </div>
       <div>
         <div id="prodMenu"class="ms-5 mt-5">
@@ -69,16 +80,16 @@
             <div class="container-fluid">
               <ul class="navbar-nav">
                 <li class="nav-item">
-                  <a class="nav-link" href="#">상품1</a>
+                  <a href="${path }/product/productList" class="nav-link ${url == 'productList' && param.product_type == null ? 'active' : ''}">전체상품</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">상품2</a>
+                  <a href="${path}/product/productList?product_type=1" class="nav-link ${url=='productList' && param.product_type=='1' ? 'active' : ''}">덤벨, 바벨, 원판</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">상품3</a>
+                  <a href="${path }/product/productList?product_type=2" class="nav-link ${url=='productList' && param.product_type=='2' ? 'active' : ''}">머신</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">상품4</a>
+                  <a href="${path }/product/productList?product_type=3" class="nav-link ${url=='productList' && param.product_type=='3' ? 'active' : ''}">보조용품</a>
                 </li>
                 <li class="nav-item ms-5">
                   <a class="nav-link" href="#">💪 오운완 챌린지</a>
@@ -108,8 +119,9 @@
       <h5><i class="fa fa-envelope"></i> rritjy@naver.com | zxc2289@naver.com</h5>
       <h5><i class="fa fa-instagram"></i> @jeongjingyu63 | @sub__b.in</h5>
     </div>
+    
+    <a class="btn btn-outline-dark" href="${path }/admin/main">관리자 바로가기</a>
   </footer>
-
 
 </body>
 </html>
