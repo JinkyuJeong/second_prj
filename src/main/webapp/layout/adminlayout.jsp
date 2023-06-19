@@ -34,28 +34,39 @@
       <a class="navbar-brand ms-5" href="${path }/admin/main"><span class="text-danger">호미짐</span> 관리자</a>
       <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
         <ul class="navbar-nav ml-auto mr-4">
+	       	<c:if test="${sessionScope.loginManager.manager_grant eq '총괄'}">
+	        	 <li class="nav-item dropdown">
+	            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"> 매니저 관리</a>
+	            <ul class="dropdown-menu">
+	              <li><a class="dropdown-item" href="${path }/admin/manager/managerReg"><i class="fa fa-user-plus" aria-hidden="true"></i> 매니저 추가</a></li>
+	              <li><a class="dropdown-item" href="${path }/admin/manager/managerList"><i class="fa fa-users" aria-hidden="true"></i> 매니저 목록</a></li>
+	            </ul>
+	          </li>
+	         </c:if>
           <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fa fa-users" aria-hidden="true"></i> 회원 관리</a></a>
+            <a class="nav-link" href="#"><i class="fa fa-users" aria-hidden="true"></i> 회원 관리</a>
           </li>
           <li class="nav-item dropdown" style="margin-right: 100px;">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><i class="fa fa-list-ul" aria-hidden="true"></i> 게시판 관리</a>
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><i class="fa fa-question-circle" aria-hidden="true"></i> 고객센터</a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">공지사항</a></li>
-              <li><a class="dropdown-item" href="#">자주하는 질문</a></li>
+              <li><a class="dropdown-item" href="${path }/admin/qna">자주하는 질문</a></li>
+              <li><a class="dropdown-item" href="#">1:1 문의</a></li>
             </ul>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fa fa-sign-out" aria-hidden="true"></i> 로그아웃</a>
+            <a class="nav-link" href="${path }/admin/logout"><i class="fa fa-sign-out" aria-hidden="true"></i> 로그아웃</a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
-
+	
   <!-- 왼쪽 사이드 바 -->
   <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:250px;" id="mySidebar"><br>
     <div class="container">
       <h3 class="text-center">쇼핑몰 관리</h3>
+      <br>
+      접속자 : <span class="text-success fw-bold">${sessionScope.loginManager.manager_name}</span>(${sessionScope.loginManager.manager_grant})
     </div>
     <hr>
     <div class="w3-bar-block">
@@ -74,9 +85,6 @@
         </li>
         <li class="nav-item dropdown-item">
           <h4><a href="" ><i class="fa fa-line-chart" aria-hidden="true"></i> 통계분석</a></h4>
-        </li>
-        <li class="nav-item dropdown-item">
-          <h4><a href="" ><i class="fa fa-question-circle" aria-hidden="true"></i> 제품 문의</a></h4>
         </li>
         <li class="nav-item dropdown-item">
           <h4><a href=""><i class="fa fa-ticket" aria-hidden="true"></i> 쿠폰 관리</a></h4>

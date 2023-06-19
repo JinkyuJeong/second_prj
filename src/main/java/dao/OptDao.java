@@ -1,8 +1,6 @@
 package dao;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +14,6 @@ import dto.ProductOptView;
 public class OptDao {
 	@Autowired
 	private SqlSessionTemplate template;
-	private Map<String, Object> param = new HashMap<>();
 	private final Class<OptMapper> cls = OptMapper.class;
 
 	public List<Opt> getOption(int product_number) {

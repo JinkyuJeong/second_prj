@@ -8,10 +8,12 @@ import org.springframework.stereotype.Service;
 import dao.CartDao;
 import dao.OptDao;
 import dao.ProductDao;
+import dao.QnaDao;
 import dto.Cart;
 import dto.Opt;
 import dto.Product;
 import dto.ProductOptView;
+import dto.Qna;
 @Service
 public class ShopService {
 	@Autowired
@@ -22,6 +24,9 @@ public class ShopService {
 	
 	@Autowired
 	private CartDao cartDao;
+	
+	@Autowired
+	private QnaDao qnaDao;
 
 	public List<Product> productList(Integer pageNum, int limit, String product_type, String searchContent) {
 		return productDao.list(pageNum, limit, product_type, searchContent);
@@ -60,5 +65,21 @@ public class ShopService {
 
 	public ProductOptView getProductOptView(int opt_number) {
 		return optDao.getProductOptView(opt_number);
+	}
+
+	public int getQnaCnt(String type) {
+		return qnaDao.getQnaCnt(type);
+	}
+
+	public List<Qna> getQnaList(Integer pageNum, String type) {
+		return qnaDao.getQnaList(pageNum, type);
+	}
+
+	public Qna getQna(Integer qna_number) {
+		return qnaDao.getQna(qna_number);
+	}
+
+	public void addQnaHits(Integer qna_number) {
+		qnaDao.addQnaHits(qna_number);
 	}
 }

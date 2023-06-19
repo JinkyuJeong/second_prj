@@ -40,7 +40,7 @@ public class AdminProductController {
 			mv.setViewName("redirect:prodList");
 			return mv;
 		}else {
-			throw new ShopException("제품등록 실패", "redirect:prodList");
+			throw new ShopException("제품 등록 실패", "redirect:prodList");
 		}
 	}
 	

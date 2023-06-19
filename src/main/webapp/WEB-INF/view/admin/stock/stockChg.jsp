@@ -56,8 +56,8 @@
           </tr>
           <tr>
             <td class="table-dark text-center">수량</td>
-            <td>
-            	<input type="number" name="stock_quantity" id="quantity" class="form-control" onkeyup="validQuantity()" value="${stock.stock_quantity }">
+            <td colspan="3">
+            	<input type="number" name="stock_quantity" id="quantity" class="form-control" onkeyup="validQuantity()" value="${stock.stock_quantity }" style="width:30%">
               <span class="mt-1" id="quantityMsg">&nbsp;</span>
               <input type="hidden" value="1" id="isQuantityValid">  
             </td>

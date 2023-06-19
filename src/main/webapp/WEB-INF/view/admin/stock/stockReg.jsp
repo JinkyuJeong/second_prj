@@ -11,7 +11,7 @@
   function inputChk(f) {
     if($.trim(f.stock_quantity.value) == "") {
 	    alert("입고 수량을 입력하세요.");
-	    f.opt_quantity.focus();
+	    f.stock_quantity.focus();
 	    return false;
 	  }
 
@@ -60,7 +60,7 @@
           </tr>
           <tr>
             <td class="table-dark text-center">옵션명</td>
-            <td>${prodOpt.opt_name }<input type="hidden" name="stock_prodName" value="${prodOpt.product_name }(${prodOpt.opt_name })"></td>
+            <td class="text-center">${prodOpt.opt_name }<input type="hidden" name="stock_prodName" value="${prodOpt.product_name }(${prodOpt.opt_name })"></td>
             <td class="table-dark text-center">입고 수량</td>
             <td>
               <input type="number" name="stock_quantity" id="quantity" class="form-control" onkeyup="validQuantity()" placeholder="입고 수량을 입력하세요.">

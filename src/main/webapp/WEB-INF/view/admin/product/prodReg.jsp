@@ -190,7 +190,7 @@
           <tr>
             <td class="table-dark text-center">제품 사진</td>
             <td colspan="3" >
-              <input class="form-control" type="file" name="picFiles[]" multiple>
+              <input class="form-control" type="file" name="picFiles[]" multiple required="required">
             </td>
           </tr>
         </table>

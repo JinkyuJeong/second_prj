@@ -66,29 +66,29 @@
 
         <div class="text-end"><a class="btn btn-primary" href="prodReg">제품등록</a></div>
 
-         <div class="w3-center w3-padding-32">
-		    <div class="w3-bar">
-			    <c:if test="${pageNum<= 1}">
-						<a class="w3-bar-item w3-button w3-hover-black" onclick="alert('이전 페이지가 없습니다.');">&laquo;</a>
-					</c:if>
-					<c:if test="${pageNum > 1}">
-						<a class="w3-bar-item w3-button w3-hover-black" href="prodList?pageNum=${pageNum-1}&query=${param.query}">&laquo;</a>
-					</c:if>
-					
-					<c:forEach var="a" begin="${startPage}" end="${endPage}">
-						<c:if test="${a <= maxPage}">
-							<a class="w3-bar-item w3-button w3-hover-black ${a == pageNum ? 'w3-black' : '' }" href="prodList?pageNum=${pageNum-1}&query=${param.query}">${a}</a>
+        <div class="w3-center w3-padding-32">
+			    <div class="w3-bar">
+				    <c:if test="${pageNum<= 1}">
+							<a class="w3-bar-item w3-button w3-hover-black" onclick="alert('이전 페이지가 없습니다.');">&laquo;</a>
 						</c:if>
-					</c:forEach>
+						<c:if test="${pageNum > 1}">
+							<a class="w3-bar-item w3-button w3-hover-black" href="prodList?pageNum=${pageNum-1}&query=${param.query}">&laquo;</a>
+						</c:if>
 						
-					<c:if test="${startPage+4 >= maxPage}">
-						<a class="w3-bar-item w3-button w3-hover-black" onclick="alert('다음 페이지가 없습니다.');">&raquo;</a>
-					</c:if>
-					<c:if test="${startPage+4 < maxPage}">
-						<a class="w3-bar-item w3-button w3-hover-black" href="prodList?pageNum=${pageNum-1}&query=${param.query}">&raquo;</a>
-					</c:if>
-		    </div>
-		  </div>
+						<c:forEach var="a" begin="${startPage}" end="${endPage}">
+							<c:if test="${a <= maxPage}">
+								<a class="w3-bar-item w3-button w3-hover-black ${a == pageNum ? 'w3-black' : '' }" href="prodList?pageNum=${a}&query=${param.query}">${a}</a>
+							</c:if>
+						</c:forEach>
+							
+						<c:if test="${startPage+4 >= maxPage}">
+							<a class="w3-bar-item w3-button w3-hover-black" onclick="alert('다음 페이지가 없습니다.');">&raquo;</a>
+						</c:if>
+						<c:if test="${startPage+4 < maxPage}">
+							<a class="w3-bar-item w3-button w3-hover-black" href="prodList?pageNum=${startPage+5}&query=${param.query}">&raquo;</a>
+						</c:if>
+			    </div>
+			  </div>
 
       </div>
     </div>
