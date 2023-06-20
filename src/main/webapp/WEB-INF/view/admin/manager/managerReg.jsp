@@ -164,7 +164,7 @@
 		
         <div class="text-center mt-3">
           <button type="submit" class="btn btn-dark">등록</button>
-          <input type="reset" value="초기화" class="btn btn-dark">
+          <a class="btn btn-dark" href="managerList">목록</a>
         </div>
 
       </form>

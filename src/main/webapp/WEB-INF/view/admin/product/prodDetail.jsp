@@ -18,13 +18,13 @@
         <input type="hidden" name="product_number" value="${product.product_number }">
         <table class="table align-middle text-center">
           <tr>
-            <td width="15%" class="table-dark">제품명</td>
+            <td width="15%" class="table-secondary">제품명</td>
             <td width="35%">${product.product_name }</td>
-            <td width="15%" class="table-dark">카테고리</td>
+            <td width="15%" class="table-secondary">카테고리</td>
             <td width="35%">${product.product_type }</td>
           </tr>
           <tr>
-            <td class="table-dark">가격</td>
+            <td class="table-secondary">가격</td>
             <td>
             	<c:if test="${product.product_discountRate > 0}">
 	            	<span style="text-decoration: line-through;"><fmt:formatNumber value="${product.product_price }" pattern="#,###"/></span>&nbsp;&nbsp;
@@ -32,18 +32,18 @@
 	           	</c:if>
 	           	<c:if test="${product.product_discountRate eq 0}"><fmt:formatNumber value="${product.product_price }" pattern="#,###"/></c:if>
             </td>
-            <td class="table-dark">할인율</td>
+            <td class="table-secondary">할인율</td>
             <td>
             	<c:if test="${product.product_discountRate > 0}">${product.product_discountRate}%</c:if>
             	<c:if test="${product.product_discountRate eq 0}">할인 없음</c:if>
             </td>
           </tr>
           <tr>
-            <td class="table-dark">제품 썸네일</td>
+            <td class="table-secondary">제품 썸네일</td>
             <td colspan="3"><img src="${path }/img/thumb/${product.product_thumb }" style="max-width: 300px;"></td>
           </tr>
           <tr>
-            <td class="table-dark">제품 사진</td>
+            <td class="table-secondary">제품 사진</td>
             <td colspan="3" >
               <c:if test="${empty prodPics}">제품 사진 없음</c:if>
               <c:if test="${!empty prodPics}">
@@ -54,7 +54,7 @@
             </td>
           </tr>
           <tr>
-            <td class="table-dark">제품 설명</td>
+            <td class="table-secondary">제품 설명</td>
             <td colspan="3">${prod.product_desc}</td>
           </tr>
         </table>
@@ -68,7 +68,7 @@
 					  <div class="modal-dialog">
 					    <div class="modal-content">
 					      <div class="modal-header">
-					        <h5 class="modal-title" id="staticBackdropLabel">삭제</h5>
+					        <h5 class="modal-title" id="staticBackdropLabel">호미짐 관리자</h5>
 					        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					      </div> 
 					      <div class="modal-body">해당 제품을 삭제 하시겠습니까?</div>

@@ -7,21 +7,26 @@
 <head>
 <meta charset="UTF-8">
 <title>호미짐 관리자</title>
+<style type="text/css">
+	a{
+		text-decoration: none;
+	}
+</style>
 </head>
 <body>
 	<br><br>
     <div class="container w3-white pt-1" >
-      <h3><i class="fa fa-caret-square-o-right text-primary" aria-hidden="true"></i> 매니저 목록</h3>
-      <p class="mb-3">매니저 목록을 보여주는 페이지 입니다.</p>
+      <h3><i class="fa fa-caret-square-o-right text-primary" aria-hidden="true"></i> 회원 목록</h3>
+      <p class="mb-3">회원 목록을 보여주는 페이지 입니다.</p>
       
       <div class="container">
-      	<form action="managerList">
+      	<form action="memList">
 	        <div style="display: flex;justify-content: space-between;border-bottom: 2px solid black;margin-bottom: 10px;">
-	          <h4 style="margin-top: 25px;">총 <span class="text-danger">${managerCnt }</span>명</h4>
+	          <h4 style="margin-top: 25px;">총 <span class="text-danger">${memCnt }</span>명</h4>
 	          <div class="input-group p-3" style="width: 40%;">
 	          	<select id="sel" class="form-select" name="f">
-			          <option ${param.f eq 'manager_name'? 'selected' : '' } value="manager_name">이름</option>
-			          <option ${param.f eq 'manager_birth'? 'selected' : '' } value="manager_birth">생년월일</option>
+			          <option ${param.f eq 'mem_id'? 'selected' : '' } value="mem_id">아이디</option>
+			          <option ${param.f eq 'mem_name'? 'selected' : '' } value="mem_name">이름</option>
 			        </select>
 	            <input type="text" class="form-control" name="query" placeholder="검색어" value="${param.query}">
 	            <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fa fa-search"></i></button>
@@ -29,33 +34,33 @@
 	        </div>
         </form>
         
-        <c:if test="${empty managerCnt }">
-        	<h4 class="text-center">등록된 관리자가 없습니다.</h4>
+        <c:if test="${empty memCnt }">
+        	<h4 class="text-center">등록된 회원이 없습니다.</h4>
         </c:if>
         
-        <c:if test="${!empty managerCnt }">
+        <c:if test="${!empty memCnt }">
 	        <table class="table table-hover table-bordered text-center align-middle">
-	          <tr class="table-success">
-	            <th width="10%">매니저 번호</th>
-	            <th width="30%">아이디</th>
-	            <th width="20%">이름</th>
-	            <th width="25%">생년월일</th>
-	            <th width="15%">권한</th>
+	          <tr class="table-warning">
+	            <th width="10%">회원 번호</th>
+	            <th width="25%">아이디</th>
+	            <th width="20%">채널</th>
+	            <th width="20%">연락처</th>
+	            <th width="25%">포인트</th>
 	          </tr>
-	          <c:forEach var="manager" items="${managerList }">
+	          <c:forEach var="mem" items="${memList }">
 		          <tr>
-		            <td>${manager.manager_number }</td>
+		            <td>${mem.mem_number }</td>
 		            <td>
-		            	${manager.manager_id }
+		            	${mem.mem_id} 
 		            	<br>
-		            	<a class="btn btn-sm btn-dark" href="managerChg?manager_id=${manager.manager_id}">정보수정</a>
+		            	<a class="btn btn-sm btn-dark" href="memChg?mem_number=${mem.mem_number}">정보수정</a>
 		            	<c:if test="${manager.manager_grant ne '총괄'}">
-		            		<form action="managerDel" method="post" style="display:inline-block;">
-		            			<input type="hidden" name="manager_number" value="${manager.manager_number}">
-			            		<a type="button" class="btn btn-sm btn-dark" data-bs-toggle="modal" data-bs-target="#staticBackdrop${manager.manager_number }">탈퇴</a>
+		            		<form action="memDel" method="post" style="display:inline-block;">
+		            			<input type="hidden" name="mem_number" value="${mem.mem_number}">
+			            		<a type="button" class="btn btn-sm btn-dark" data-bs-toggle="modal" data-bs-target="#staticBackdrop${mem.mem_number }">탈퇴</a>
 																		
 											<%-- Modal --%>
-											<div class="modal fade" id="staticBackdrop${manager.manager_number }" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+											<div class="modal fade" id="staticBackdrop${mem.mem_number }" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 											  <div class="modal-dialog">
 											    <div class="modal-content">
 											      <div class="modal-header">
@@ -72,17 +77,18 @@
 											</div>
 										</form>
 		            	</c:if>
-		            	
 		            </td>
-		            <td>${manager.manager_name}</td>
-		            <td>${manager.manager_birth}</td>
-		            <td>${manager.manager_grant}</td>
+		            <td>${empty mem.mem_channel? '일반' :  mem.mem_channel}</td>
+		            <td>${mem.mem_phoneno}</td>
+		            <td>
+		            	100 P
+		            	<br>
+		            	<a class="btn btn-sm btn-secondary" href="${path }/admin/pointReg?mem_id=${mem.mem_id}">포인트 지급</a>
+		            </td>
 		          </tr>
 	          </c:forEach>
 	        </table>
         </c:if>
-
-				<div class="text-end"><a class="btn btn-primary" href="managerReg">매니저 등록</a></div>
 
         <div class="w3-center w3-padding-32">
 			    <div class="w3-bar">

@@ -56,7 +56,7 @@
 										  <div class="modal-dialog">
 										    <div class="modal-content">
 										      <div class="modal-header">
-										        <h5 class="modal-title" id="staticBackdropLabel">삭제</h5>
+										        <h5 class="modal-title" id="staticBackdropLabel">호미짐 관리자</h5>
 										        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 										      </div> 
 										      <div class="modal-body">해당 제품 옵션을 삭제 하시겠습니까?</div>
@@ -67,6 +67,7 @@
 										    </div>
 										  </div>
 										</div>
+										
 			            </td>
 			          </tr>
 		          </c:forEach>

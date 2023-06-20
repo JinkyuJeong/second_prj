@@ -23,12 +23,16 @@ public class AdminManagerDao {
 		return template.getMapper(cls).managerReg(manager);
 	}
 
-	public int managerCnt(String query) {
-		return template.getMapper(cls).managerCnt(query);
+	public int managerCnt(String f, String query) {
+		param.clear();
+		param.put("f", f);
+		param.put("query", query);
+		return template.getMapper(cls).managerCnt(param);
 	}
 
-	public List<Manager> getManagerList(Integer pageNum, String query) {
+	public List<Manager> getManagerList(Integer pageNum, String f, String query) {
 		param.clear();
+		param.put("f", f);
 		param.put("query", query);
 		param.put("start", (pageNum -1) * 10);
 		param.put("limit", 10);
@@ -46,6 +50,14 @@ public class AdminManagerDao {
 		param.put("manager_id", manager_id);
 		param.put("manager_pass", manager_pass);
 		return template.getMapper(cls).getManager(param);
+	}
+
+	public boolean managerChg(Manager manager) {
+		return template.getMapper(cls).managerChg(manager);
+	}
+
+	public boolean managerDel(Integer manager_number) {
+		return template.getMapper(cls).managerDel(manager_number);
 	}
 
 }

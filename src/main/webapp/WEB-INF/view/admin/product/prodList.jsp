@@ -64,7 +64,7 @@
 	        </table>
         </c:if>
 
-        <div class="text-end"><a class="btn btn-primary" href="prodReg">제품등록</a></div>
+        <div class="text-end"><a class="btn btn-primary" href="prodReg">제품 등록</a></div>
 
         <div class="w3-center w3-padding-32">
 			    <div class="w3-bar">

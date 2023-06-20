@@ -19,10 +19,22 @@
       	<form action="stockList">
 	        <div style="display: flex;justify-content: space-between;border-bottom: 2px solid black;margin-bottom: 10px;">
 	          <h4 style="margin-top: 25px;">총 <span class="text-danger">${stockCnt }</span>개</h4>
-	          <div class="input-group p-3" style="width: 30%;">
-	            <input type="text" class="form-control" name="query" placeholder="제품명 검색" value="${param.query}">
-	            <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fa fa-search"></i></button>
-	          </div>
+	          <div class="input-group p-3" style="width: 70%;">
+						  <input type="date" name="sd" value="${sd}" class="form-control mr-3">
+						  <div class="input-group-prepend">
+						    <span class="input-group-text">부터</span>
+						  </div>
+						  <input type="date" name="ed" value="${ed}" class="form-control">
+						  <div class="input-group-prepend">
+						    <span class="input-group-text">까지</span>
+						  </div>
+						  <input type="text" class="form-control ms-3" name="query" placeholder="제품명" value="${param.query}">
+						  <div class="input-group-append">
+						    <button class="btn btn-outline-secondary" type="submit" id="button-addon2">
+						      <i class="fa fa-search"></i>
+						    </button>
+						  </div>
+						</div>
 	        </div>
         </form>
         
@@ -64,12 +76,12 @@
 						<a class="w3-bar-item w3-button w3-hover-black" onclick="alert('이전 페이지가 없습니다.');">&laquo;</a>
 					</c:if>
 					<c:if test="${pageNum > 1}">
-						<a class="w3-bar-item w3-button w3-hover-black" href="stockList?pageNum=${pageNum-1}&query=${param.query}">&laquo;</a>
+						<a class="w3-bar-item w3-button w3-hover-black" href="stockList?pageNum=${pageNum-1}&query=${param.query}&sd=${sd}&ed=${ed}">&laquo;</a>
 					</c:if>
 					
 					<c:forEach var="a" begin="${startPage}" end="${endPage}">
 						<c:if test="${a <= maxPage}">
-							<a class="w3-bar-item w3-button w3-hover-black ${a == pageNum ? 'w3-black' : '' }" href="stockList?pageNum=${pageNum-1}&query=${param.query}">${a}</a>
+							<a class="w3-bar-item w3-button w3-hover-black ${a == pageNum ? 'w3-black' : '' }" href="stockList?pageNum=${pageNum-1}&query=${param.query}&sd=${sd}&ed=${ed}">${a}</a>
 						</c:if>
 					</c:forEach>
 						
@@ -77,7 +89,7 @@
 						<a class="w3-bar-item w3-button w3-hover-black" onclick="alert('다음 페이지가 없습니다.');">&raquo;</a>
 					</c:if>
 					<c:if test="${startPage+4 < maxPage}">
-						<a class="w3-bar-item w3-button w3-hover-black" href="stockList?pageNum=${pageNum-1}&query=${param.query}">&raquo;</a>
+						<a class="w3-bar-item w3-button w3-hover-black" href="stockList?pageNum=${pageNum-1}&query=${param.query}&sd=${sd}&ed=${ed}">&raquo;</a>
 					</c:if>
 		    </div>
 		  </div>

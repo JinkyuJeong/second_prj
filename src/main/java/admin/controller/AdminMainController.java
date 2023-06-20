@@ -41,7 +41,7 @@ public class AdminMainController {
 		Manager dbManager = service.managerLogin(manager_id, manager_pass);
 		
 		if(dbManager == null) {
-			throw new ShopException("아이디 또는 비밀번호를 확인하세요.", "redirect:login");
+			throw new ShopException("아이디 또는 비밀번호를 확인하세요.", "login");
 		}else {
 			session.setAttribute("loginManager", dbManager);
 			mv.setViewName("redirect:main");

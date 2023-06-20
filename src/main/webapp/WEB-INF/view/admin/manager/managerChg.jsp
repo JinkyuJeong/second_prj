@@ -9,9 +9,8 @@
   function inputChk(f) {
     const isValidBirth = $("#isValidBirth").val();
     const isEqualPass = $("#isEqualPass").val();
-    const isDupId = $("#isDupId").val();
 
-    if (isValidBirth === "1" && isEqualPass === "1" && isDupId === "0") {
+    if (isValidBirth === "1" && isEqualPass === "1") {
       return true;
     } else {
       alert("유효하지 않은 입력란들이 있습니다.");
@@ -88,6 +87,7 @@
   function ablePass() {
 	  $("#manager_pass1").prop("disabled", false);
 	  $("#manager_pass2").prop("disabled", false);
+	  $("#passMsg").show();
 	}
 </script>
 </head>
@@ -116,6 +116,7 @@
             <input type="hidden" name="manager_pass" id="manager_pass" value="${manager.manager_pass}">
             <input type="hidden" id="isEqualPass" value="1">
             <span id="passEqualMsg"></span>
+            <div class="mt-1" id="passMsg" style="display:none;font-size : 13px;"><span class="text-danger">*</span> 비밀번호를 입력하고 아래 수정 버튼을 눌러주세요.</div>
           </div>
 
           <label class="mb-1" for="manager_name">이름</label>
@@ -144,7 +145,7 @@
         </div>
 		
         <div class="text-center mt-3">
-          <button type="submit" class="btn btn-dark">변경</button>
+          <button type="submit" class="btn btn-dark">수정</button>
           <a class="btn btn-dark" href="managerList">목록</a>
         </div>
 

@@ -34,11 +34,6 @@
     border-bottom: 3px solid red;
   }
   
-   a.btn {
-    font-size: 18px;
-    color : white;
-  }
-  
   .w3-bar-block {
     border-radius: 8px; /* 꼭짓점을 둥글게 설정 */
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.4); /* 그림자 효과 설정 */

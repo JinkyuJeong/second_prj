@@ -29,7 +29,7 @@ public class AdminOptController {
 		ModelAndView mv = new ModelAndView();
 		Product product = service.getProd(product_number);
 		if(product == null) {
-			throw new ShopException("해당 제품은 존재하지 않습니다.", "prodList");
+			throw new ShopException("해당 제품은 존재하지 않습니다.", "../product/prodList");
 		}
 		mv.addObject("product",product);
 		return mv;
@@ -42,7 +42,7 @@ public class AdminOptController {
 			mv.setViewName("redirect:optList");
 			return mv;
 		}else {
-			throw new ShopException("옵션 등록 실패", "redirect:optReg?product_number="+opt.getProduct_number());
+			throw new ShopException("옵션 등록 실패", "optReg?product_number="+opt.getProduct_number());
 		}
 	}
 	
@@ -96,7 +96,7 @@ public class AdminOptController {
 			mv.setViewName("redirect:optList");
 			return mv;
 		}else {
-			throw new ShopException("옵션 변경 실패", "redirect:optList");
+			throw new ShopException("옵션 변경 실패", "optList");
 		}
 	}
 	
@@ -107,7 +107,7 @@ public class AdminOptController {
 			mv.setViewName("redirect:optList");
 			return mv;
 		}else {
-			throw new ShopException("옵션 삭제 실패", "redirect:optList");
+			throw new ShopException("옵션 삭제 실패", "optList");
 		}
 	}
 }

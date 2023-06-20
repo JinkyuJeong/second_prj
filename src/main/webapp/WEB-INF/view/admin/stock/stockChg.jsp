@@ -42,22 +42,24 @@
 </head>
 <body>
 	<br><br>
-    <div class="container w3-white pt-1">
+    <div class="container w3-white pt-1" style="width:60%">
       <h3><i class="fa fa-caret-square-o-right text-primary" aria-hidden="true"></i> 재고 등록 내역 수정</h3>
       <p class="mb-3">재고 등록 내역을 수정하는 페이지 입니다.</p>
       <form action="stockChg" method="post" name="f" onsubmit="return inputChk(this)">
       	<input type="hidden" value="${stock.stock_number }" name="stock_number">
         <table class="table align-middle">
           <tr class="text-center">
-            <td width="15%" class="table-dark text-center">제품명(옵션)</td>
-            <td width="35%">${stock.stock_prodName }</td>
-            <td width="15%" class="table-dark text-center">제품 이미지</td>
-            <td width="35%"><img src="${path }/img/thumb/${stock.stock_prodThumb }" width="200" height="130"></td>
+            <td class="table-danger text-center">제품명(옵션)</td>
+            <td>${stock.stock_prodName }</td>
           </tr>
           <tr>
-            <td class="table-dark text-center">수량</td>
-            <td colspan="3">
-            	<input type="number" name="stock_quantity" id="quantity" class="form-control" onkeyup="validQuantity()" value="${stock.stock_quantity }" style="width:30%">
+          	<td class="table-danger text-center">제품 이미지</td>
+            <td class="text-center"><img src="${path }/img/thumb/${stock.stock_prodThumb }" width="200" height="130"></td>
+          </tr>
+          <tr>
+            <td class="table-danger text-center">수량</td>
+            <td>
+            	<input type="number" name="stock_quantity" id="quantity" class="form-control" onkeyup="validQuantity()" value="${stock.stock_quantity }">
               <span class="mt-1" id="quantityMsg">&nbsp;</span>
               <input type="hidden" value="1" id="isQuantityValid">  
             </td>

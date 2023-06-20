@@ -14,10 +14,28 @@ public interface AdminStockMapper {
 	@Insert("insert into stock (opt_number, stock_regdate, stock_quantity, stock_prodName, stock_prodThumb) values (#{opt_number}, now(), #{stock_quantity}, #{stock_prodName}, #{stock_prodThumb})")
 	boolean regProdStock(Stock stock);
 
-	@Select("select count(*) from stock  where stock_prodName like '%${value}%'")
-	int getStockCnt(String query);
+	@Select({"<script> ",
+		" select count(*) from stock  where stock_prodName like '%${value}%'",
+		" <if test='sd != null and sd != \"\"'>",
+		"  AND stock_regdate &gt;= #{sd} ",
+		" </if>",
+		" <if test='ed != null and ed != \"\"'> ",
+		"  AND stock_regdate &lt;= #{ed} ",
+		" </if>",
+	" </script>"})
+	int getStockCnt(Map<String, Object> param);
 
-	@Select("select * from stock where stock_prodName like '%${query}%' ORDER BY stock_number DESC LIMIT #{start}, 10")
+	@Select({"<script> ",
+		"SELECT * FROM stock WHERE stock_prodName LIKE '%${value}%' ",
+		" <if test='sd != null and sd != \"\"'>",
+		"  AND stock_regdate &gt;= #{sd} ",
+		" </if>",
+		" <if test='ed != null and ed != \"\"'> ",
+		"  AND stock_regdate &lt;= #{ed} ",
+		" </if>",
+		" ORDER BY stock_number DESC LIMIT #{start}, 10",
+		"</script>"
+	})	
 	List<Stock> getStockList(Map<String, Object> param);
 
 	@Select("select * from stock where stock_number = #{value}")

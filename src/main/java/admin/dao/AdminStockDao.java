@@ -23,12 +23,19 @@ public class AdminStockDao {
 		return template.getMapper(cls).regProdStock(stock);
 	}
 
-	public int getStockCnt(String query) {
-		return template.getMapper(cls).getStockCnt(query);
+	public int getStockCnt(String query, String sd, String ed) {
+		param.clear();
+		param.put("sd", sd);
+		param.put("ed", ed);
+		param.put("query", query);
+		
+		return template.getMapper(cls).getStockCnt(param);
 	}
 
-	public List<Stock> getStockList(Integer pageNum, String query) {
+	public List<Stock> getStockList(Integer pageNum, String query, String sd, String ed) {
 		param.clear();
+		param.put("sd", sd);
+		param.put("ed", ed);
 		param.put("query", query);
 		param.put("start", (pageNum -1) * 10);
 		param.put("limit", 10);

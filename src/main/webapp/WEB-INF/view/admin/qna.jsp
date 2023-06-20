@@ -84,7 +84,7 @@
 	   		listHtml += "<div class='modal-dialog'>";
 	   		listHtml += "<div class='modal-content'>";
 	   		listHtml += "<div class='modal-header'>";
-	   		listHtml += "<h5 class='modal-title' id='staticBackdropLabel'>삭제</h5>";
+	   		listHtml += "<h5 class='modal-title' id='staticBackdropLabel'>호미짐 관리자</h5>";
 	   		listHtml += "<button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>";
 	   		listHtml += "</div>";
 	   		listHtml += "<div class='modal-body'>해당 게시글을 삭제하시겠습니까?</div>";

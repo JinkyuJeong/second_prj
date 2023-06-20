@@ -120,12 +120,12 @@ public class AdminShopService {
 		return b1 && b2;
 	}
 
-	public int getStockCnt(String query) {
-		return stockDao.getStockCnt(query);
+	public int getStockCnt(String query, String sd, String ed) {
+		return stockDao.getStockCnt(query, sd, ed);
 	}
 
-	public List<Stock> getStockList(Integer pageNum, String query) {
-		return stockDao.getStockList(pageNum, query);
+	public List<Stock> getStockList(Integer pageNum, String query, String sd, String ed) {
+		return stockDao.getStockList(pageNum, query, sd, ed);
 	}
 
 	public Stock getStock(Integer stock_number) {

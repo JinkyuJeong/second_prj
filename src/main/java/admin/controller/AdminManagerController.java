@@ -39,22 +39,25 @@ public class AdminManagerController {
 			mv.setViewName("redirect:managerList");
 			return mv;
 		}else {
-			throw new ShopException("매니저 등록 실패", "redirect:managerList");
+			throw new ShopException("매니저 등록 실패", "managerList");
 		}
 	}
 	
 	@RequestMapping("managerList")
-	public ModelAndView managerList(Integer pageNum, String query, HttpSession session) {
+	public ModelAndView managerList(Integer pageNum, String f, String query, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		
 		if(pageNum == null || pageNum.toString().equals("")) {
 			pageNum = 1;
 		}
+		if(f == null || f.equals("")) {
+			f = "manager_name";
+		}
 		if(query == null || query.equals("")) {
 			query = "";
 		}
 		
-		int managerCnt = service.managerCnt(query);
+		int managerCnt = service.managerCnt(f, query);
 		
 		int limit = 10;
 		int maxPage = (int)((double)managerCnt/limit +0.95);
@@ -62,7 +65,7 @@ public class AdminManagerController {
 		int endPage = startPage + 4;
 		if(endPage > maxPage) endPage = maxPage;
 		
-		List<Manager> managerList =service.getManagerList(pageNum, query);
+		List<Manager> managerList =service.getManagerList(pageNum, f, query);
 		
 		mv.addObject("managerList", managerList);
 		mv.addObject("managerCnt", managerCnt);
@@ -91,11 +94,33 @@ public class AdminManagerController {
 	}
 	
 	@GetMapping("managerChg")
-	public ModelAndView managerChg(String manager_id) {
+	public ModelAndView managerChg(String manager_id,HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		Manager manager = service.getManager(manager_id);
 		System.out.println(manager);
 		mv.addObject("manager", manager);
 		return mv;
+	}
+	
+	@PostMapping("managerChg")
+	public ModelAndView managerChg(Manager manager, HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(service.managerChg(manager)) {
+			mv.setViewName("redirect:managerList");
+			return mv;
+		}else {
+			throw new ShopException("매니저 정보 변경 실패", "managerList");
+		}
+	}
+	
+	@PostMapping("managerDel")
+	public ModelAndView managerDel(Integer manager_number, HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(service.managerDel(manager_number)) {
+			mv.setViewName("redirect:managerList");
+			return mv;
+		}else {
+			throw new ShopException("매니저 탈퇴 실패", "managerList");
+		}
 	}
 }

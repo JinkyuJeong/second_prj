@@ -36,15 +36,11 @@
         <ul class="navbar-nav ml-auto mr-4">
 	       	<c:if test="${sessionScope.loginManager.manager_grant eq '총괄'}">
 	        	 <li class="nav-item dropdown">
-	            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"> 매니저 관리</a>
-	            <ul class="dropdown-menu">
-	              <li><a class="dropdown-item" href="${path }/admin/manager/managerReg"><i class="fa fa-user-plus" aria-hidden="true"></i> 매니저 추가</a></li>
-	              <li><a class="dropdown-item" href="${path }/admin/manager/managerList"><i class="fa fa-users" aria-hidden="true"></i> 매니저 목록</a></li>
-	            </ul>
+	        	 	<a class="nav-link" href="${path }/admin/manager/managerList"><i class="fa fa-users" aria-hidden="true"></i> 매니저 관리</a>
 	          </li>
 	         </c:if>
           <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fa fa-users" aria-hidden="true"></i> 회원 관리</a>
+            <a class="nav-link" href="${path }/admin/mem/memList"><i class="fa fa-users" aria-hidden="true"></i> 회원 관리</a>
           </li>
           <li class="nav-item dropdown" style="margin-right: 100px;">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><i class="fa fa-question-circle" aria-hidden="true"></i> 고객센터</a>
@@ -84,10 +80,16 @@
           <h4><a href="" ><i class="fa fa-paper-plane-o" aria-hidden="true"></i> 주문 관리</a></h4>
         </li>
         <li class="nav-item dropdown-item">
+          <h4><a href="" ><i class="fa fa-reply" aria-hidden="true"></i> 환불 관리</a></h4>
+        </li>
+        <li class="nav-item dropdown-item">
           <h4><a href="" ><i class="fa fa-line-chart" aria-hidden="true"></i> 통계분석</a></h4>
         </li>
         <li class="nav-item dropdown-item">
-          <h4><a href=""><i class="fa fa-ticket" aria-hidden="true"></i> 쿠폰 관리</a></h4>
+          <h4><a href=""><i class="fa fa-product-hunt" aria-hidden="true"></i> 포인트 관리</a></h4>
+        </li>
+        <li class="nav-item dropdown-item">
+          <h4><a href="">💪이벤트 관리</a></h4>
         </li>
       </ul>
     </div>
@@ -108,6 +110,8 @@
       <h5><i class="fa fa-envelope"></i> rritjy@naver.com | zxc2289@naver.com</h5>
       <h5><i class="fa fa-instagram"></i> @jeongjingyu63 | @sub__b.in</h5>
     </div>
+    
+    <a class="btn btn-outline-dark" href="${path }/">호미짐 바로가기</a>
   </footer>
 
 </body>

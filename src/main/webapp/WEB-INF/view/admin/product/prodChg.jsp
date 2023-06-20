@@ -120,9 +120,9 @@
       	<input type="hidden" name="product_number" value="${product.product_number }">
         <table class="table align-middle">
           <tr>
-            <td width="15%" class="table-dark text-center">제품명</td>
+            <td width="15%" class="table-secondary text-center">제품명</td>
             <td width="35%"><input type="text" name="product_name" class="form-control" value='${product.product_name }' placeholder="제품명을 입력하세요."></td>
-            <td width="15%" class="table-dark text-center">카테고리</td>
+            <td width="15%" class="table-secondary text-center">카테고리</td>
             <td width="35%">
               <select class="form-select" name="product_type">
                 <option value="1" ${product.product_type eq '1'? 'selected' : ''}>카테고리1</option>
@@ -133,7 +133,7 @@
             </td>
           </tr>
           <tr>
-            <td class="table-dark text-center">가격</td>
+            <td class="table-secondary text-center">가격</td>
             <td colspan="3">
               <input type="number" id="price" onkeyup="validPrice()" value="${product.product_price }" name="product_price" class="form-control" placeholder="가격을 입력하세요."><span class="mt-1" id="priceMsg">&nbsp;</span>
               <input type="hidden" value="1" id="isPriceValid">
@@ -156,7 +156,7 @@
             </td>
           </tr>
           <tr>
-            <td class="table-dark text-center">제품 설명</td>
+            <td class="table-secondary text-center">제품 설명</td>
             <td colspan="3">
               <textarea rows="15" name="product_desc" class="form-control" id="desc">${product.product_desc}</textarea>
             </td>
@@ -182,7 +182,7 @@
             </script>
           </tr>
           <tr>
-            <td class="table-dark text-center">제품 썸네일</td>
+            <td class="table-secondary text-center">제품 썸네일</td>
             <td colspan="3">
               <input class="form-control mb-3" type="file" name="thumbFile" id="productThumbInput">
               <input type="hidden" value="${product.product_thumb}">
@@ -192,7 +192,7 @@
             </td>
           </tr>
           <tr>
-            <td class="table-dark text-center">제품 사진</td>
+            <td class="table-secondary text-center">제품 사진</td>
             <td colspan="3" >
               <input class="form-control" type="file" name="picFiles[]" multiple>
               <input type="hidden" value="${product.product_pictures}">
