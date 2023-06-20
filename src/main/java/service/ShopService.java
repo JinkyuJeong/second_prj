@@ -9,6 +9,8 @@ import dao.CartDao;
 import dao.DeliveryDao;
 import dao.MemDao;
 import dao.OptDao;
+import dao.OrderDao;
+import dao.OrderItemDao;
 import dao.ProductDao;
 import dao.QnaDao;
 import dto.Cart;
@@ -37,6 +39,12 @@ public class ShopService {
 	
 	@Autowired
 	private QnaDao qnaDao;
+	
+	@Autowired
+	private OrderDao orderDao;
+	
+	@Autowired
+	private OrderItemDao orderItemDao;
 
 	public List<Product> productList(Integer pageNum, int limit, String product_type, String searchContent) {
 		return productDao.list(pageNum, limit, product_type, searchContent);
@@ -128,6 +136,19 @@ public class ShopService {
 	}
 	public void addQnaHits(Integer qna_number) {
 		qnaDao.addQnaHits(qna_number);
+	}
+
+	public String getMaxOrderId() {
+		return orderDao.getMaxOrderId();
+	}
+
+	public boolean addOrder(String order_id, String deliver_receiver, String mem_id, String delivery_postcode,
+			String delivery_address, String delivery_detailAddress, int delivery_cost, int order_point, String phoneno, String order_msg) {
+		return orderDao.addOrder(order_id, deliver_receiver, mem_id, delivery_postcode, delivery_address, delivery_detailAddress, delivery_cost, order_point, phoneno, order_msg);
+	}
+
+	public boolean addOrderItem(String order_id, Integer opt_number, Integer product_number, String opt_count) {
+		return orderItemDao.addOrderItem(order_id, opt_number, product_number, opt_count);
 	}
 
 }

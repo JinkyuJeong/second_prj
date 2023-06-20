@@ -161,7 +161,10 @@
 </style>
 </head>
 <body>
+
 	<div class="container">
+	<form action="../order/orderConfiguration" method="POST" name="f">
+		<input type="hidden" name="order_id" value="${order_id }">
 	  <h1>주문정보</h1>      
       <div class="row">
         <div class="col-lg-6">
@@ -172,8 +175,13 @@
               <th class="align-middle">상품명</th>
               <th class="align-middle">옵션명</th>
               <th class="align-middle">수량</th>
-            </tr>
+            </tr>            
+            <c:if test="${from == 'cart' }">
             <c:forEach items="${map }" var="map">
+            <input type="hidden" name="opt_number" value="${map.value.opt_number }">
+            <input type="hidden" name="product_number" value="${map.value.product_number }">
+            <input type="hidden" name="opt_count" value="${map.key.opt_count }">
+            <input type="hidden" name="product_name" class="product_name" value="${map.value.product_name }">
             <tr>
               <td class="align-middle">
                 <div class="d-flex justify-content-center">
@@ -185,6 +193,25 @@
               <td class="align-middle">${map.key.opt_count }</td>
             </tr>
             </c:forEach>
+            </c:if>
+            <c:if test="${from != 'cart' }">
+            <c:forEach items="${povList }" var="pov">
+            <input type="hidden" name="opt_number" value="${pov.key.opt_number }">
+            <input type="hidden" name="product_number" value="${pov.key.product_number }">
+            <input type="hidden" name="opt_count" value="${pov.value }">
+            <input type="hidden" name="product_name" class="product_name" value="${pov.key.product_name }">
+            <tr>
+              <td class="align-middle">
+                <div class="d-flex justify-content-center">
+                  <img src="${path }/img/thumb/${pov.key.product_thumb }" style="width:100px;height:100px;">
+                </div>
+              </td>
+              <td class="align-middle">${pov.key.product_name }</td>
+              <td class="align-middle">${pov.key.opt_name }</td>
+              <td class="align-middle">${pov.value }</td>
+            </tr>
+            </c:forEach>
+            </c:if>
           </table>
         </div>
       </div>
@@ -192,17 +219,16 @@
       <div class="row mt-4">
         <div class="col-lg-6">
           <hr>
-          <form>
             <div class="mb-3 row">
               <label for="namex" class="col-sm-2 col-form-label">주문자</label>
               <div class="col-sm-3">
-                <input type="text" class="form-control" id="name" value="${mem.mem_name }" readonly> 
+                <input type="text" class="form-control" id="name" name="mem_name" value="${mem.mem_name }" readonly> 
               </div>
             </div>
 
             <div class="mb-3 row">
               <label for="phone1" class="col-sm-2 col-form-label">연락처</label>
-              <input type="hidden" name="phoneNo" value="${mem.mem_phoneno }">
+              <input type="hidden" name="mem_phoneno" value="${mem.mem_phoneno }">
               <div class="col-sm-10">
                 <div class="row">
                   <div class="col-sm-3">
@@ -223,7 +249,7 @@
             <div class="mb-3 row">
               <label for="name" class="col-sm-2 col-form-label">이메일</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="email" value="${mem.mem_id }" readonly>
+                <input type="text" class="form-control" id="email" value="${mem.mem_id }" name="mem_id" readonly>
               </div>
             </div>
 
@@ -278,7 +304,7 @@
                 <div class="mb-1">
                   <label for="name" class="form-label">주소 &nbsp;&nbsp;</label>
                   <div class="input-group">
-                    <input type="text" class="form-control" id="sample6_postcode" placeholder="우편번호">
+                    <input type="text" class="form-control" name="delivery_postcode" id="sample6_postcode" placeholder="우편번호">
                     <input type="button" class="btn btn-light " id="searchPostcode" value="우편번호 찾기"><br>                  
                   </div>
                 </div>                
@@ -288,7 +314,7 @@
               <label for="name" class="col-sm-2 col-form-label"></label>
               <div class="col-sm-10">
                 <div class="mb-1">
-                  <input type="text" class="form-control" id="sample6_address" placeholder="주소"><br>
+                  <input type="text" class="form-control" name="delivery_address" id="sample6_address" placeholder="주소"><br>
                 </div>
               </div>
             </div>
@@ -296,7 +322,7 @@
               <label for="name" class="col-sm-2 col-form-label"></label>
               <div class="col-sm-10">
                 <div class="mb-1">
-                  <input type="text" class="form-control" id="sample6_detailAddress" placeholder="상세주소">
+                  <input type="text" class="form-control" name="delivery_detailAddress" id="sample6_detailAddress" placeholder="상세주소">
                 </div>
               </div>
             </div>
@@ -332,21 +358,20 @@
             </div>
             
             <div class="mb-3 row">
-              <label for="shippingMsg" class="col-sm-2 col-form-label">배송요청사항 </label>
+              <label for="shippingMsg" class="col-sm-2 col-form-label" >배송요청사항 </label>
               <div class="col-sm-10">
-                <select id="shippingMsg" class="form-select">
+                <select id="shippingMsg" name="order_msg" class="form-select" required="required">
                   <option value="optionNotSelected" disabled selected>배송요청사항을 선택해주세요.</option>
-                  <option value="1">빠른 배송 부탁드립니다.</option>
-                  <option value="2">배송 전, 연락주세요.</option>
-                  <option value="3">부재 시, 휴대폰으로 연락주세요.</option>
-                  <option value="4">부재 시, 경비실에 맡겨주세요.</option>
-                  <option value="5">경비실이 없습니다. 배송 전, 연락주세요.</option>
+                  <option value="빠른 배송 부탁드립니다.">빠른 배송 부탁드립니다.</option>
+                  <option value="배송 전, 연락주세요.">배송 전, 연락주세요.</option>
+                  <option value="부재 시, 휴대폰으로 연락주세요.">부재 시, 휴대폰으로 연락주세요.</option>
+                  <option value="부재 시, 경비실에 맡겨주세요.">부재 시, 경비실에 맡겨주세요.</option>
+                  <option value="경비실이 없습니다. 배송 전, 연락주세요.">경비실이 없습니다. 배송 전, 연락주세요.</option>
                   <option value="직접입력">직접입력</option>
                 </select>
-                <input type="text" id="selfType" class="form-control mt-2" style="display: none;" placeholder="배송요청사항 직접 입력">
+                <input type="text" name="order_msgSelf" id="selfType" class="form-control mt-2" style="display: none;" placeholder="배송요청사항 직접 입력">
               </div>
-            </div>
-          </form>         
+            </div>        
         </div>
 
         <div class="col-lg-4 sticky-card">
@@ -357,17 +382,60 @@
                 <hr>
                 <p class="card-text">주문금액: <fmt:formatNumber value="${total}" pattern=",###"/>원</p>
                 <p class="card-text">할인: <fmt:formatNumber value="${discounted }" pattern=",###"/>원</p>
-                <p class="card-text">최종 결제 금액: <fmt:formatNumber value="${total - discounted }" pattern=",###"/>원</p>
+                <p class="card-text" id="final-payment-amount">최종 결제 금액: <fmt:formatNumber value="${total - discounted }" pattern=",###"/>원</p>
+                <input type="hidden" id="final_amount" value="${total - discounted }">
               </div>
             </div>
           </div>
           <div class="mt-3">
-            <button type="button" class="btn-danger btn-lg" style="width:100%"><fmt:formatNumber value="${total - discounted }" pattern=",###"/>원 결제하기</button>
+            <button type="button" class="btn-danger btn-lg" id="payBtn" style="width:100%" onclick="javascript:payment()"><fmt:formatNumber value="${total - discounted }" pattern=",###"/>원 결제하기</button>
           </div>
         </div>
       </div>
-      		
-        <h1 class="mt-5">환불정보</h1>
+      </form>	
+      </div>
+      <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+      <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+      <script>
+      			let IMP = window.IMP
+      		  	IMP.init("imp03400706");
+      			
+      			function payment() {      				
+      				$.ajax({
+      				  url: "payment",
+      				  data: {product_name : $(".product_name").val() , final_amount : $("#final_amount").val()},
+      				  success: function(json) {
+      				    iamPay(json);
+      				  }
+      				});
+      			}
+      			
+      			function iamPay(json) {
+      				IMP.request_pay({
+      					pg : "html5_inicis",  
+      					pay_method : "card", 
+      					merchant_uid : json.merchant_uid, //주문번호 : 주문별로 유일한 값이 필요. userid-session id 값으로 설정(내맘대로 설정)
+      					name : json.name, //주문상품명. 사과 외 n개
+      					amount : json.amount, //주문금액(합계)
+      					buyer_email : json.buyer_email, //결제내역 메일 전송(주문자 이메일)
+      				    buyer_name : json.buyer_name,
+      				    buyer_tel : json.buyer_tel
+      				}, function(rsp) {
+      					if(rsp.success) { 
+/*      						var msg = '결제가 완료되었습니다.';
+  					        msg += '고유ID : ' + rsp.imp_uid;
+  					        msg += '상점 거래ID : ' + rsp.merchant_uid;
+  					        msg += '결제 금액 : ' + rsp.paid_amount;
+  					        msg += '카드 승인번호 : ' + rsp.apply_num;
+      						alert(msg); */
+      						document.f.submit();
+      					} else {
+      						alert("결제 시 오류 발생" + rsp.error_msg)
+      					}
+      				}) 
+      			}
+      </script>
+<!--       <h1 class="mt-5">환불정보</h1>
         <div class="row mt-4">
           <div class="col-lg-6">
           <hr>
@@ -396,10 +464,7 @@
                   <input type="text" class="form-control" id="refundAccount" required>
                 </div>
             </div>
-          </form>
-        </div>
-      </div>
-      </div>
-    </div>
+              --> 
+        
 </body>
 </html>
