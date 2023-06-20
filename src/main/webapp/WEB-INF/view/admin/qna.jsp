@@ -34,11 +34,11 @@
 		
 		let listHtml = "<div id='info' class='mb-1'><h4>총 <span class='text-danger'>" + json.qnaCnt + "</span>개</h4>";
 		listHtml += "<div class='btn-group btn-group-sm' role='group'>";
-		listHtml += "<button type='button' onclick='getQnaList()' class='btn " + (type == '' ? 'btn-secondary' : 'btn-outline-secondary') + "'>전체</button>";
-		listHtml += "<button type='button' onclick='getQnaList(\"제품\")' class='btn " + (type == '제품' ? 'btn-secondary' : 'btn-outline-secondary') + "'>제품</button>";
-		listHtml += "<button type='button' onclick='getQnaList(\"결제\")' class='btn " + (type == '결제' ? 'btn-secondary' : 'btn-outline-secondary') + "'>결제</button>";
-		listHtml += "<button type='button' onclick='getQnaList(\"배송\")' class='btn " + (type == '배송' ? 'btn-secondary' : 'btn-outline-secondary') + "'>배송</button>";
-		listHtml += "<button type='button' onclick='getQnaList(\"이벤트\")' class='btn " + (type == '이벤트' ? 'btn-secondary' : 'btn-outline-secondary') + "'>이벤트</button>";
+		listHtml += "<button type='button' onclick='getQnaList()' class='btn " + (type == '' ? 'btn-dark' : 'btn-outline-dark') + "'>전체</button>";
+		listHtml += "<button type='button' onclick='getQnaList(\"제품\")' class='btn " + (type == '제품' ? 'btn-dark' : 'btn-outline-dark') + "'>제품</button>";
+		listHtml += "<button type='button' onclick='getQnaList(\"결제\")' class='btn " + (type == '결제' ? 'btn-dark' : 'btn-outline-dark') + "'>결제</button>";
+		listHtml += "<button type='button' onclick='getQnaList(\"배송\")' class='btn " + (type == '배송' ? 'btn-dark' : 'btn-outline-dark') + "'>배송</button>";
+		listHtml += "<button type='button' onclick='getQnaList(\"이벤트\")' class='btn " + (type == '이벤트' ? 'btn-dark' : 'btn-outline-dark') + "'>이벤트</button>";
 		listHtml += "</div></div>";
 		
 		listHtml += "<input type='hidden' value='"+(type == '' ? '전체' : type)+"' id='type'/>";

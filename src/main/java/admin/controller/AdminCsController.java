@@ -20,7 +20,7 @@ public class AdminCsController {
 	private AdminManageService service;
 	
 	@RequestMapping("csList")
-	public ModelAndView adminCsList(Integer pageNum, String sd, String ed, HttpSession session) {
+	public ModelAndView adminCsList(Integer pageNum, String sd, String ed, String query, String cs_state, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		
 		if(pageNum == null || pageNum.toString().equals("")) {
@@ -29,11 +29,17 @@ public class AdminCsController {
 	    if (sd == null || sd.equals("")) {
 	    	sd = "";
 	    }
-	    if (ed != null && ed.equals("")) {
+	    if (ed == null || ed.equals("")) {
 	    	ed="";
 	    }
+	    if (query == null || query.equals("")) {
+	    	query="";
+	    }
+	    if (cs_state == null || cs_state.equals("")) {
+	    	cs_state="";
+	    }
 		
-		int csCnt = service.csCnt(sd, ed);
+		int csCnt = service.csCnt(sd, ed, query, cs_state);
 		
 		int limit = 10;
 		int maxPage = (int)((double)csCnt/limit +0.95);
@@ -41,7 +47,7 @@ public class AdminCsController {
 		int endPage = startPage + 4;
 		if(endPage > maxPage) endPage = maxPage;
 		
-		List<Cs> csList =service.getCsList(pageNum, sd, ed);
+		List<Cs> csList =service.getCsList(pageNum, sd, ed, query, cs_state);
 		
 		mv.addObject("csList", csList);
 		mv.addObject("csCnt", csCnt);
@@ -51,6 +57,7 @@ public class AdminCsController {
 		mv.addObject("maxPage", maxPage);
 		mv.addObject("sd", sd);
 		mv.addObject("ed", ed);
+		mv.addObject("cs_state", cs_state);
 		return mv;
 	}
 }

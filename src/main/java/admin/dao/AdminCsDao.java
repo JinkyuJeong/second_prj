@@ -19,20 +19,26 @@ public class AdminCsDao {
 	private Map<String, Object> param = new HashMap<>();
 	private final Class<AdminCsMapper> cls = AdminCsMapper.class;
 	
-	public int csCnt(String sd, String ed) {
+	public int csCnt(String sd, String ed, String query, String cs_state) {
 		param.clear();
 		param.put("sd", sd);
 		param.put("ed", ed);
+		param.put("query", query);
+		param.put("cs_state", cs_state);
 		
 		return template.getMapper(cls).csCnt(param);
 	}
 
-	public List<Cs> getCsList(Integer pageNum, String sd, String ed) {
+	public List<Cs> getCsList(Integer pageNum, String sd, String ed, String query, String cs_state) {
 		param.clear();
 		param.put("sd", sd);
 		param.put("ed", ed);
+		param.put("query", query);
+		param.put("cs_state", cs_state);
 		param.put("start", (pageNum -1) * 10);
 		param.put("limit", 10);
+		
+		System.out.println("sd : " + sd +", ed : " + ed);
 		
 		return template.getMapper(cls).getCsList(param);
 	}

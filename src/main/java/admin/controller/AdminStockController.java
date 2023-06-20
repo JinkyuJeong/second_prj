@@ -58,7 +58,7 @@ public class AdminStockController {
 	    if (sd == null || sd.equals("")) {
 	    	sd = "";
 	    }
-	    if (ed != null && ed.equals("")) {
+	    if (ed == null || ed.equals("")) {
 	    	ed="";
 	    }
 		

@@ -103,12 +103,12 @@ public class AdminManageService {
 		return memDao.memDel(mem_number);
 	}
 
-	public int csCnt(String sd, String ed) {
-		return csDao.csCnt(sd, ed);
+	public int csCnt(String sd, String ed, String query, String cs_state) {
+		return csDao.csCnt(sd, ed, query, cs_state);
 	}
 
-	public List<Cs> getCsList(Integer pageNum, String sd, String ed) {
-		return csDao.getCsList(pageNum, sd, ed);
+	public List<Cs> getCsList(Integer pageNum, String sd, String ed, String query, String cs_state) {
+		return csDao.getCsList(pageNum, sd, ed, query, cs_state);
 	}
 
 }
