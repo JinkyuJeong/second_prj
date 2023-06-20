@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import dao.CartDao;
+import dao.CsDao;
 import dao.DeliveryDao;
 import dao.MemDao;
 import dao.OptDao;
@@ -14,6 +15,7 @@ import dao.OrderItemDao;
 import dao.ProductDao;
 import dao.QnaDao;
 import dto.Cart;
+import dto.Cs;
 import dto.Delivery;
 import dto.Mem;
 import dto.Opt;
@@ -41,10 +43,14 @@ public class ShopService {
 	private QnaDao qnaDao;
 	
 	@Autowired
+	private CsDao csDao;
+	
+	@Autowired
 	private OrderDao orderDao;
 	
 	@Autowired
 	private OrderItemDao orderItemDao;
+	
 
 	public List<Product> productList(Integer pageNum, int limit, String product_type, String searchContent) {
 		return productDao.list(pageNum, limit, product_type, searchContent);
@@ -149,6 +155,10 @@ public class ShopService {
 
 	public boolean addOrderItem(String order_id, Integer opt_number, Integer product_number, String opt_count) {
 		return orderItemDao.addOrderItem(order_id, opt_number, product_number, opt_count);
+	}
+
+	public boolean csReg(Cs cs) {
+		return csDao.csReg(cs);
 	}
 
 }

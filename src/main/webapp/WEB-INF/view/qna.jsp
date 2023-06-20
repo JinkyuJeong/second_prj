@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="path" value="${pageContext.request.contextPath}" /> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,7 +38,7 @@
   
   .w3-bar-block {
     border-radius: 8px; /* 꼭짓점을 둥글게 설정 */
-    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.4); /* 그림자 효과 설정 */
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3); /* 그림자 효과 설정 */
   }
   
   .content{
@@ -46,6 +48,10 @@
   	text-align: left;
   	margin-left: 70px;
   	margin-right: 50px;
+  }
+  .cc{
+  	color : white;
+  	font-size : 16px;
   }
 </style>
 <script type="text/javascript">
@@ -173,29 +179,24 @@
 <body>
 	<br><br>
 	<div class="container-sm pt-1">
-		
 		<div style="display:flex;">
-		
 			<div style="flex-basis: 20%; margin-top : 100px;">
 				<nav class="w3-bar-block w3-red p-3">
 				  <div id="customer" class="w3-large w3-center" style="font-weight:bold">
 				  	<h2><i class="fa fa-question-circle" aria-hidden="true"></i> 고객센터</h2><br>
 				  	<p>
-				    <a href="#" id="q" class="btn">· 자주하는 질문</a><br>
-				    <a href="#" class="btn">· 1:1 문의</a>
+				    <a href="${path }/qna" id="q" class="btn cc">· 자주 묻는 질문</a><br>
+				    <a href="${path }/cs" class="btn cc">· 1:1 문의</a>
 				  </div>
 				</nav>
 			</div>
 			<div style="flex-basis: 5%">&nbsp;</div>
 			<div style="flex-basis: 75%; margin-right: 100px">
-				<h2 ><i class="fa fa-caret-square-o-right text-danger" aria-hidden="true"></i> 자주하는 질문</h2>
+				<h2 ><i class="fa fa-caret-square-o-right text-danger" aria-hidden="true"></i> 자주 묻는 질문</h2>
 				<p class="mb-3">고객님들께서 자주 궁금해 하시는 질문들을 모아놓은 곳입니다.</p>
 				<div id="view"></div>
 			</div>
-			
-			
 		</div>
-
 	</div>
 </body>
 </html>

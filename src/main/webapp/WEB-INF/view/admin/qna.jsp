@@ -278,8 +278,8 @@
 <body>
 	<br><br>
 	<div class="container w3-white pt-1">
-		<h3><i class="fa fa-caret-square-o-right text-primary" aria-hidden="true"></i> 자주하는 질문</h3>
-		<p class="mb-3">자주하는 질문을 관리하는 페이지 입니다.</p>
+		<h3><i class="fa fa-caret-square-o-right text-primary" aria-hidden="true"></i> 자주 묻는 질문</h3>
+		<p class="mb-3">자주 묻는 질문을 관리하는 페이지 입니다.</p>
 
 		<div id="view"></div>
 		<div id="regForm" style="display: none;">

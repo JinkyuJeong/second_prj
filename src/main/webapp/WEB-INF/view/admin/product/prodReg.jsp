@@ -122,10 +122,9 @@
             <td width="15%" class="table-secondary text-center">카테고리</td>
             <td width="35%">
               <select class="form-select" name="product_type">
-                <option value="1" selected>카테고리1</option>
-                <option value="2">카테고리2</option>
-                <option value="3">카테고리3</option>
-                <option value="4">카테고리3</option>
+                <option value="1" selected>덤벨, 바벨, 원판</option>
+                <option value="2">머신</option>
+                <option value="3">보조용품</option>
               </select>
             </td>
           </tr>
