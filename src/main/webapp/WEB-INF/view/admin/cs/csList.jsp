@@ -25,7 +25,7 @@
       	<form action="csList">
 	        <div style="display: flex;justify-content: space-between;border-bottom: 2px solid black;margin-bottom: 10px;">
 	          <h4 style="margin-top: 25px;">총 <span class="text-danger">${csCnt }</span>개</h4>
-	          <div class="input-group p-3" style="width: 70%;">
+	          <div class="input-group p-3" style="width: 50%;">
 						  <input type="date" name="sd" value="${sd}" class="form-control mr-3">
 						  <div class="input-group-prepend">
 						    <span class="input-group-text">부터</span>

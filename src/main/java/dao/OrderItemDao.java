@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import dao.mapper.OrderItemMapper;
+import dto.OrderItem;
 
 @Repository
 public class OrderItemDao {
@@ -23,5 +24,9 @@ public class OrderItemDao {
 		param.put("product_number", product_number);
 		param.put("opt_count", opt_count);
 		return template.getMapper(cls).addOrderItem(param);
+	}
+
+	public OrderItem getOrderItemList(String order_id) {
+		return template.getMapper(cls).getOrderItemList(order_id);
 	}
 }

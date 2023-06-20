@@ -18,4 +18,5 @@ public class Order {
 	private Date order_date;
 	private String order_phoneno;
 	private String order_msg;
+	private int order_totalPay;
 }

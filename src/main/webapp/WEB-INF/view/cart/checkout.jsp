@@ -25,7 +25,7 @@
   });
   </script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-  <script>
+  <script>   
   $(function() {
 	  //배송지 라디오버튼
       $('input[name="flexRadioDefault"]').change(function() {
@@ -163,7 +163,7 @@
 <body>
 
 	<div class="container">
-	<form action="../order/orderConfiguration" method="POST" name="f">
+	<form action="../order/orderConfiguration" method="POST" name="f" onsubmit="return input_check(this)">
 		<input type="hidden" name="order_id" value="${order_id }">
 	  <h1>주문정보</h1>      
       <div class="row">
@@ -259,13 +259,13 @@
                 <div class="mb-1">
                   <div class="d-flex">
                     <div class="form-check me-3">
-                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="new">
                       <label class="form-check-label" for="flexRadioDefault1">
                         신규 배송지 입력
                       </label>
                     </div>
                     <div class="form-check">
-                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="og">
                       <label class="form-check-label" for="flexRadioDefault2">
                         기존 배송지 선택
                       </label>
@@ -383,6 +383,7 @@
                 <p class="card-text">주문금액: <fmt:formatNumber value="${total}" pattern=",###"/>원</p>
                 <p class="card-text">할인: <fmt:formatNumber value="${discounted }" pattern=",###"/>원</p>
                 <p class="card-text" id="final-payment-amount">최종 결제 금액: <fmt:formatNumber value="${total - discounted }" pattern=",###"/>원</p>
+                <input type="hidden" value="${total-discounted }" name="order_totalPay">
                 <input type="hidden" id="final_amount" value="${total - discounted }">
               </div>
             </div>
@@ -397,17 +398,77 @@
       <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
       <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
       <script>
+      function input_check(f) {
+    	  if(f.flexRadioDefault.value.trim() == "") {
+    		  alert("배송지 입력방법을 선택해주세요.")
+		      return false;
+    	  }
+    	  var newDelivery = document.getElementById("flexRadioDefault1");
+    	  console.log(newDelivery.value)
+    	  var og = document.getElementById("flexRadioDefault2");
+    	  console.log(og.value)
+    	  if(newDelivery.checked && f.delivery_nickName.value.trim() == "") {
+    		  alert("배송지 별명을 입력하세요.")
+		      f.delivery_nickName.focus();
+		      return false;
+    	  } 
+    	  if(f.deliver_receiver.value.trim() == "" ){
+    		    alert("받으실 분을 입력하세요")
+    		    f.deliver_receiver.focus();
+    		    return false;
+    	  }
+    	  if(f.delivery_postcode.value.trim() == "" ){
+    		    alert("주소를 입력하세요")
+    		    f.delivery_postcode.focus();
+    		    return false;
+    	  }
+    	  if(f.delivery_address.value.trim() == "" ){
+    		    alert("주소를 입력하세요")
+    		    f.delivery_address.focus();
+    		    return false;
+    	  }
+    	  if(f.delivery_detailAddress.value.trim() == "" ){
+    		    alert("상세주소를 입력하세요")
+    		    f.delivery_detailAddress.focus();
+    		    return false;
+    	  }
+    	  if(f.receiver_phoneNo1.value.trim() == "" ){
+    		    alert("전화번호를 입력하세요")
+    		    f.receiver_phoneNo1.focus();
+    		    return false;
+    	  }
+    	  if(f.receiver_phoneNo2.value.trim() == "" ){
+    		    alert("전화번호를 입력하세요")
+    		    f.receiver_phoneNo2.focus();
+    		    return false;
+    	  }
+    	  if(f.receiver_phoneNo3.value.trim() == "" ){
+    		    alert("전화번호를 입력하세요")
+    		    f.receiver_phoneNo3.focus();
+    		    return false;
+    	  }
+    	  if(f.order_msg.value.trim() == "optionNotSelected") {
+    		  alert("배송 메세지를 선택 혹은 입력하세요.")
+  		    	f.order_msg.focus();
+  		    	return false;
+    	  }    	     	  
+    	  return true;
+      }
+      
+      //결제
       			let IMP = window.IMP
       		  	IMP.init("imp03400706");
       			
-      			function payment() {      				
-      				$.ajax({
-      				  url: "payment",
-      				  data: {product_name : $(".product_name").val() , final_amount : $("#final_amount").val()},
-      				  success: function(json) {
-      				    iamPay(json);
-      				  }
-      				});
+      			function payment() { 
+      				if(input_check(f)) {
+      					$.ajax({
+            				  url: "payment",
+            				  data: {product_name : $(".product_name").val() , final_amount : $("#final_amount").val()},
+            				  success: function(json) {
+            				    iamPay(json);
+            				  }
+            				});
+      				};      				
       			}
       			
       			function iamPay(json) {
@@ -430,7 +491,7 @@
       						alert(msg); */
       						document.f.submit();
       					} else {
-      						alert("결제 시 오류 발생" + rsp.error_msg)
+      						alert(rsp.error_msg)
       					}
       				}) 
       			}

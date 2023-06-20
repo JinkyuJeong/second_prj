@@ -42,7 +42,7 @@
           		<a class="nav-link" href="${path }/mem/join"><i class="fa fa-user-plus" aria-hidden="true"></i> 회원가입</a>
           	</c:if>
             <c:if test="${sessionScope.loginMem != null }">
-            	<a class="nav-link" href="${path }/mem/mypage?mem_id=${sessionScope.loginUser.mem_id}"><i class="fa fa-user" aria-hidden="true"></i> 마이페이지</a>
+            	<a class="nav-link" href="${path }/mypage/myInfo?mem_id=${sessionScope.loginMem.mem_id}"><i class="fa fa-user" aria-hidden="true"></i> 마이페이지</a>
             </c:if>
           </li>
           <li class="nav-item">
@@ -60,7 +60,7 @@
           <li class="nav-item dropdown" style="margin-right: 100px;">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><i class="fa fa-question-circle" aria-hidden="true"></i> 고객센터</a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="${path }/qna">자주 묻는 질문</a></li>
+              <li><a class="dropdown-item" href="${path }/qna">자주하는 질문</a></li>
               <li><a class="dropdown-item" href="${path }/cs">1:1 문의</a></li>
             </ul>
           </li>

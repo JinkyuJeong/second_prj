@@ -19,6 +19,9 @@ import dto.Cs;
 import dto.Delivery;
 import dto.Mem;
 import dto.Opt;
+import dto.Order;
+import dto.OrderItem;
+import dto.OrderView;
 import dto.Product;
 import dto.ProductOptView;
 import dto.Qna;
@@ -43,14 +46,13 @@ public class ShopService {
 	private QnaDao qnaDao;
 	
 	@Autowired
-	private CsDao csDao;
-	
-	@Autowired
 	private OrderDao orderDao;
 	
 	@Autowired
 	private OrderItemDao orderItemDao;
 	
+	@Autowired
+	private CsDao csDao;
 
 	public List<Product> productList(Integer pageNum, int limit, String product_type, String searchContent) {
 		return productDao.list(pageNum, limit, product_type, searchContent);
@@ -149,12 +151,28 @@ public class ShopService {
 	}
 
 	public boolean addOrder(String order_id, String deliver_receiver, String mem_id, String delivery_postcode,
-			String delivery_address, String delivery_detailAddress, int delivery_cost, int order_point, String phoneno, String order_msg) {
-		return orderDao.addOrder(order_id, deliver_receiver, mem_id, delivery_postcode, delivery_address, delivery_detailAddress, delivery_cost, order_point, phoneno, order_msg);
+			String delivery_address, String delivery_detailAddress, int delivery_cost, int order_point, String phoneno, String order_msg, int order_totalPay) {
+		return orderDao.addOrder(order_id, deliver_receiver, mem_id, delivery_postcode, delivery_address, delivery_detailAddress, delivery_cost, order_point, phoneno, order_msg, order_totalPay);
 	}
 
 	public boolean addOrderItem(String order_id, Integer opt_number, Integer product_number, String opt_count) {
 		return orderItemDao.addOrderItem(order_id, opt_number, product_number, opt_count);
+	}
+
+	public List<Order> getOrderList(String mem_id) {
+		return orderDao.getOrderList(mem_id);
+	}
+
+	public OrderItem getOrderItemList(String order_id) {
+		return orderItemDao.getOrderItemList(order_id);
+	}
+
+	public List<OrderView> getOv(String mem_id) {
+		return orderDao.getOv(mem_id);
+	}
+
+	public List<OrderView> getOvList(String mem_id, String order_id) {
+		return orderDao.getOvList(mem_id, order_id);
 	}
 
 	public boolean csReg(Cs cs) {

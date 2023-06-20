@@ -28,7 +28,7 @@ public class OrderController {
 	@PostMapping("orderConfiguration")
 	public ModelAndView orderConfiguration(Mem mem, String deliver_receiver, String delivery_postcode, 
 			String delivery_address, String delivery_detailAddress, String receiver_phoneNo1, 
-			String receiver_phoneNo2, String receiver_phoneNo3, String order_msg, String order_msgSelf,
+			String receiver_phoneNo2, String receiver_phoneNo3, String order_msg, String order_msgSelf, int order_totalPay, 
 			Integer[] opt_number, Integer[] product_number, String[] opt_count, ProductOptView pov, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		//배송정보
@@ -44,7 +44,7 @@ public class OrderController {
 		String orderMsg = order_msg;
 		if(order_msg.equals("직접입력")) orderMsg=order_msgSelf;
 		if(service.addOrder(order_id, deliver_receiver, mem.getMem_id(), delivery_postcode, delivery_address, delivery_detailAddress,
-				delivery_cost, order_point, phoneno, orderMsg)) {
+				delivery_cost, order_point, phoneno, orderMsg, order_totalPay)) {
 			System.out.println("주문, 결제 완료");
 		} else {
 			throw new ShopException("죄송합니다. 주문 시 오류가 발생했습니다.", "/second_prj/cart/cartAdd");

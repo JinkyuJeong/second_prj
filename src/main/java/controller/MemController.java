@@ -198,7 +198,7 @@ public class MemController {
 			if(dbMem.getMem_pw().equals(mem.getMem_pw())) {
 				session.setAttribute("loginMem", dbMem);
 				mav.addObject("userid",dbMem.getMem_id());
-				mav.setViewName("redirect:mypage");
+				mav.setViewName("redirect:/mypage/myInfo?mem_id=" + dbMem.getMem_id());
 			} else {
 				throw new ShopException("아이디 또는 비밀번호를 확인하세요.", "login");
 			}
@@ -293,7 +293,7 @@ public class MemController {
 		Mem mem = service.getMemEmail(mem_email);	
 		if(mem != null) {
 			session.setAttribute("loginMem", mem);
-			throw new ShopException("반갑습니다. " + mem.getMem_name() + "님 :)", "mypage?mem_id=" + mem.getMem_id());
+			throw new ShopException("반갑습니다. " + mem.getMem_name() + "님 :)", "/second_prj/mypage/myInfo?mem_id=" + mem.getMem_id());
 		} else {
 			mem = new Mem();
 			mem.setMem_id(mem_email);

@@ -10,4 +10,5 @@ public class Mem {
 	private String mem_channel;
 	private String mem_name;
 	private String mem_phoneno;
+	private int mem_point;
 }

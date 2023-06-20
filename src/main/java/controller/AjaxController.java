@@ -19,6 +19,7 @@ import dto.Cart;
 import dto.Delivery;
 import dto.Mem;
 import dto.Opt;
+import dto.OrderView;
 import dto.Product;
 import dto.ProductOptView;
 import exception.ShopException;
@@ -184,5 +185,13 @@ public class AjaxController {
 	public Delivery deliverySelect(@RequestParam("selectedOption") Integer selectedOption) {
 	    Delivery delivery = service.getDelivery(selectedOption);
 	    return delivery;
+	}
+	
+	@RequestMapping("orderDetail")
+	@ResponseBody
+	public List<OrderView> orderDetail(String order_id, HttpSession session) {
+		Mem mem = (Mem)session.getAttribute("loginMem");
+		List<OrderView> orderDetailList = service.getOvList(mem.getMem_id(), order_id);
+		return orderDetailList;
 	}
 }
