@@ -15,7 +15,7 @@ public interface AdminStockMapper {
 	boolean regProdStock(Stock stock);
 
 	@Select({"<script> ",
-		" select count(*) from stock  where stock_prodName like '%${value}%'",
+		" select count(*) from stock  where stock_prodName like '%${query}%'",
 		" <if test='sd != null and sd != \"\"'>",
 		"  AND stock_regdate &gt;= #{sd} ",
 		" </if>",
@@ -26,7 +26,7 @@ public interface AdminStockMapper {
 	int getStockCnt(Map<String, Object> param);
 
 	@Select({"<script> ",
-		"SELECT * FROM stock WHERE stock_prodName LIKE '%${value}%' ",
+		"SELECT * FROM stock WHERE stock_prodName LIKE '%${query}%' ",
 		" <if test='sd != null and sd != \"\"'>",
 		"  AND stock_regdate &gt;= #{sd} ",
 		" </if>",

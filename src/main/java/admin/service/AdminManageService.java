@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import admin.dao.AdminCsDao;
 import admin.dao.AdminManagerDao;
 import admin.dao.AdminMemDao;
 import admin.dao.AdminQnaDao;
+import dto.Cs;
 import dto.Delivery;
 import dto.Manager;
 import dto.Mem;
@@ -18,6 +20,8 @@ public class AdminManageService {
 	
 	@Autowired
 	private AdminQnaDao qnaDao;
+	@Autowired
+	private AdminCsDao csDao;
 	@Autowired
 	private AdminManagerDao managerDao;
 	@Autowired
@@ -97,6 +101,14 @@ public class AdminManageService {
 
 	public boolean memDel(Integer mem_number) {
 		return memDao.memDel(mem_number);
+	}
+
+	public int csCnt(String sd, String ed) {
+		return csDao.csCnt(sd, ed);
+	}
+
+	public List<Cs> getCsList(Integer pageNum, String sd, String ed) {
+		return csDao.getCsList(pageNum, sd, ed);
 	}
 
 }
