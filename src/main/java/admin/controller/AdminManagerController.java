@@ -93,6 +93,23 @@ public class AdminManagerController {
 		return map;
 	}
 	
+	@PostMapping("managerNameDup")
+	@ResponseBody
+	public Map<String, String> managerNameDup(String manager_name){
+		Map<String, String> map = new HashMap<>();
+		
+		Manager manager = service.getManager2(manager_name);
+		
+		if(manager == null) {
+			map.put("isDup", "0");
+			map.put("msg", "해당 매니저명은 사용 가능합니다.");
+		}else {
+			map.put("isDup", "1");
+			map.put("msg", "해당 매니저명은 중복입니다.");
+		}
+		return map;
+	}
+	
 	@GetMapping("managerChg")
 	public ModelAndView managerChg(String manager_id,HttpSession session) {
 		ModelAndView mv = new ModelAndView();

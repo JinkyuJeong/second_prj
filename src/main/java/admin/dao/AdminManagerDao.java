@@ -44,6 +44,12 @@ public class AdminManagerDao {
 		param.put("manager_id", manager_id);
 		return template.getMapper(cls).getManager(param);
 	}
+	
+	public Manager getManager2(String manager_name) {
+		param.clear();
+		param.put("manager_name", manager_name);
+		return template.getMapper(cls).getManager2(param);
+	}
 
 	public Manager managerLogin(String manager_id, String manager_pass) {
 		param.clear();

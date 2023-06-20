@@ -109,6 +109,31 @@
 			}
 	  })
   }
+  
+  function nameDupChk(){
+	  const inputName = $("#manager_name").val();
+	  
+	  $.ajax({
+		  url : "managerNameDup?manager_name=" + inputName,
+			type : "POST",
+			success : function(data){
+				// data = { "isDup" : 1(중복), "msg" : "중복입니다."}
+				if (data.isDup == 1) {
+	        $("#isDupName").val("1");
+	        $("#nameDupMsg").text(data.msg);
+	        $("#nameDupMsg").addClass("text-danger");
+	        $("#manager_name").addClass("is-invalid");
+	        $("#manager_name").removeClass("is-valid");
+	      } else {
+	        $("#isDupName").val("0");
+	        $("#nameDupMsg").text("");
+	        $("#nameDupMsg").removeClass("text-danger");
+	        $("#manager_name").removeClass("is-invalid");
+	        $("#manager_name").addClass("is-valid");
+	      }
+			}
+	  })
+  }
 </script>
 </head>
 <body>
@@ -138,8 +163,9 @@
 
           <label class="mb-1" for="manager_name">이름<span class="text-danger">*</span></label>
           <div class="mb-4">
-            <input placeholder="이름" type="text" name="manager_name" class="form-control" required maxlength="10">
-            <span></span>
+            <input placeholder="이름" type="text" id="manager_name" name="manager_name" class="form-control" required maxlength="10" onkeyup="nameDupChk()">
+            <input type="hidden" id="isDupName" value="0">
+            <span id="nameDupMsg"></span>
           </div>
 
           <label class="mb-1" for="manager_birth">생년월일<span class="text-danger">*</span></label>

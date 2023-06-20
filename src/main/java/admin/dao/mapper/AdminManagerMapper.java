@@ -34,6 +34,9 @@ public interface AdminManagerMapper {
 		" <if test='manager_pass != null'> and manager_pass = #{manager_pass} </if> ",
 		" </script>"})
 	Manager getManager(Map<String, Object> param);
+	
+	@Select("select * from manager where manager_name=#{manager_name}")
+	Manager getManager2(Map<String, Object> param);
 
 	@Update("update manager set manager_pass=#{manager_pass}, manager_name=#{manager_name}, manager_birth=#{manager_birth}, manager_grant=#{manager_grant} "
 			+ " where manager_number=#{manager_number}")

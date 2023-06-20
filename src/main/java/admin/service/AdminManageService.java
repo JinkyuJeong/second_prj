@@ -70,6 +70,10 @@ public class AdminManageService {
 	public Manager getManager(String manager_id) {
 		return managerDao.getManager(manager_id);
 	}
+	
+	public Manager getManager2(String manager_name) {
+		return managerDao.getManager2(manager_name);
+	}
 
 	public Manager managerLogin(String manager_id, String manager_pass) {
 		return managerDao.managerLogin(manager_id, manager_pass);
@@ -110,5 +114,6 @@ public class AdminManageService {
 	public List<Cs> getCsList(Integer pageNum, String sd, String ed, String query, String cs_state) {
 		return csDao.getCsList(pageNum, sd, ed, query, cs_state);
 	}
+
 
 }
