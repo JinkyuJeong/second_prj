@@ -115,5 +115,13 @@ public class AdminManageService {
 		return csDao.getCsList(pageNum, sd, ed, query, cs_state);
 	}
 
+	public Cs getCs(Integer cs_number) {
+		return csDao.getCs(cs_number);
+	}
+
+	public boolean csReply(Cs cs) {
+		return csDao.csReply(cs);
+	}
+
 
 }

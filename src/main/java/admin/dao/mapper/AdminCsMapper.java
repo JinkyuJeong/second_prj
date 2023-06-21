@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import dto.Cs;
 
@@ -38,6 +39,12 @@ public interface AdminCsMapper {
 		"</script>"
 	})	
 	List<Cs> getCsList(Map<String, Object> param);
+
+	@Select("select * from cs where cs_number = #{value}")
+	Cs getCs(Integer cs_number);
+
+	@Update("update cs set manager_name=#{manager_name}, cs_aContent=#{cs_aContent}, cs_adate=now(), cs_state='답변완료' where cs_number=#{cs_number}")
+	boolean csReply(Cs cs);
 
 	
 }

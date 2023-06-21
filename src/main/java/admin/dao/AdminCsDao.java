@@ -42,4 +42,12 @@ public class AdminCsDao {
 		
 		return template.getMapper(cls).getCsList(param);
 	}
+
+	public Cs getCs(Integer cs_number) {
+		return template.getMapper(cls).getCs(cs_number);
+	}
+
+	public boolean csReply(Cs cs) {
+		return template.getMapper(cls).csReply(cs);
+	}
 }

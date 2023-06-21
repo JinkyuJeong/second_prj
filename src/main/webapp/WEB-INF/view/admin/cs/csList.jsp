@@ -9,21 +9,13 @@
 <meta charset="UTF-8">
 <title>호미짐 관리자</title>
 <style type="text/css">
-	#tr{
+	#tr, .purple, .btn-outline-custom-purple:hover {
 		background-color: purple;
 		color : white;
-	}
-	.purple {
-		background-color: purple
 	}
 	.btn-outline-custom-purple {
 	  color: purple;
 	  border-color: purple;
-	}
-	
-	.btn-outline-custom-purple:hover {
-	  color: white;
-	  background-color: purple;
 	}
 	
 	.active-purple{
@@ -85,8 +77,8 @@
 			          <tr>
 			            <td>${cs.cs_number }</td>
 			            <td>${cs.mem_id }</td>
-			            <td>${cs.cs_qContent }</td>
-			            <td>${empty cs.manager_name? '미정' : 'cs.manager_name'}</td>
+			            <td>${fn:length(cs.cs_qContent) > 30 ? fn:substring(cs.cs_qContent, 0, 30) + '...' : cs.cs_qContent}</td>
+			            <td>${empty cs.manager_name? '미정' : cs.manager_name}</td>
 			            <td>
 			            	${cs.cs_state} <br>
 			            	<c:if test="${cs.cs_state eq '답변대기' }">
