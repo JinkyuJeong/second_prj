@@ -3,6 +3,7 @@ package admin.dao.mapper;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -45,6 +46,9 @@ public interface AdminCsMapper {
 
 	@Update("update cs set manager_name=#{manager_name}, cs_aContent=#{cs_aContent}, cs_adate=now(), cs_state='답변완료' where cs_number=#{cs_number}")
 	boolean csReply(Cs cs);
+
+	@Delete("delete from cs where cs_number=#{cs_number}")
+	boolean csDel(Integer cs_number);
 
 	
 }

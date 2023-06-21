@@ -51,6 +51,9 @@ function inputChk(form) {
           <button id="loginBtn" type="submit" class="btn btn-dark w-100 mb-3">로그인</button>
         </div>
         
+        <div class="mt-5 text-center">
+					<a class="btn btn-outline-dark" href="${path }/">호미짐 바로가기</a>
+        </div>
       </div>
       
     </form>

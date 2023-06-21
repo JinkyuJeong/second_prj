@@ -12,8 +12,8 @@
 <body>
 	<br><br>
     <div class="container w3-white pt-1" style="width:50%">
-      <h3><i class="fa fa-caret-square-o-right text-primary" aria-hidden="true"></i> 1:1 문의 답변</h3>
-      <p class="mb-3">1:1 문의를 답변하는 페이지 입니다.</p>
+      <h3><i class="fa fa-caret-square-o-right text-primary" aria-hidden="true"></i> 1:1 문의 상세</h3>
+      <p class="mb-3">1:1 문의 상세 페이지 입니다.</p>
 
       <form action="csDel" method="post">
       	<input type="hidden" name="cs_number" value="${cs.cs_number }">

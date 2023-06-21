@@ -123,5 +123,9 @@ public class AdminManageService {
 		return csDao.csReply(cs);
 	}
 
+	public boolean csDel(Integer cs_number) {
+		return csDao.csDel(cs_number);
+	}
+
 
 }

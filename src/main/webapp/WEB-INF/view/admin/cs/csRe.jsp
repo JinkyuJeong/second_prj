@@ -21,7 +21,7 @@
         <div class="form-group">
           <label class="mb-1">회원 아이디</label>
           <div class="mb-4">
-            <input name="manager_id" type="text" class="form-control" value="${cs.mem_id }" readonly>
+            <input name="mem_id" type="text" class="form-control" value="${cs.mem_id }" readonly>
           </div>
 
           <label class="mb-1" >문의 날짜</label>

@@ -38,8 +38,6 @@ public class AdminCsDao {
 		param.put("start", (pageNum -1) * 10);
 		param.put("limit", 10);
 		
-		System.out.println("sd : " + sd +", ed : " + ed);
-		
 		return template.getMapper(cls).getCsList(param);
 	}
 
@@ -49,5 +47,9 @@ public class AdminCsDao {
 
 	public boolean csReply(Cs cs) {
 		return template.getMapper(cls).csReply(cs);
+	}
+
+	public boolean csDel(Integer cs_number) {
+		return template.getMapper(cls).csDel(cs_number);
 	}
 }
