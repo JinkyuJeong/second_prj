@@ -117,9 +117,9 @@
       <form:form modelAttribute="product" action="reg" method="post" name="f" onsubmit="return inputChk(this)" enctype="multipart/form-data">
         <table class="table align-middle">
           <tr>
-            <td width="15%" class="table-secondary text-center">제품명</td>
+            <td width="15%" class="table-secondary text-center">제품명<span class="text-danger">*</span></td>
             <td width="35%"><input type="text" name="product_name" class="form-control" placeholder="제품명을 입력하세요."></td>
-            <td width="15%" class="table-secondary text-center">카테고리</td>
+            <td width="15%" class="table-secondary text-center">카테고리<span class="text-danger">*</span></td>
             <td width="35%">
               <select class="form-select" name="product_type">
                 <option value="1" selected>덤벨, 바벨, 원판</option>
@@ -129,7 +129,7 @@
             </td>
           </tr>
           <tr>
-            <td class="table-secondary text-center">가격</td>
+            <td class="table-secondary text-center">가격<span class="text-danger">*</span></td>
             <td colspan="3">
               <input type="text" id="price" onkeyup="validPrice()" name="product_price" class="form-control" placeholder="가격을 입력하세요."><span class="mt-1" id="priceMsg">&nbsp;</span>
               <input type="hidden" value="0" id="isPriceValid">
@@ -152,7 +152,7 @@
             </td>
           </tr>
           <tr>
-            <td class="table-secondary text-center">제품 설명</td>
+            <td class="table-secondary text-center">제품 설명<span class="text-danger">*</span></td>
             <td colspan="3">
               <textarea rows="15" name="product_desc" class="form-control" id="desc"></textarea>
             </td>
@@ -178,7 +178,7 @@
             </script>
           </tr>
           <tr>
-            <td class="table-secondary text-center">제품 썸네일</td>
+            <td class="table-secondary text-center">제품 썸네일<span class="text-danger">*</span></td>
             <td colspan="3">
               <input class="form-control mb-3" type="file" name="thumbFile" id="productThumbInput">
               <img id="thumbPreview" src="" style="max-width: 300px; display: none;">
@@ -187,7 +187,7 @@
             </td>
           </tr>
           <tr>
-            <td class="table-secondary text-center">제품 사진</td>
+            <td class="table-secondary text-center">제품 사진<span class="text-danger">*</span></td>
             <td colspan="3" >
               <input class="form-control" type="file" name="picFiles[]" multiple required="required">
             </td>

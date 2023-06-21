@@ -5,9 +5,11 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import dto.Delivery;
 import dto.Mem;
+import dto.Point;
 
 public interface AdminMemMapper {
 
@@ -20,10 +22,20 @@ public interface AdminMemMapper {
 	@Select("select * from mem where mem_number=#{value}")
 	Mem getMem(Integer mem_number);
 
+	@Select("select * from mem where mem_id=#{value}")
+	Mem getMemId(String mem_id);
+	
 	@Select("select * from delivery where mem_id=#{value}")
 	List<Delivery> getDelList(String mem_id);
 
 	@Delete("delete from mem where mem_number=#{value}")
 	boolean memDel(Integer mem_number);
 
+	@Update("update mem set mem_point = mem_point+#{point_value} where mem_id=#{mem_id}")
+	boolean pointChg(Point point);
+
+	@Update("update mem set mem_point = #{point} where mem_id=#{mem_id}")
+	boolean setPointZero(Map<String, Object> param);
+
+	
 }

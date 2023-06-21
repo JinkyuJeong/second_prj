@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import admin.dao.mapper.AdminMemMapper;
 import dto.Delivery;
 import dto.Mem;
+import dto.Point;
 
 @Repository
 public class AdminMemDao {
@@ -37,10 +38,23 @@ public class AdminMemDao {
 	public Mem getMem(Integer mem_number) {
 		return template.getMapper(cls).getMem(mem_number);
 	}
+	public Mem getMemId(String mem_id) {
+		return template.getMapper(cls).getMemId(mem_id);
+	}
 	public List<Delivery> getDelList(String mem_id) {
 		return template.getMapper(cls).getDelList(mem_id);
 	}
 	public boolean memDel(Integer mem_number) {
 		return template.getMapper(cls).memDel(mem_number);
+	}
+	public boolean pointChg(Point point) {
+		return template.getMapper(cls).pointChg(point);
+	}
+	public boolean setPointZero(int point, String mem_id) {
+		param.clear();
+		param.put("point", point);
+		param.put("mem_id", mem_id);
+		
+		return template.getMapper(cls).setPointZero(param);
 	}
 }

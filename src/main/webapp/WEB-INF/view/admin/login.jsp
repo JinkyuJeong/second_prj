@@ -39,7 +39,7 @@ function inputChk(form) {
 <body class="w3-light-grey">
     <form action="login" name="f" method="post" onsubmit="return inputChk(this)">
 
-      <div class="container p-5 w3-white mt-5" style="width: 40%; border-radius: 2em;">
+      <div class="container p-5 w3-white mt-5" style="width: 30%; border-radius: 2em;">
         <h1 class="text-center mb-5">관리자 로그인</h1>
         
         <div class="form-group">

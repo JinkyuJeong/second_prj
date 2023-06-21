@@ -49,28 +49,30 @@
 		            	${manager.manager_id }
 		            	<br>
 		            	<a class="btn btn-sm btn-dark" href="managerChg?manager_id=${manager.manager_id}">정보수정</a>
-		            	<c:if test="${manager.manager_grant ne '총괄'}">
-		            		<form action="managerDel" method="post" style="display:inline-block;">
-		            			<input type="hidden" name="manager_number" value="${manager.manager_number}">
-			            		<a type="button" class="btn btn-sm btn-dark" data-bs-toggle="modal" data-bs-target="#staticBackdrop${manager.manager_number }">탈퇴</a>
-																		
-											<%-- Modal --%>
-											<div class="modal fade" id="staticBackdrop${manager.manager_number }" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-											  <div class="modal-dialog">
-											    <div class="modal-content">
-											      <div class="modal-header">
-											        <h5 class="modal-title" id="staticBackdropLabel">호미짐 관리자</h5>
-											        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-											      </div> 
-											      <div class="modal-body">해당 매니저를 탈퇴 처리 하시겠습니까?</div>
-											      <div class="modal-footer">
-											        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-											        <button type="submit" class="btn btn-dark">탈퇴</button>
-											      </div>
-											    </div>
-											  </div>
-											</div>
-										</form>
+		            	<c:if test="${sessionScope.loginManager.manager_grant eq '총괄'}">
+			            	<c:if test="${manager.manager_grant ne '총괄'}">
+			            		<form action="managerDel" method="post" style="display:inline-block;">
+			            			<input type="hidden" name="manager_number" value="${manager.manager_number}">
+				            		<a type="button" class="btn btn-sm btn-dark" data-bs-toggle="modal" data-bs-target="#staticBackdrop${manager.manager_number }">탈퇴</a>
+																			
+												<%-- Modal --%>
+												<div class="modal fade" id="staticBackdrop${manager.manager_number }" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+												  <div class="modal-dialog">
+												    <div class="modal-content">
+												      <div class="modal-header">
+												        <h5 class="modal-title" id="staticBackdropLabel">호미짐 관리자</h5>
+												        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+												      </div> 
+												      <div class="modal-body">해당 매니저를 탈퇴 처리 하시겠습니까?</div>
+												      <div class="modal-footer">
+												        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+												        <button type="submit" class="btn btn-dark">탈퇴</button>
+												      </div>
+												    </div>
+												  </div>
+												</div>
+											</form>
+			            	</c:if>
 		            	</c:if>
 		            	
 		            </td>

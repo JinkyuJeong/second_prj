@@ -64,11 +64,11 @@
 	          <td class="text-center"><img src="${path }/img/thumb/${product.product_thumb }" width="200" height="130"></td>
           </tr>
           <tr>
-            <td class="table-primary text-center">옵션명</td>
+            <td class="table-primary text-center">옵션명<span class="text-danger">*</span></td>
             <td><input type="text" name="opt_name" class="form-control" placeholder="옵션명을 입력하세요."></td>
           </tr>
           <tr>
-          	<td class="table-primary text-center">수량</td>
+          	<td class="table-primary text-center">수량<span class="text-danger">*</span></td>
             <td>
               <input type="number" name="opt_quantity" id="quantity" class="form-control" onkeyup="validQuantity()" placeholder="수량을 입력하세요.">
               <span class="mt-1" id="quantityMsg">&nbsp;</span>

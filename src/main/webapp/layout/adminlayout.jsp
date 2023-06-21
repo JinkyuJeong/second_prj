@@ -67,13 +67,13 @@
     <hr>
     <div class="w3-bar-block">
       <ul class="navbar-nav ml-auto mr-4">
-        <li class="nav-item dropdown-item <c:if test='${url == "product"}'>w3-blue</c:if>">
+        <li class="nav-item dropdown-item <c:if test='${url eq "product"}'>w3-blue</c:if>">
           <h4><a href="${path }/admin/product/prodList"><i class="fa fa-shopping-bag" aria-hidden="true"></i> 제품 관리</a></h4>
         </li>
-        <li class="nav-item dropdown-item <c:if test='${url == "opt"}'>w3-blue</c:if>">
+        <li class="nav-item dropdown-item <c:if test='${url eq "opt"}'>w3-blue</c:if>">
           <h4><a href="${path }/admin/opt/optList"><i class="fa fa-cog" aria-hidden="true"></i> 제품 옵션/재고 관리</a></h4>
         </li>
-        <li class="nav-item dropdown-item <c:if test='${url == "stock"}'>w3-blue</c:if>">
+        <li class="nav-item dropdown-item <c:if test='${url eq "stock"}'>w3-blue</c:if>">
           <h4><a href="${path }/admin/stock/stockList"><i class="fa fa-cube" aria-hidden="true"></i> 재고 등록 내역</a></h4>
         </li>
         <li class="nav-item dropdown-item">
@@ -85,8 +85,8 @@
         <li class="nav-item dropdown-item">
           <h4><a href="" ><i class="fa fa-line-chart" aria-hidden="true"></i> 통계분석</a></h4>
         </li>
-        <li class="nav-item dropdown-item">
-          <h4><a href=""><i class="fa fa-product-hunt" aria-hidden="true"></i> 포인트 관리</a></h4>
+        <li class="nav-item dropdown-item <c:if test='${url eq "point"}'>w3-blue</c:if>">
+          <h4><a href="${path}/admin/point/pointList"><i class="fa fa-product-hunt" aria-hidden="true"></i> 포인트 관리</a></h4>
         </li>
         <li class="nav-item dropdown-item">
           <h4><a href="">💪이벤트 관리</a></h4>

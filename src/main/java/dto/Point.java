@@ -9,6 +9,6 @@ public class Point {
 	private int point_number;
 	private String mem_id;
 	private String point_type;
-	private String point_value;
+	private int point_value;
 	private Date point_regdate;
 }

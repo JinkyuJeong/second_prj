@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="path" value="${pageContext.request.contextPath}" /> 
 <!DOCTYPE html>
 <html>
@@ -54,7 +55,7 @@
 		            	${mem.mem_id} 
 		            	<br>
 		            	<a class="btn btn-sm btn-dark" href="memChg?mem_number=${mem.mem_number}">정보수정</a>
-		            	<c:if test="${manager.manager_grant ne '총괄'}">
+		            	<c:if test="${sessionScope.loginManager.manager_grant eq '총괄'}">
 		            		<form action="memDel" method="post" style="display:inline-block;">
 		            			<input type="hidden" name="mem_number" value="${mem.mem_number}">
 			            		<a type="button" class="btn btn-sm btn-dark" data-bs-toggle="modal" data-bs-target="#staticBackdrop${mem.mem_number }">탈퇴</a>
@@ -81,9 +82,9 @@
 		            <td>${empty mem.mem_channel? '일반' :  mem.mem_channel}</td>
 		            <td>${mem.mem_phoneno}</td>
 		            <td>
-		            	100 P
+		            	<fmt:formatNumber value="${mem.mem_point }" pattern="#,###"/>P
 		            	<br>
-		            	<a class="btn btn-sm btn-secondary" href="${path }/admin/pointReg?mem_id=${mem.mem_id}">포인트 지급</a>
+		            	<a class="btn btn-sm btn-secondary" href="${path }/admin/point/pointReg?mem_number=${mem.mem_number}">포인트 지급</a>
 		            </td>
 		          </tr>
 	          </c:forEach>

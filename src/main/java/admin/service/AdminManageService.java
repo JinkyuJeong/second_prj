@@ -4,15 +4,18 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import admin.dao.AdminCsDao;
 import admin.dao.AdminManagerDao;
 import admin.dao.AdminMemDao;
+import admin.dao.AdminPointDao;
 import admin.dao.AdminQnaDao;
 import dto.Cs;
 import dto.Delivery;
 import dto.Manager;
 import dto.Mem;
+import dto.Point;
 import dto.Qna;
 
 @Service
@@ -26,6 +29,8 @@ public class AdminManageService {
 	private AdminManagerDao managerDao;
 	@Autowired
 	private AdminMemDao memDao;
+	@Autowired
+	private AdminPointDao pointDao;
 
 	public boolean regQna(Qna qna) {
 		return qnaDao.regQna(qna);
@@ -125,6 +130,60 @@ public class AdminManageService {
 
 	public boolean csDel(Integer cs_number) {
 		return csDao.csDel(cs_number);
+	}
+
+	@Transactional
+	public boolean regPoint(Point point) {
+		boolean b1 = pointDao.regPoint(point);
+		boolean b2 = memDao.pointChg(point);
+		return b1&&b2;
+	}
+
+	public int getPointCnt(String query) {
+		return pointDao.getPointCnt(query);
+	}
+
+	public List<Point> getPointList(Integer pageNum, String query) {
+		return pointDao.getPointList(pageNum, query);
+	}
+
+	public Point getPoint(Integer point_number) {
+		return pointDao.getPoint(point_number);
+	}
+
+	@Transactional
+	public boolean pointChg(Point point, Integer cur_point) {
+		Mem mem = memDao.getMemId(point.getMem_id());
+		boolean b1 = false;
+		boolean b2 = false;
+		boolean b3 = false;
+		if(mem.getMem_point() > cur_point) {
+			Point newPoint = new Point();
+			newPoint.setMem_id(point.getMem_id());
+			newPoint.setPoint_value(cur_point*-1);
+			b1 = memDao.pointChg(newPoint);
+			b2 = memDao.pointChg(point);
+			b3 = pointDao.pointChg(point);
+			return b1&&b2&&b3;
+		}else {
+			b1 = memDao.setPointZero(0, point.getMem_id());
+			int diff = mem.getMem_point() - cur_point + point.getPoint_value();
+			if(diff>0) {
+				b2 = memDao.pointChg(point);
+				b3 = pointDao.pointChg(point);
+				
+				return b1&&b2&&b3;
+			}else {
+				b3 = pointDao.pointChg(point);
+				
+				return b1&&b3;
+			}
+		}
+		
+	}
+
+	public boolean pointDel(Integer point_number) {
+		return pointDao.pointDel(point_number);
 	}
 
 

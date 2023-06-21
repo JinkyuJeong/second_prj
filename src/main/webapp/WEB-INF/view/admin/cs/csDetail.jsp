@@ -33,7 +33,8 @@
           <div class="mb-4">
             <textarea  class="form-control" readonly>${cs.cs_qContent }</textarea>
           </div>
-
+						<hr>
+					
 	         	<label class="mb-1">담당자</label>
 	          <div class="mb-4">
 	            <input type="text" class="form-control" value="${cs.manager_name }" readonly>

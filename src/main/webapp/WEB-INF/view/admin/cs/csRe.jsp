@@ -33,7 +33,9 @@
           <div class="mb-4">
             <textarea  class="form-control" readonly>${cs.cs_qContent }</textarea>
           </div>
-
+          
+						<hr>
+						
 	         	<label class="mb-1">담당자<span class="text-danger">*</span></label>
 	          <div class="mb-4">
 	            <input name="manager_name" type="text" class="form-control" value="${sessionScope.loginManager.manager_name }" readonly>
