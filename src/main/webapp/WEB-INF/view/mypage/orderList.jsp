@@ -94,10 +94,29 @@
             </td>
             <td>
             	<c:if test="${map.value.get(0).order_state=='배송완료' }">
-            		<button type="button" class="btn btn-outline-danger btn-sm" onclick="refund('${map.key}')">환불요청</button>
+            		<button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">환불신청</button>
             	</c:if>
+            	<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">환불신청</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        주문번호 '${map.key }' 에 대해 환불신청하시겠습니까?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니요</button>
+        <button type="button" class="btn btn-danger" onclick="location.href='refundReq?mem_id=${sessionScope.loginMem.mem_id}&order_id=${map.key }'">네</button>
+      </div>
+    </div>
+  </div>
+</div>
             </td>
-          </tr>          
+          </tr>
+                    
           <!-- 주문 상세정보 -->
           <tr style="text-align:center;" class="saleLine" id="saleLine${map.key }">
             <td colspan="7">

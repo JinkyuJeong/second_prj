@@ -14,6 +14,9 @@
     <a href="${path}/mypage/orderList?mem_id=${sessionScope.loginMem.mem_id}" 
     class="w3-bar-item w3-button w3-padding <c:if test='${url=="user" }'>w3-blue</c:if>">
     <i class="fa fa-users fa-fw"></i>&nbsp; 주문목록</a>
+    <a href="${path}/mypage/refundReq?mem_id=${sessionScope.loginMem.mem_id}" 
+    class="w3-bar-item w3-button w3-padding <c:if test='${url=="item" }'>w3-blue </c:if>">
+    <i class="fa fa-eye fa-fw"></i>&nbsp; 환불 신청</a>
     <a href="${path}/mypage/cancelList?mem_id=${sessionScope.loginMem.mem_id}" 
     class="w3-bar-item w3-button w3-padding <c:if test='${url=="item" }'>w3-blue </c:if>">
     <i class="fa fa-eye fa-fw"></i>&nbsp; 취소/환불 내역</a>

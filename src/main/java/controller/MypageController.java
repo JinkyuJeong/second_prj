@@ -20,6 +20,7 @@ import dto.Mem;
 import dto.OrderView;
 import dto.Refund;
 import exception.CloseException;
+import exception.ShopException;
 import service.ShopService;
 
 @Controller
@@ -101,6 +102,18 @@ public class MypageController {
 		ModelAndView mav = new ModelAndView();
 		List<Cs> csList = service.getCs(mem_id);
 		mav.addObject("csList", csList);
+		return mav;
+	}
+	
+	@GetMapping("refundReq")
+	public ModelAndView idCheckRefundReg(String order_id, String mem_id, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		if(order_id == null || order_id.equals("")) {
+			throw new ShopException("마이페이지 > 주문목록에서 환불신청을 해주세요. \\n환불신청은 주문완료된 건들만 가능합니다.", "orderList?mem_id=" + mem_id);
+		} else {
+			List<OrderView> orderItems = service.getOvList(mem_id, order_id);
+			mav.addObject("orderItems", orderItems);
+		}		
 		return mav;
 	}
 }
