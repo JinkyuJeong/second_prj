@@ -3,6 +3,7 @@ package admin.controller;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.http.HttpRequest;
 import java.util.List;
 import java.util.Properties;
 
@@ -125,7 +126,7 @@ public class AdminCsController {
 				msg.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
 
 				msg.setSubject("호미짐에서 문의하신 내용의 답변이 등록 되었습니다.");
-
+				
 				String content = "<a href=\"http://localhost:8080/second_prj/cs\">답변 확인하기</a><br><br>처리 담당자: " + cs.getManager_name();
 				msg.setContent(content, "text/html; charset=UTF-8");
 				Transport.send(msg);

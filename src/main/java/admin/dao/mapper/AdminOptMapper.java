@@ -34,4 +34,7 @@ public interface AdminOptMapper {
 	@Delete("delete from opt where opt_number=#{value}")
 	boolean deleteOpt(Integer opt_number);
 
+	@Update("update opt set opt_quantity = opt_quantity - #{diffQuantity} where opt_number = #{opt_number}")
+	boolean diffQuantity(Map<String, Object> param);
+
 }

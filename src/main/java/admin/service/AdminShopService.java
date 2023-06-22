@@ -136,4 +136,8 @@ public class AdminShopService {
 		return stockDao.updateStock(stock);
 	}
 
+	public boolean diffQuantity(int opt_number, int diffQuantity) {
+		return optDao.diffQuantity(opt_number, diffQuantity);
+	}
+
 }

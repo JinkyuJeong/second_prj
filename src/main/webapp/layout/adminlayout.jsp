@@ -76,8 +76,8 @@
         <li class="nav-item dropdown-item <c:if test='${url eq "stock"}'>w3-blue</c:if>">
           <h4><a href="${path }/admin/stock/stockList"><i class="fa fa-cube" aria-hidden="true"></i> 재고 등록 내역</a></h4>
         </li>
-        <li class="nav-item dropdown-item">
-          <h4><a href="" ><i class="fa fa-paper-plane-o" aria-hidden="true"></i> 주문 관리</a></h4>
+        <li class="nav-item dropdown-item <c:if test='${url eq "order"}'>w3-blue</c:if>">
+          <h4><a href="${path }/admin/order/orderList" ><i class="fa fa-paper-plane-o" aria-hidden="true"></i> 주문 관리</a></h4>
         </li>
         <li class="nav-item dropdown-item">
           <h4><a href="" ><i class="fa fa-reply" aria-hidden="true"></i> 환불 관리</a></h4>

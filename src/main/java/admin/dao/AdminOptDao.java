@@ -54,4 +54,12 @@ public class AdminOptDao {
 	public boolean deleteOpt(Integer opt_number) {
 		return template.getMapper(cls).deleteOpt(opt_number);
 	}
+
+	public boolean diffQuantity(int opt_number, int diffQuantity) {
+		param.clear();
+		param.put("opt_number", opt_number);
+		param.put("diffQuantity", diffQuantity);
+		
+		return template.getMapper(cls).diffQuantity(param);
+	}
 }
