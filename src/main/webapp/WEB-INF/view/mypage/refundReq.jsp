@@ -10,13 +10,15 @@
 <title>호미짐</title>
 <script>
 	function input_chk(f) {		
-		// 체크박스 요소를 선택합니다.
 		var checkboxes = $("input[type='checkbox']:checked");
-		  
-		// 체크박스에 선택된 값이 없으면 경고 메시지를 출력하고 폼을 중지시킵니다.
 		if (checkboxes.length === 0) {
 		  alert("환불하실 상품을 선택해주세요.");
 		  return false;
+		}
+		if(f.refund_reason.value.trim() === '') {
+			alert("수량을 입력해주세요.");
+			f.refund_reason.focus();
+			return false;
 		}
 		if(f.refund_reason.value.trim() === '') {
 			alert("환불사유를 입력해주세요.");
@@ -52,7 +54,7 @@
 									</td>
 									<td>
 										<div class="form-check" id="quantityInput">
-											<input type="text" class="form-control" id="quantity" placeholder="수량">
+											<input type="text" class="form-control" name="opt_count" id="quantity" placeholder="수량">
 										</div>
 									</td>
 								</tr>
