@@ -43,7 +43,7 @@ public class IndexController {
     public ModelAndView csQ(Cs cs,HttpSession session){
     	ModelAndView mv = new ModelAndView();
     	if(service.csReg(cs)) {
-    		mv.setViewName("redirect:cs");
+    		mv.setViewName("redirect:mypage/cs?mem_id="+cs.getMem_id());
 			return mv;
 		}else {
 			throw new ShopException("문의 내용 전송 실패", "cs");

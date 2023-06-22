@@ -92,6 +92,25 @@
 			  }
 		  })
 	  })
+	  //포인트 사용
+	  $("#order_point").keyup(function() {
+		  $("#pointMsg").text("")
+		  var point = parseInt($("#order_point").val());
+		  if($("#order_point").val() == "") point = 0;		  
+		  var mem_point = parseInt($("#mem_point").val());
+		  var final_amount = parseInt($("#final_amount").val());
+		  if(point > mem_point) {
+			  msg = "보유포인트 보다 많은 포인트를 사용할 수 없습니다.";
+			  $("#pointMsg").text(msg)
+		  } else if (point > final_amount) {
+			  msg = "결제하려는 금액보다 사용하려는 포인트가 많습니다."
+			  $("#pointMsg").text(msg)
+		  } else {
+			  $("#pointMsg").text("")
+			  $("#total").text(final_amount - point)
+			  $("#Total").text(final_amount - point)
+		  }
+	  })
     });
   function sample6_execDaumPostcode() {
       new daum.Postcode({
@@ -381,15 +400,23 @@
                 <h5 class="card-title">결제 예정 금액</h5>
                 <hr>
                 <p class="card-text">주문금액: <fmt:formatNumber value="${total}" pattern=",###"/>원</p>
-                <p class="card-text">할인: <fmt:formatNumber value="${discounted }" pattern=",###"/>원</p>
-                <p class="card-text" id="final-payment-amount">최종 결제 금액: <fmt:formatNumber value="${total - discounted }" pattern=",###"/>원</p>
-                <input type="hidden" value="${total-discounted }" name="order_totalPay">
-                <input type="hidden" id="final_amount" value="${total - discounted }">
+                <p class="card-text">할인: - <fmt:formatNumber value="${discounted }" pattern=",###"/>원</p>
+                <p class="card-text">배송비: + <fmt:formatNumber value="${delivery_cost }" pattern=",###"/>원</p>
+                <p class="card-text"> 포인트 사용 : 
+                	<input type="text" name="order_point" id="order_point"> p &nbsp; <span style="color:grey;">(회원님의 보유 포인트 : <fmt:formatNumber value="${mem.mem_point }" pattern=",###"/> P)</span>
+                	<br>
+                	<span id="pointMsg" style="color:red;font-size:10px;"></span>
+                </p>
+                
+                <p class="card-text" id="final-payment-amount">최종 결제 금액: <span id="total"><fmt:formatNumber value="${total - discounted + delivery_cost }" pattern=",###"/></span>원</p>   
+                <input type="hidden" value="${mem.mem_point }" id="mem_point"> 
+                <input type="hidden" value="${delivery_cost }" name="delivery_cost">           
+                <input type="hidden" value="${total - discounted + delivery_cost }" name="order_totalPay" id="final_amount">
               </div>
             </div>
           </div>
           <div class="mt-3">
-            <button type="button" class="btn-danger btn-lg" id="payBtn" style="width:100%" onclick="javascript:payment()"><fmt:formatNumber value="${total - discounted }" pattern=",###"/>원 결제하기</button>
+            <button type="button" class="btn-danger btn-lg" id="payBtn" style="width:100%" onclick="javascript:payment()"><span id="Total"><fmt:formatNumber value="${total - discounted + delivery_cost }" pattern=",###"/></span>원 결제하기</button>
           </div>
         </div>
       </div>
@@ -451,7 +478,13 @@
     		  alert("배송 메세지를 선택 혹은 입력하세요.")
   		    	f.order_msg.focus();
   		    	return false;
-    	  }    	     	  
+    	  }  
+    	  var og = document.getElementById("pointMsg");
+    	  if(og.innerText !== "") {
+    		  alert("포인트 메세지를 확인하세요.")
+    		  f.order_point.focus();
+    		  return false;
+    	  }
     	  return true;
       }
       
@@ -463,7 +496,7 @@
       				if(input_check(f)) {
       					$.ajax({
             				  url: "payment",
-            				  data: {product_name : $(".product_name").val() , final_amount : $("#final_amount").val()},
+            				  data: {product_name : $(".product_name").val() , final_amount : $("#final_amount").val() - $("#order_point").val()},
             				  success: function(json) {
             				    iamPay(json);
             				  }

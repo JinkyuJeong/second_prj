@@ -37,4 +37,15 @@ public class DeliveryDao {
 	public Delivery getDelivery(Integer selectedOption) {
 		return template.getMapper(cls).getDelivery(selectedOption);
 	}
+
+	public boolean deleteD(Integer delivery_number) {
+		return template.getMapper(cls).deleteD(delivery_number);
+	}
+
+	public boolean newD(Delivery delivery, String mem_id) {
+		param.clear();
+		param.put("delivery", delivery);
+		param.put("mem_id", mem_id);
+		return template.getMapper(cls).newD(param);
+	}
 }

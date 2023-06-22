@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import dto.Order;
 import dto.OrderView;
@@ -26,4 +27,7 @@ public interface OrderMapper {
 
 	@Select("select * from orderView where mem_id=#{mem_id} and order_id=#{order_id} order by order_date desc")
 	List<OrderView> getOvList(Map<String, Object> param);
+
+	@Update("update h_order set order_state = '주문취소' where order_id = #{value}")
+	void updateOrderState(String order_id);
 }

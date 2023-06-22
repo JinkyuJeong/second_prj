@@ -10,13 +10,13 @@
 <div class="options">
 <div class="row mt-3">
 	<div class="col" style="font-size: 20px;">${opt_name }</div>
-	<input type="hidden" value="${opt_number }" name="opt_number" id="hiddenOpt_number">
 </div>
 <div class="row mt-3">
 	<div class="col-8">
 		<div class="btn-group btn-group-lg" style="width: 150px;">
     		<button type="button" class="btn btn-secondary minus" id="minus">-</button>
     		<input type="number" name="quantity" id="quantityInput" style="width: 55px;" value="1">
+    		<input type="hidden" value="${opt_number }" name="opt_number" id="hiddenOpt_number">
     		<button type="button" class="btn btn-secondary plus" id="plus">+</button>
 		</div>
 	</div>

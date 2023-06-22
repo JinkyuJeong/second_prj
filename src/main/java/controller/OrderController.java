@@ -26,9 +26,9 @@ public class OrderController {
 	private ShopService service;
 	
 	@PostMapping("orderConfiguration")
-	public ModelAndView orderConfiguration(Mem mem, String deliver_receiver, String delivery_postcode, 
+	public ModelAndView idCheckorderConfiguration(String mem_id, Mem mem, String deliver_receiver, String delivery_postcode, 
 			String delivery_address, String delivery_detailAddress, String receiver_phoneNo1, 
-			String receiver_phoneNo2, String receiver_phoneNo3, String order_msg, String order_msgSelf, int order_totalPay, 
+			String receiver_phoneNo2, String receiver_phoneNo3, String order_msg, String order_msgSelf, int order_totalPay, int order_point, int delivery_cost,
 			Integer[] opt_number, Integer[] product_number, String[] opt_count, ProductOptView pov, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		//배송정보
@@ -39,12 +39,12 @@ public class OrderController {
         String formattedNumber = String.format("%04d", num+1);
 		String order_id = formattedDate + formattedNumber;
 		String phoneno = receiver_phoneNo1 + receiver_phoneNo2 + receiver_phoneNo3;
-		int delivery_cost = 0;
-		int order_point = 0;
 		String orderMsg = order_msg;
+		order_totalPay = order_totalPay - order_point;
 		if(order_msg.equals("직접입력")) orderMsg=order_msgSelf;
 		if(service.addOrder(order_id, deliver_receiver, mem.getMem_id(), delivery_postcode, delivery_address, delivery_detailAddress,
 				delivery_cost, order_point, phoneno, orderMsg, order_totalPay)) {
+			service.usePoint(order_point, mem.getMem_id());
 			System.out.println("주문, 결제 완료");
 		} else {
 			throw new ShopException("죄송합니다. 주문 시 오류가 발생했습니다.", "/second_prj/cart/cartAdd");

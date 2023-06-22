@@ -56,8 +56,24 @@
 		//수량 변경(+)
 	    $(document).on("click", ".plus", function() {
 	        var quantityInput = $(this).siblings("input[name='quantity']");
+	        var opt_number = $(this).siblings("input[name='opt_number']");
 	        var currentQuantity = parseInt(quantityInput.val());
 	        quantityInput.val(currentQuantity + 1);
+	        $.ajax({
+	        	  url: "${path}/ajax/opt_quantityCheck",
+	        	  type: "POST",
+	        	  data: { opt_number: opt_number.val() },
+	        	  success: function(result) {
+	        	    if (quantityInput.val() > parseInt(result)) {
+	        	      alert("상품 재고보다 많이 주문할 수 없습니다.");
+	        	      quantityInput.val(result);
+	        	      return;
+	        	    }
+	        	  },
+	        	  error: function(e) {
+	        	    alert("재고 수량 체크 에러: " + e.status);
+	        	  }
+	        });
 	        addSum();
 	    });
 	    $("#cartBtn").click(function(e) {
@@ -108,7 +124,7 @@
 	    });
 	    //장바구니로 이동 버튼 클릭
 	    $("#moveToCart").click(function() {
-	        window.location.href = "../cart/cartAdd"; // 장바구니 페이지 URL로 수정해주세요.
+	        window.location.href = "../cart/cartAdd?mem_id=${sessionScope.loginMem.mem_id} ";
 	    });
 	    $("#moveToList").click(function() {
 	    	 $("#staticBackdrop").modal("hide");
@@ -205,6 +221,8 @@
                 <h1>${product.product_name }</h1> 
                 <div class="row mt-1">
                   <c:if test='${product.product_isDiscount==0 }'>
+                  	<div class="col-9"></div>
+                  	<div class="col-3" style="font-size:30px;" id="price"><fmt:formatNumber value="${product.product_price}" />원</div>
                   </c:if>
                   <c:if test='${product.product_isDiscount==1 }'>
                   	<div class="col-7 text-primary" style="font-size:30px;">${product.product_discountRate }%</div>
@@ -216,12 +234,12 @@
                 </div>
                 <hr>  
                 <div class="row mb-2">
-                  <div class="col-2">택배배송</div>
-                  <div class="col-3">무료배송, CJ대한통운</div>
+                  <div class="col-2 text-secondary"><i class="fa fa-bus" aria-hidden="true"></i> &nbsp; 택배배송</div>
+                  <div class="col text-secondary">30,000원 이상 구매 시 무료배송, CJ대한통운</div>
                 </div>
-                <div class="row">
+<!--               <div class="row">
                   <div class="col text-secondary">제주 추가 4,000원, 제주 외 도서지역 추가 4,000원</div>
-                </div>
+                </div> -->  
                 <hr>
            <form action="../cart/checkout" method="post" name="cart" id="cart">
            	  <input type="hidden" value="${param.product_number }" name="product_number">
@@ -234,9 +252,12 @@
                       	<c:if test="${o.opt_quantity==0 }">
                       		<option class="text-secondary" value="soldOut" id="opt_number">${o.opt_name }[품절]</option>
                       	</c:if>
-                      	<c:if test="${o.opt_quantity!=0 }">
+                      	<c:if test="${o.opt_quantity>0 && o.opt_quantity <= 5}">
+                      		<option value="${o.opt_number }" id="opt_number">${o.opt_name } &nbsp; [${ o.opt_quantity} 개 남음]</option>
+                      	</c:if> 
+                      	<c:if test="${o.opt_quantity > 5}">
                       		<option value="${o.opt_number }" id="opt_number">${o.opt_name }</option>
-                      	</c:if>                      	
+                      	</c:if>                     	
                       </c:forEach>
                     </select>
                   </div>                  

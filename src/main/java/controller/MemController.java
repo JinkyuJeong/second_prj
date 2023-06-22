@@ -56,9 +56,9 @@ public class MemController {
 		int maxMemNum = service.maxMemNum();
 		mem.setMem_number(maxMemNum+1);
 		mem.setMem_id(email1 + "@" + email2);
-		if(service.userInsert(mem)) {
-			throw new ShopException("반갑습니다. " + mem.getMem_name() + "님 :)", "login");
-//			service.pointInsert(2000);
+		if(service.userInsert(mem)) {			
+			service.pointInsert(mem.getMem_id());
+			throw new ShopException("반갑습니다. " + mem.getMem_name() + "님 :)", "login");			
 		} else {
 			throw new ShopException("죄송합니다. 회원가입 시 오류가 발생했습니다.", "mem/join");
 		}
@@ -80,7 +80,7 @@ public class MemController {
 			System.out.println("inputedEmail : " + email);
 			Properties prop = new Properties();
 			try {
-				FileInputStream fis = new FileInputStream("D:\\\\springstudy\\\\second_prj\\\\src\\\\main\\\\resources\\mail.properties"); 
+				FileInputStream fis = new FileInputStream("D:\\twerkinghamtori\\workspace\\spring\\second_prj\\src\\main\\resources\\mail.properties"); 
 				// 진규 경로 : D:\java_gdu_workspace\second_prj\src\main\resources\mail.properties
 				// 수빈 경로 : D:\\springstudy\\second_prj\\src\\main\\resources\mail.properties
 				prop.load(fis);

@@ -28,4 +28,11 @@ public class MemDao {
 	public int maxMemNum() {
 		return template.getMapper(cls).maxMemNum();
 	}
+
+	public void usePoint(int order_point, String mem_id) {
+		param.clear();
+		param.put("order_point", order_point);
+		param.put("mem_id", mem_id);
+		template.getMapper(cls).usePoint(param);
+	}
 }

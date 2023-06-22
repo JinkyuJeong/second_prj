@@ -34,19 +34,6 @@
 			}
 		})
 	}
-	function cancel(order_id) {
-		$.ajax({
-			url : "${path}/ajax/cancelOrder",
-			method : "POST",
-			data : { order_id: order_id },
-			success : function(result) {
-				alert(result);
-			}, 
-			error : function(e) {
-				alert("[ajax] 주문취소 오류 : " + e.status);
-			}
-		});
-	}
 </script>
 </head>
 <body>
@@ -56,52 +43,45 @@
 				<%@ include file="mypageSideBar2.jsp"%>
 			</div>
 			<div style="flex-basis: 80%;">
-      <h1 class="mb-3">주문조회</h1>
+      <h1 class="mb-3">취소/환불 내역</h1>
       <div class="row">
-        <div class="col-2">
-          <h5>총 <span style="color: red;">${orderCnt }</span>건</h5>
+        <div class="col-7">
+          <h5>총 <span style="color: red;">${refundList.size() }</span>건</h5>
+        </div>
+        <div class="col-5 text-end">
+        	<div class="btn-group mb-3">
+			<button type="button" onclick="location.href='cancelList?mem_id=${sessionScope.loginMem.mem_id}'" class="btn btn-outline-danger ${empty param.refund_type ? 'active' : '' }">전체</button>
+			<button type="button" onclick="location.href='cancelList?mem_id=${sessionScope.loginMem.mem_id}&refund_type=취소'" class="btn btn-outline-danger ${param.refund_type == '취소' ? 'active' : '' }">취소</button>
+			<button type="button" onclick="location.href='cancelList?mem_id=${sessionScope.loginMem.mem_id}&refund_type=환불대기'" class="btn btn-outline-danger  ${param.refund_type == '환불대기' ? 'active' : '' }">환불대기</button>
+			<button type="button" onclick="location.href='cancelList?mem_id=${sessionScope.loginMem.mem_id}&refund_type=환불완료'" class="btn btn-outline-danger  ${param.refund_type == '환불완료' ? 'active' : '' }">환불완료</button>
+	  </div>
         </div>
       </div>
+      
       <div class="row" id="oinfo" class="info">
       
       
         <table class="table table-hover">
           <tr style="text-align:center; background-color:#D1180B; color: white;">
-            <th>주문일자</th>
+            <th>취소일자</th>
             <th>주문번호</th>
-            <th>제품명</th>
-            <th>결제금액</th>
+            <th>취소사유</th>
+            <th>취소금액</th>
             <th>처리현황</th>
-            <th>결제취소</th>
-            <th>환불요청</th>
           </tr>
-        <c:forEach items="${map }" var="map" varStatus="st">
+        <c:forEach items="${refundList }" var="r" varStatus="st">
           <tr style="text-align:center;">
-            <td><fmt:formatDate value="${map.value.get(0).order_date }" pattern="yyyy년 MM월 dd일" /></td>
-            <td><a href="javascript:list_disp('${map.key }')">${map.key }</a></td>
-            <c:if test="${map.value.size() ==1 }">
-            	<td>${map.value.get(0).product_name }</td>
-            </c:if>
-            <c:if test="${map.value.size() !=1 }">
-            	<td>${map.value.get(0).product_name } 외 ${map.value.size() -1 } 개</td>
-            </c:if>            
-            <td><fmt:formatNumber value="${map.value.get(0).order_totalPay }" pattern="###,###"/>원</td>
-            <td>${map.value.get(0).order_state }</td>
-            <td>
-            	<c:if test="${map.value.get(0).order_state=='결제완료' }">
-            		<button type="button" class="btn btn-outline-danger btn-sm" onclick="cancel('${map.key}')">주문취소</button>
-            	</c:if>             	           
-            </td>
-            <td>
-            	<c:if test="${map.value.get(0).order_state=='배송완료' }">
-            		<button type="button" class="btn btn-outline-danger btn-sm" onclick="refund('${map.key}')">환불요청</button>
-            	</c:if>
-            </td>
+            <td><fmt:formatDate value="${r.refund_date }" pattern="yyyy년 MM월 dd일" /></td>
+            <td><a href="javascript:list_disp('${r.refund_orderId }')">${r.refund_orderId }</a></td>
+            <td>${r.refund_reason}</td>           
+            <td><fmt:formatNumber value="${r.refund_price }" pattern="###,###"/>원</td>
+            <td>${r.refund_type }</td>
           </tr>          
           <!-- 주문 상세정보 -->
-          <tr style="text-align:center;" class="saleLine" id="saleLine${map.key }">
+          <tr style="text-align:center;" class="saleLine" id="saleLine${r.refund_orderId }">
             <td colspan="7">
-            <table id="orderDetail${map.key }" class="table table-borderless">                    
+            <table id="orderDetail${r.refund_orderId }" class="table table-borderless">       
+                   
             </table>
             </td>
           </tr>

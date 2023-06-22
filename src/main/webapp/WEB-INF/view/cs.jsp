@@ -86,6 +86,7 @@ $(()=>{
             · 주문취소/환불은 마이페이지>주문내역에서 신청하실 수 있습니다. <br>
             · 1:1문의 처리 내역은 마이페이지>1:1문의를 통해 확인하실 수 있습니다. <br>
           </p>
+          <div class="mt-1 mb-1"><a class="btn btn-sm btn-danger" href="${path}/mypage/cs?mem_id=${sessionScope.loginMem.mem_id}">내 문의</a></div>
           <div class="w3-light-grey w3-padding-large w3-margin-top" id="contact">
             <form action="csQ" method="post">
               <div class="w3-section">

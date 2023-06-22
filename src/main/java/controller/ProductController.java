@@ -86,6 +86,9 @@ public class ProductController {
 			throw new ShopException("해당 상품은 존재하지 않습니다.", "productList");
 		}
 		List<Opt> optList = service.getOption(product.getProduct_number());
+		if(optList == null || optList.size() == 0) {
+			throw new ShopException("상품 준비중입니다.", "prductList");
+		}
 		String[] product_pictures = product.getProduct_pictures().split(",");
 		List<String> product_pircturesList = Arrays.asList(product_pictures);
 		mav.addObject("product",product);

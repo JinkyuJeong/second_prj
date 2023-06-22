@@ -12,8 +12,10 @@ import dao.MemDao;
 import dao.OptDao;
 import dao.OrderDao;
 import dao.OrderItemDao;
+import dao.PointDao;
 import dao.ProductDao;
 import dao.QnaDao;
+import dao.RefundDao;
 import dto.Cart;
 import dto.Cs;
 import dto.Delivery;
@@ -25,6 +27,7 @@ import dto.OrderView;
 import dto.Product;
 import dto.ProductOptView;
 import dto.Qna;
+import dto.Refund;
 @Service
 public class ShopService {
 	@Autowired
@@ -53,6 +56,12 @@ public class ShopService {
 	
 	@Autowired
 	private CsDao csDao;
+	
+	@Autowired
+	private PointDao pointDao;
+	
+	@Autowired
+	private RefundDao refundDao;
 
 	public List<Product> productList(Integer pageNum, int limit, String product_type, String searchContent) {
 		return productDao.list(pageNum, limit, product_type, searchContent);
@@ -177,6 +186,46 @@ public class ShopService {
 
 	public boolean csReg(Cs cs) {
 		return csDao.csReg(cs);
+	}
+
+	public void pointInsert(String mem_id) {
+		pointDao.pointInsert(mem_id);		
+	}
+
+	public void usePoint(int order_point, String mem_id) {
+		memDao.usePoint(order_point, mem_id);
+	}
+
+	public boolean deleteD(Integer delivery_number) {
+		return deliveryDao.deleteD(delivery_number);
+	}
+
+	public boolean newD(Delivery delivery, String mem_id) {
+		return deliveryDao.newD(delivery, mem_id);
+	}
+
+	public void addRefund(String order_id, int optId, String mem_id, int price) {
+		refundDao.addRefund(order_id, optId, mem_id, price);
+	}
+
+	public void updateOrderState(String order_id) {
+		orderDao.updateOrderState(order_id);
+	}
+
+	public List<Refund> getRefundList(String mem_id) {
+		return refundDao.getRefundList(mem_id);
+	}
+
+	public List<Refund> getRefundCancelList(String mem_id, String refund_type) {
+		return refundDao.getRefundCancelList(mem_id, refund_type);
+	}
+
+	public List<Cs> getCs(String mem_id) {
+		return csDao.getCs(mem_id);
+	}
+
+	public Cs getCsDetail(Integer cs_number) {
+		return csDao.getCsDetail(cs_number);
 	}
 
 }

@@ -1,6 +1,7 @@
 package dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -20,5 +21,13 @@ public class CsDao {
 	
 	public boolean csReg(Cs cs) {
 		return template.getMapper(cls).csReg(cs);
+	}
+
+	public List<Cs> getCs(String mem_id) {
+		return template.getMapper(cls).getCs(mem_id);
+	}
+
+	public Cs getCsDetail(Integer cs_number) {
+		return template.getMapper(cls).getCsDetail(cs_number);
 	}
 }

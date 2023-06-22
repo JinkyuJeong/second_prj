@@ -30,10 +30,10 @@ public class CartController {
 	private ShopService service;
 	
 	@RequestMapping("cartAdd")
-	public ModelAndView cart(HttpSession session) {
+	public ModelAndView idCheckcart(String mem_id, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		Mem loginMem = (Mem) session.getAttribute("loginMem");
-		String mem_id = loginMem.getMem_id(); 
+		String sessionMem = loginMem.getMem_id(); 
 		List<Cart> cartList = service.getCartList(mem_id);
 		Map<Cart, ProductOptView> map = new HashMap<>();
 		int total = 0;
@@ -53,11 +53,12 @@ public class CartController {
 	}
 	
 	@RequestMapping("checkout")
-	public ModelAndView checkout(@RequestParam(value = "opt_numberChecked", required = false) String[] opt_numberChecked, String product_number, Integer[] opt_number, String[] quantity, HttpSession session) {
+	public ModelAndView loginCheckcheckout(@RequestParam(value = "opt_numberChecked", required = false) String[] opt_numberChecked, String product_number, Integer[] opt_number, String[] quantity, HttpSession session) {
 		ModelAndView mav = new ModelAndView();	
+		Mem loginMem = (Mem)session.getAttribute("loginMem");
 		if(product_number == null) { //장바구니에서 구매로
 			if(opt_numberChecked == null) {
-				throw new ShopException("주문할 상품이 없습니다.", "cartAdd");
+				throw new ShopException("주문할 상품이 없습니다.", "cartAdd?mem_id=" + loginMem.getMem_id());
 			} else {
 				Mem mem = (Mem)session.getAttribute("loginMem");
 			    String mem_id = mem.getMem_id();
@@ -74,10 +75,15 @@ public class CartController {
 					discounted += pov.getProduct_price()* Integer.parseInt(c.getOpt_count()) * ((double)pov.getProduct_discountRate()/100);
 			        map.put(c, pov);
 			    }
+				int delivery_cost = 0;
+				if(total-discounted < 30000) {
+					delivery_cost = 3000;
+				}
 				List<Delivery> deliveryList = service.getDeliveryList(mem_id);
 				mav.addObject("deliveryList", deliveryList);
 				mav.addObject("total",total);
 				mav.addObject("discounted",discounted);
+				mav.addObject("delivery_cost",delivery_cost);
 				mav.addObject("discountedTotal", total-discounted);
 				mav.addObject("map",map);	
 				mav.addObject("mem",mem);
@@ -86,7 +92,7 @@ public class CartController {
 		} else { //바로 구매
 			if(opt_number == null) {
 				throw new ShopException("주문할 상품이 없습니다.", "/second_prj/product/productDetail?product_number="+product_number);
-			} else {
+			}else {
 				Mem mem = (Mem)session.getAttribute("loginMem");
 			    String mem_id = mem.getMem_id();
 				int total = 0;
@@ -117,16 +123,17 @@ public class CartController {
 	
 	@RequestMapping("payment")
 	@ResponseBody
-	public Map<String, Object> payment(String final_amount, String[] product_name, HttpSession session) {
+	public Map<String, Object> loginCheckpayment(String final_amount, String[] product_name, HttpSession session) {
 		Map<String, Object> map = new HashMap<>();
 		Mem mem = (Mem)session.getAttribute("loginMem");
+		//주문번호 생성
 		LocalDate today = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMdd");
         String formattedDate = today.format(formatter);
         int num= Integer.parseInt(service.getMaxOrderId().substring(6,10));
         String formattedNumber = String.format("%04d", num+1);
-		String order_id = formattedDate + formattedNumber;		
-		System.out.println(order_id);
+		String order_id = formattedDate + formattedNumber;	
+
 		map.put("merchant_uid", order_id);
 		map.put("name", product_name[0] + " 외 " + (product_name.length-1) + "개");
 		map.put("amount", final_amount);

@@ -100,14 +100,20 @@
 			var tableIndex = $(this).attr("id").split("_")[1];
 			var selectedTable = $(".table").eq(tableIndex);
 			var optNumber = selectedTable.find("input[name='opt_number']").val();
+			var quantityInput = selectedTable.find("input[name='quantity']");
 			
 			$.ajax({
 				url : "${path}/ajax/cartPlus",
 				type : "POST",
 				data : {
-					opt_number : optNumber
+					opt_number : optNumber, opt_count : quantityInput.val()
 				},
 				success : function(result) {
+					if (quantityInput.val() == parseInt(result)) {
+		        	   alert("상품 재고보다 많이 주문할 수 없습니다.");
+		        	   quantityInput.val(result);
+		        	   return;
+		        	}
 					location.reload();
 				},
 				error : function(e) {
@@ -133,15 +139,15 @@
           <input type="hidden" name="opt_number" id="opt_number" value="${map.value.opt_number }">                
           <table class="table">                	
           	<tr>
-          		<td rowspan="5">
+          		<td rowspan="5" width="5%">
           			<input type="hidden" name="opt_number" id="opt_number" value="${map.value.opt_number }"> 
           			<input class="form-check-input" type="checkbox" value="${map.value.opt_number}" name="opt_numberChecked">
           		</td>
           	</tr>
             <tr>
-              <td rowspan="4"><img src="${path }/img/thumb/${map.value.product_thumb }" style="width:100px;height:100px;"></td>
-              <th>상품명</th>
-              <td>${map.value.product_name }</td>
+              <td rowspan="4" width="20%"><img src="${path }/img/thumb/${map.value.product_thumb }" style="width:100px;height:100px;"></td>
+              <th width="20%">상품명</th>
+              <td width="50%">${map.value.product_name }</td>
             </tr>
             <tr>
               <th>선택 옵션 명</th>

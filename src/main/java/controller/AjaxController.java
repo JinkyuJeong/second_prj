@@ -16,12 +16,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import dto.Cart;
+import dto.Cs;
 import dto.Delivery;
 import dto.Mem;
 import dto.Opt;
 import dto.OrderView;
 import dto.Product;
 import dto.ProductOptView;
+import exception.CloseException;
 import exception.ShopException;
 import service.ShopService;
 
@@ -47,7 +49,7 @@ public class AjaxController {
 	
 	@RequestMapping("cartAdd")
 	@ResponseBody
-	public String cartAdd(@RequestParam(value="opt_number", required=false)String[] opt_number, @RequestParam(value="quantity", required=false)String[] quantity, HttpSession session) {
+	public String loginCheckcartAdd(@RequestParam(value="opt_number", required=false)String[] opt_number, @RequestParam(value="quantity", required=false)String[] quantity, HttpSession session) {
 		Mem loginMem = (Mem) session.getAttribute("loginMem");
 		String mem_id = loginMem.getMem_id(); 
 		if(opt_number!=null || quantity != null) {
@@ -58,7 +60,7 @@ public class AjaxController {
 					throw new ShopException("장바구니 등록 시 오류 발생", "../product/productList");
 				} 			
 			}
-		}
+		} 
 		return "장바구니 담기 성공";
 	}
 	
@@ -133,14 +135,15 @@ public class AjaxController {
 	
 	@RequestMapping("cartPlus")
 	@ResponseBody
-	public String cartPlus(Integer opt_number, HttpSession session) {
+	public Integer cartPlus(Integer opt_number, Integer opt_count, HttpSession session) {
 		Mem mem = (Mem)session.getAttribute("loginMem");
 		String mem_id = mem.getMem_id();
-		if(service.cartPlus(opt_number, mem_id)) {
-			return "[ajax] 장바구니 수량 + 성공";
-		} else {
-			return "[ajax] 장바구니 수량 + 실패";
+		Cart cart = service.getCart(mem_id, opt_number);
+		Opt opt = service.getOptionByNum(opt_number);
+		if(opt_count < opt.getOpt_quantity()) {
+			service.cartPlus(opt_number, mem_id);
 		}
+		return opt.getOpt_quantity();
 	}
 	
 	@RequestMapping("cartCalculate")
@@ -189,9 +192,58 @@ public class AjaxController {
 	
 	@RequestMapping("orderDetail")
 	@ResponseBody
-	public List<OrderView> orderDetail(String order_id, HttpSession session) {
+	public List<OrderView> loginCheckorderDetail(String order_id, HttpSession session) {
 		Mem mem = (Mem)session.getAttribute("loginMem");
 		List<OrderView> orderDetailList = service.getOvList(mem.getMem_id(), order_id);
 		return orderDetailList;
+	}
+	
+	@RequestMapping("deleteD")
+	@ResponseBody
+	public String deleteD(Integer delivery_number) {
+		if(service.deleteD(delivery_number)) {
+			return "배송지 정보 삭제 성공";
+		} else {
+			return "배송지 정보 삭제 실패";
+		}
+		
+	}
+	
+	@RequestMapping("newD")
+	@ResponseBody
+	public String loginChecknewD(Delivery delivery, HttpSession session) {
+		Mem sessionMem = (Mem) session.getAttribute("loginMem");
+		if(service.newD(delivery, sessionMem.getMem_id())) {
+			throw new CloseException("배송지가 추가되었습니다.");
+		}
+		return "배송지 추가 성공";
+	}
+	
+	@RequestMapping(value="cancelOrder", produces = "text/plain; charset=UTF-8")
+	@ResponseBody
+	public String loginCheckCancel(String order_id, HttpSession session) {
+		Mem sessionMem = (Mem) session.getAttribute("loginMem");
+		List<OrderView> orderList = service.getOvList(sessionMem.getMem_id(), order_id);
+		for(OrderView ov : orderList) {
+			int optId = ov.getOpt_number();
+			int price = ov.getOrder_totalPay();
+			service.addRefund(order_id, optId, sessionMem.getMem_id(), price);			
+		}
+		service.updateOrderState(order_id);
+		return "주문이 취소되었습니다. 취소 내역은 마이페이지의 취소/환불 내역에서 확인 가능합니다.";
+	}
+	
+	@RequestMapping("csDetail")
+	@ResponseBody
+	public Cs loginCheckcsDetail(Integer cs_number, HttpSession session) {
+		Cs cs = service.getCsDetail(cs_number);
+		return cs;
+	}
+	
+	@RequestMapping("opt_quantityCheck")
+	@ResponseBody
+	public Integer QuantityCheck(Integer opt_number, HttpSession session) {
+		Opt opt = service.getOptionByNum(opt_number);
+		return opt.getOpt_quantity();
 	}
 }

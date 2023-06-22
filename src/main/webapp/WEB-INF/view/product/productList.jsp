@@ -20,6 +20,7 @@
 </script>
 <style>
 	.noline {text-decoration:none;}
+	a.active {color : red;}
 </style>
 </head>
 <body>
@@ -41,11 +42,11 @@
       <hr>
       <div class="row">
         <div class="col" style="margin-bottom:20px; font-size:20px;">
-        	<a href="productList?sort=1" class="noline">주문많은순</a>
-        	<a href="productList?sort=2" class="noline">낮은가격순</a>
-        	<a href="productList?sort=3" class="noline">높은가격순</a>
-        	<a href="productList?sort=4" class="noline">최신등록순</a>
-        	<a href="productList?sort=5" class="noline">리뷰많은순</a>
+        	<a href="productList?sort=1" class="noline ${param.sort == 1 ? 'active' : '' }">주문많은순</a>
+        	<a href="productList?sort=2" class="noline ${param.sort == 2 ? 'active' : '' }">낮은가격순</a>
+        	<a href="productList?sort=3" class="noline ${param.sort == 3 ? 'active' : '' }">높은가격순</a>
+        	<a href="productList?sort=4" class="noline ${param.sort == 4 ? 'active' : '' }">최신등록순</a>
+        	<a href="productList?sort=5" class="noline ${param.sort == 5 ? 'active' : '' }">리뷰많은순</a>
         </div>     
       </div>
 	
@@ -71,7 +72,7 @@
               					<div class="text-secondary" style="font-size: 20px;text-decoration:line-through;"><fmt:formatNumber value="${p.product_price }" pattern=",###" /></div>
             				</div>
           				</div>        
-          				<div style="font-size:20px;"><a href="productDetail?product_number=${p.product_number }">${p.product_name }</a></div>
+          				<div style="font-size:20px;"><a href="productDetail?product_number=${p.product_number }" style="text-decoration:none;">${p.product_name }</a></div>
          				<div class="text-secondary"><span>평점 4.8</span><span>  리뷰 34</span></div>        				
 	  				</td>
 	  			</tr>
@@ -93,7 +94,7 @@
               					<div style="font-size: 20px; text-align:right;"><fmt:formatNumber value="${p.product_price }" pattern=",###" /></div>
             				</div>
           				</div>        
-          				<div style="font-size:20px;"><a href="productDetail?product_number=${p.product_number }">${p.product_name }</a></div>
+          				<div style="font-size:20px;"><a href="productDetail?product_number=${p.product_number }" style="text-decoration:none;">${p.product_name }</a></div>
          				<div class="text-secondary"><span>평점 4.8</span><span>  리뷰 34</span></div>        				
 	  				</td>
 	  			</tr>
