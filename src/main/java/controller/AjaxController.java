@@ -246,4 +246,12 @@ public class AjaxController {
 		Opt opt = service.getOptionByNum(opt_number);
 		return opt.getOpt_quantity();
 	}
+	
+	@RequestMapping("ov_quantityChk")
+	@ResponseBody
+	public Integer ov_quantityChk(String order_id, Integer opt_number, HttpSession session) {
+		OrderView ov = service.getOvIdNum(order_id, opt_number);
+		return Integer.parseInt(ov.getOpt_count());
+	}
+	
 }

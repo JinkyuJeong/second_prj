@@ -25,12 +25,14 @@ public class OrderController {
 	@Autowired
 	private ShopService service;
 	
-	@PostMapping("orderConfiguration")
+	@RequestMapping("orderConfiguration")
 	public ModelAndView idCheckorderConfiguration(String mem_id, Mem mem, String deliver_receiver, String delivery_postcode, 
 			String delivery_address, String delivery_detailAddress, String receiver_phoneNo1, 
-			String receiver_phoneNo2, String receiver_phoneNo3, String order_msg, String order_msgSelf, int order_totalPay, int order_point, int delivery_cost,
+			String receiver_phoneNo2, String receiver_phoneNo3, String order_msg, String order_msgSelf, Integer order_totalPay, Integer order_point, Integer delivery_cost,
 			Integer[] opt_number, Integer[] product_number, String[] opt_count, ProductOptView pov, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
+		if(order_point == null) order_point = 0;
+		if(delivery_cost == null) delivery_cost=0;
 		//배송정보
 		LocalDate today = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMdd");
@@ -38,6 +40,7 @@ public class OrderController {
         int num= Integer.parseInt(service.getMaxOrderId().substring(6,10));
         String formattedNumber = String.format("%04d", num+1);
 		String order_id = formattedDate + formattedNumber;
+		System.out.println(order_id);
 		String phoneno = receiver_phoneNo1 + receiver_phoneNo2 + receiver_phoneNo3;
 		String orderMsg = order_msg;
 		order_totalPay = order_totalPay - order_point;
@@ -61,10 +64,10 @@ public class OrderController {
 		return mav;
 	}
 	
-	@GetMapping("orderConfiguration")
-	public ModelAndView orderConfiguration(String order_id) {
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("order_id", order_id);
-		return mav;
-	}
+//	@GetMapping("orderConfiguration")
+//	public ModelAndView orderConfiguration(String order_id) {
+//		ModelAndView mav = new ModelAndView();
+//		mav.addObject("order_id", order_id);
+//		return mav;
+//	}
 }

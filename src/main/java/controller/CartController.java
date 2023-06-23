@@ -133,7 +133,7 @@ public class CartController {
         int num= Integer.parseInt(service.getMaxOrderId().substring(6,10));
         String formattedNumber = String.format("%04d", num+1);
 		String order_id = formattedDate + formattedNumber;	
-
+		System.out.println(order_id);
 		map.put("merchant_uid", order_id);
 		map.put("name", product_name[0] + " 외 " + (product_name.length-1) + "개");
 		map.put("amount", final_amount);

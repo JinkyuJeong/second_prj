@@ -58,4 +58,22 @@ public class OrderDao {
 	public void updateOrderState(String order_id) {
 		template.getMapper(cls).updateOrderState(order_id);
 	}
+
+	public OrderView getOvIdNum(String order_id, Integer opt_number) {
+		param.clear();
+		param.put("order_id", order_id);
+		param.put("opt_number", opt_number);
+		return template.getMapper(cls).getOvIdNum(param);
+	}
+	
+	public void deleteOrder(String order_id) {
+		template.getMapper(cls).deleteOrder(order_id);
+	}
+
+	public List<OrderView> getOvDelivered(String mem_id, String order_state) {
+		param.clear();
+		param.put("mem_id", mem_id);
+		param.put("order_state", order_state);
+		return template.getMapper(cls).getOvDelivered(param);
+	}
 }

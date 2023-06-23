@@ -228,4 +228,36 @@ public class ShopService {
 		return csDao.getCsDetail(cs_number);
 	}
 
+	public OrderView getOvIdNum(String order_id, Integer opt_number) {
+		return orderDao.getOvIdNum(order_id, opt_number);
+	}
+
+	public boolean refundInsert(String order_id, Integer opt_number, Integer opt_count, String refund_memId, String refund_reason, int price) {
+		return refundDao.refundInsert(order_id, opt_number, opt_count, refund_memId, refund_reason, price);
+	}
+
+	public List<Refund> getRefundListOrderId(String order_id) {
+		return refundDao.getRefundListOrderId(order_id);
+	}
+
+	public void deleteOrder(String order_id) {
+		orderDao.deleteOrder(order_id);
+	}
+
+	public boolean updateQ(int refund_optId, int refund_optCount) {
+		return optDao.updateQ(refund_optId, refund_optCount);
+	}
+
+	public List<Refund> getRefund(String order_id, Integer opt_number) {
+		return refundDao.getRefund(order_id, opt_number);
+	}
+
+	public List<Refund> getRefundListAll(String mem_id, String string, String string2) {
+		return refundDao.getRefundListAll(mem_id, string, string2);
+	}
+
+	public List<OrderView> getOvDelivered(String mem_id, String order_state) {
+		return orderDao.getOvDelivered(mem_id, order_state);
+	}
+
 }

@@ -28,7 +28,6 @@
 					html += "<td>" + o.product_price * o.opt_count + "원 </td>";
 					html += "</tr>";
 				})
-				console.log(html);
 				$("#orderDetail"+order_id).html(html);
 			}, error : function(e) {
 				alert("주문 상세정보 불러오기 오류 : " + e.status)
@@ -44,13 +43,16 @@
 				<%@ include file="mypageSideBar2.jsp"%>
 			</div>
 			<div style="flex-basis: 80%;">
-      <h1 class="mb-3">주문 취소 내역</h1>
+      <h1 class="mb-3">환불 내역</h1>
       <div class="row">
         <div class="col-7">
           <h5>총 <span style="color: red;">${map.size() }</span>건</h5>
         </div>
         <div class="col-5 text-end">
         	<div class="btn-group mb-3">
+			<button type="button" onclick="location.href='refundList?mem_id=${sessionScope.loginMem.mem_id}'" class="btn btn-outline-danger ${empty param.refund_type ? 'active' : '' }">전체</button>
+			<button type="button" onclick="location.href='refundList?mem_id=${sessionScope.loginMem.mem_id}&refund_type=환불대기'" class="btn btn-outline-danger  ${param.refund_type == '환불대기' ? 'active' : '' }">환불대기</button>
+			<button type="button" onclick="location.href='refundList?mem_id=${sessionScope.loginMem.mem_id}&refund_type=환불완료'" class="btn btn-outline-danger  ${param.refund_type == '환불완료' ? 'active' : '' }">환불완료</button>
 	  </div>
         </div>
       </div>
@@ -60,28 +62,24 @@
       
         <table class="table table-hover">
           <tr style="text-align:center; background-color:#D1180B; color: white;">
-            <th>취소일자</th>
+            <th>일자</th>
             <th>주문번호</th>
-            <th>취소사유</th>
-            <th>취소금액</th>
+            <th>제품명</th>
+            <th>환불수량</th>
+            <th>환불사유</th>
+            <th>환불금액</th>
             <th>처리현황</th>
           </tr>
         <c:forEach items="${map }" var="entry" varStatus="st">
           <tr style="text-align:center;">
-            <td><fmt:formatDate value="${entry.value.get(0).refund_date}" pattern="yyyy-MM-dd" /></td>
-            <td><a href="javascript:list_disp('${entry.key }')">${entry.key }</a></td>
-            <td>${entry.value.get(0).refund_reason}</td>           
-            <td><fmt:formatNumber value="${entry.value.get(0).refund_price }" pattern="###,###"/>원</td>
-            <td>${entry.value.get(0).refund_type }</td>
+            <td><fmt:formatDate value="${entry.key.refund_date}" pattern="yyyy-MM-dd" /></td>
+            <td>${entry.key.refund_orderId }</td>
+            <td>${entry.value.product_name} / ${entry.value.opt_name }</td> 
+            <td>${entry.key.refund_optCount }</td> 
+            <td>${entry.key.refund_reason }</td>         
+            <td><fmt:formatNumber value="${entry.key.refund_price}" pattern="###,###"/>원</td>
+            <td>${entry.key.refund_type }</td>
           </tr>          
-          <!-- 주문 상세정보 -->
-          <tr style="text-align:center;" class="saleLine" id="saleLine${entry.key }">
-            <td colspan="7">
-            <table id="orderDetail${entry.key }" class="table table-borderless">       
-                   
-            </table>
-            </td>
-          </tr>
           </c:forEach>
         </table>
       </div>

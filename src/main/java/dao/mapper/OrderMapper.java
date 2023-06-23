@@ -3,6 +3,7 @@ package dao.mapper;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -30,4 +31,13 @@ public interface OrderMapper {
 
 	@Update("update h_order set order_state = '주문취소' where order_id = #{value}")
 	void updateOrderState(String order_id);
+
+	@Select("select * from orderView where order_id=#{order_id} and opt_number=#{opt_number}")
+	OrderView getOvIdNum(Map<String, Object> param);
+
+	@Delete("delete from h_order where order_id=#{value}")
+	void deleteOrder(String order_id);
+
+	@Select("select * from orderView where mem_id=#{mem_id} and order_state=#{order_state} order by order_date desc")
+	List<OrderView> getOvDelivered(Map<String, Object> param);
 }

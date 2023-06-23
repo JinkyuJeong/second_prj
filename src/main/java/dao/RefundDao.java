@@ -37,4 +37,36 @@ public class RefundDao {
 		param.put("refund_type", refund_type);
 		return template.getMapper(cls).getRefundCancelList(param);
 	}
+
+	public boolean refundInsert(String order_id, Integer opt_number, Integer opt_count, String refund_memId, String refund_reason, int price) {
+		param.clear();
+		param.put("refund_orderId", order_id);
+		param.put("refund_optId", opt_number);
+		param.put("refund_optCount", opt_count);
+		param.put("refund_memId", refund_memId);
+		param.put("refund_reason", refund_reason);
+		param.put("price", price);
+		return template.getMapper(cls).refundInsert(param);
+	}
+
+	public List<Refund> getRefundListOrderId(String order_id) {
+		return template.getMapper(cls).getRefundListOrderId(order_id);
+	}
+
+	public List<Refund> getRefund(String order_id, Integer opt_number) {
+		param.clear();
+		param.put("refund_orderId", order_id);
+		param.put("refund_optId", opt_number);
+		return template.getMapper(cls).getRefund(param);
+	}
+
+	public List<Refund> getRefundListAll(String mem_id, String string, String string2) {
+		param.clear();
+		param.put("mem_id", mem_id);
+		param.put("string", string);
+		param.put("string2", string2);
+		System.out.println(mem_id);
+		System.out.println(string);
+		return template.getMapper(cls).getRefundListAll(param);
+	}
 }

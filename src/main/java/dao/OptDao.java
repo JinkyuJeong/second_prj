@@ -30,4 +30,11 @@ public class OptDao {
 	public ProductOptView getProductOptView(int opt_number) {
 		return template.getMapper(cls).getProductOptView(opt_number);
 	}
+
+	public boolean updateQ(int refund_optId, int refund_optCount) {
+		param.clear();
+		param.put("opt_number", refund_optId);
+		param.put("opt_count", refund_optCount);
+		return template.getMapper(cls).updateQ(param);
+	}
 }

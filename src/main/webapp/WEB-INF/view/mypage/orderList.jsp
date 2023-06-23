@@ -59,7 +59,7 @@
       <h1 class="mb-3">주문조회</h1>
       <div class="row">
         <div class="col-2">
-          <h5>총 <span style="color: red;">${orderCnt }</span>건</h5>
+          <h5>총 <span style="color: red;">${map.size() }</span>건</h5>
         </div>
       </div>
       <div class="row" id="oinfo" class="info">
@@ -73,7 +73,6 @@
             <th>결제금액</th>
             <th>처리현황</th>
             <th>결제취소</th>
-            <th>환불요청</th>
           </tr>
         <c:forEach items="${map }" var="map" varStatus="st">
           <tr style="text-align:center;">
@@ -91,29 +90,6 @@
             	<c:if test="${map.value.get(0).order_state=='결제완료' }">
             		<button type="button" class="btn btn-outline-danger btn-sm" onclick="cancel('${map.key}')">주문취소</button>
             	</c:if>             	           
-            </td>
-            <td>
-            	<c:if test="${map.value.get(0).order_state=='배송완료' }">
-            		<button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">환불신청</button>
-            	</c:if>
-            	<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">환불신청</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        주문번호 '${map.key }' 에 대해 환불신청하시겠습니까?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니요</button>
-        <button type="button" class="btn btn-danger" onclick="location.href='refundReq?mem_id=${sessionScope.loginMem.mem_id}&order_id=${map.key }'">네</button>
-      </div>
-    </div>
-  </div>
-</div>
             </td>
           </tr>
                     
