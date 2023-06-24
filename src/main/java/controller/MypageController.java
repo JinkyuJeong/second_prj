@@ -21,6 +21,7 @@ import dto.Mem;
 import dto.OrderView;
 import dto.ProductOptView;
 import dto.Refund;
+import dto.Review;
 import exception.CloseException;
 import exception.ShopException;
 import service.ShopService;
@@ -119,7 +120,6 @@ public class MypageController {
 	            recentOrders.add(order);
 	        }
 	    }
-	    System.out.println(orderItems);
 		mav.addObject("orderItems", recentOrders);	
 		return mav;
 	}
@@ -197,5 +197,57 @@ public class MypageController {
 		mav.addObject("map", map);
 		mav.addObject("refundList",refundList);
 		return mav;
+	}
+	
+	@GetMapping("reviewReg")
+	public ModelAndView idCheckReviewReg(Integer order_itemId, String mem_id, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		Review review = service.getReviewIsWritten(order_itemId, mem_id);
+		if(review != null) {
+			throw new ShopException("이미 작성한 리뷰가 있습니다.", "reviewList?mem_id="+mem_id);
+		}
+		OrderView ov = service.getOvItemId(order_itemId);
+		mav.addObject("ov", ov);
+		return mav;
+	}
+	
+	@PostMapping("reviewReg")
+	public ModelAndView idCheckReviewRegPost(Integer order_itemId, Review review, String mem_id, HttpSession session) {
+		if(service.addReview(order_itemId, review.getReview_value(), review.getReview_content(), mem_id)) {
+			throw new ShopException("감사합니다. 리뷰가 등록되었습니다.", "reviewList?mem_id="+mem_id);
+		} else {
+			throw new ShopException("죄송합니다. 리뷰 등록 중 오류가 발생했습니다.", "orderList?mem_id="+mem_id);
+		}
+	}
+	
+	@GetMapping("reviewList")
+	public ModelAndView idCheckReviewList(String mem_id, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		List<Review> reviewList = service.getMyReview(mem_id);
+		Map<Review, OrderView> map = new HashMap<>();
+		for(Review r : reviewList) {
+			OrderView ov = service.getOvItemId(r.getOrder_itemId());
+			map.put(r, ov);
+		}
+		mav.addObject("map",map);
+		return mav;
+	}
+	
+	@GetMapping("reviewUpdate")
+	public ModelAndView idCheckReviewUpdate(Integer review_number, String mem_id, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		Review review = service.getReviewNum(review_number);
+		OrderView ov = service.getOvItemId(review.getOrder_itemId());
+		mav.addObject("ov", ov);
+		return mav;
+	}
+	
+	@PostMapping("reviewUpdate")
+	public ModelAndView idCheckReviewUpdatePost(Integer review_number, Integer review_value, String review_content, String mem_id, HttpSession session) {
+		if(service.updateReview(review_number, review_value, review_content)) {
+			throw new ShopException("리뷰가 성공적으로 수정되었습니다.", "reviewList?mem_id="+mem_id);
+		} else {
+			throw new ShopException("죄송합니다. 리뷰 수정 중 오류가 발생했습니다.", "reviewList?mem_id="+mem_id);
+		}
 	}
 }

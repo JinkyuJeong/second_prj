@@ -65,8 +65,6 @@ public class RefundDao {
 		param.put("mem_id", mem_id);
 		param.put("string", string);
 		param.put("string2", string2);
-		System.out.println(mem_id);
-		System.out.println(string);
 		return template.getMapper(cls).getRefundListAll(param);
 	}
 }

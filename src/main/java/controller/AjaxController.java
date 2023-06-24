@@ -174,7 +174,6 @@ public class AjaxController {
 		String msg = "";
 		Mem mem = (Mem) session.getAttribute("loginMem");
 		String mem_id = mem.getMem_id();
-		System.out.println(delivery.getDelivery_postcode());
 		if(service.addDelivery(delivery, mem_id)) {
 			msg = "배송지가 저장되었습니다.";
 		} else {

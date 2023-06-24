@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -196,8 +197,7 @@
 
 		  // 총 상품 금액 업데이트
 		  document.getElementById("totalAmount").textContent = totalAmount.toLocaleString() + "원";
-		}
-	
+		}	
 </script>
 </head>
 <body>
@@ -274,7 +274,7 @@
                   <div class="col-4 text-secondary" style="font-size:30px;" id="totalQuantity"></div>
                   <div class="col-4 text-primary" style="font-size:30px;" id="totalAmount"></div>
                 </div>
-                <div class="row mt-5">
+                <div class="row mt-5 mb-5">
                   <div class="col-6">
                     <button type="button" id="cartBtn" class="btn-light btn-lg" style="width:100%" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                       <i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;&nbsp; 장바구니
@@ -311,30 +311,54 @@
           </div>
         </div>          
       </div>
+      
       <!-- 리뷰 -->
-      <div class="row border">
+      <div class="row">
+      <hr>
         <div class="row">
-            <div class="col" style="font-size:20px;">리뷰(24)</div>
-        </div>     
-        <div class="row mx-5 mt-1 mb-1">
-          <div class="col">★★★★☆</div>
-          <div class="col">hamtori</div>  
-          <div class="col-7">좋아요</div>  
-          <div class="col">23.06.13</div>            
+            <div class="col-10 ms-3" style="font-size:20px;">&nbsp;&nbsp;리뷰(${reviewList.size() })</div>
+            <div class="col-1 text-end" style="font-size:25px;">
+            	<c:if test="${pageNum >1 }">
+      				<a href="javascript:listpage('${pageNum -1 }')" class="w3-bar-item w3-button" style="font-size:20px">&laquo;</a>
+      			</c:if>
+      			<c:if test="${pageNum <= 1 }">
+					<a href="javascript:noPage()" class="w3-bar-item w3-button" style="font-size:20px">&laquo;</a>
+				</c:if>
+            	&nbsp;&nbsp;&nbsp;
+            	<c:if test="${pageNum < maxpage }">
+					<a href="javascript:listpage('${pageNum + 1 }')" class="w3-bar-item w3-button w3-hover-black" style="font-size:20px">&raquo;</a>
+				</c:if>
+				<c:if test="${pageNum >= maxpage }">
+					<a href="javascript:noPage()" class="w3-bar-item w3-button" style="font-size:20px">&raquo;</a>
+				</c:if>
+            </div>
         </div>
-        <div class="row mx-5 mt-1 mb-1">
-          <div class="col">★★★★☆</div>
-          <div class="col">hamtori</div>  
-          <div class="col-7">좋아요</div>  
-          <div class="col">23.06.13</div>            
-        </div>
-        <div class="row mx-5 mt-1 mb-1">
-          <div class="col">★★★★☆</div>
-          <div class="col">hamtori</div>  
-          <div class="col-7">좋아요</div>  
-          <div class="col">23.06.13</div>            
-        </div>
-      </div>
+        <div id="reviewDiv">    
+        <c:forEach items="${reviewList }" var="r">
+        	<div class="row mx-5 mt-1 mb-1">
+          		<div class="col">
+          			<c:if test="${r.review_value== '1' }">
+            			★☆☆☆☆
+            		</c:if>
+            		<c:if test="${r.review_value== '2' }">
+            			★★☆☆☆
+            		</c:if>
+            		<c:if test="${r.review_value== '3' }">
+            			★★★☆☆
+            		</c:if>
+            		<c:if test="${r.review_value== '4' }">
+            			★★★★☆
+            		</c:if>
+            		<c:if test="${r.review_value== '5' }">
+            			★★★★★
+            		</c:if>
+          		</div>
+          		<div class="col">${fn:substring(r.mem_id, 0, 3)}***</div>  
+          		<div class="col-7">${r.review_content }</div>  
+          		<div class="col"><fmt:formatDate value="${r.review_date }" pattern="yyyy.MM.dd" /></div>            
+        	</div>
+        </c:forEach>
+        </div> 
       <!--상품 상세 설명-->
       <div class="row mt-5 justify-content-center">
       	<div class="col-12 text-center">

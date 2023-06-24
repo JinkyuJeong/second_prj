@@ -18,14 +18,20 @@
 			data : {order_id : order_id}, 
 			success : function(result) {
 				var html = ""
-				html+="<tr style='background-color:pink; color:white;'><th>상품명</th><th>옵션명</th><th>상품가격</th><th>주문수량</th><th>상품총액</th></tr>"              	
+				html+="<tr style='background-color:pink; color:white;'><th>상품명</th><th>옵션명</th><th>상품가격</th><th>주문수량</th><th>상품총액</th><th>리뷰쓰기</th></tr>"              	
 				$.each(result, function(index, o) {
 					html += "<tr>";
 					html += "<td>" + o.product_name + "</td>";
 					html += "<td>" + o.opt_name + "</td>";
 					html += "<td>" + o.product_price + "원 </td>";
 					html += "<td>" + o.opt_count + "개 </td>";
-					html += "<td>" + o.product_price * o.opt_count + "원 </td>";
+					html += "<td>" + (o.product_price * (100-o.product_discountRate)/100) * o.opt_count + "원 </td>";
+					if(o.order_state == '배송완료') {
+						html += "<td>";
+						html += "<button type='button' class='btn btn-outline-danger btn-sm' onclick=\"location.href='reviewReg?mem_id=${sessionScope.loginMem.mem_id}&order_itemId=" + o.order_itemId + "'\">";
+						html += "리뷰쓰기</button>";
+						html += "</td>";
+					}					
 					html += "</tr>";
 				})
 				$("#orderDetail"+order_id).html(html);

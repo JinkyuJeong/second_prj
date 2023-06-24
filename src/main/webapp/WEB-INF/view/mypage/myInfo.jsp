@@ -47,7 +47,7 @@
 						<div class="form-group">
 							<label class="mb-1" for="nickname">보유 포인트</label>
 							<div class="input-group mb-3">
-								<input type="text" class="form-control" name="nickname" id="nickname" readonly value="${mem.mem_point }">
+								<input type="text" class="form-control" name="point" id="point" readonly value="${mem.mem_point }">
 							</div>
 						</div>
 

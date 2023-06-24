@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -110,30 +113,16 @@
     <div class="container">
       <h3 class="fw-bold mt-5">👍 호미짐 BEST4 상품</h3>
       <div class="w3-row-padding w3-padding-16 w3-center">
-        <div class="w3-quarter">
-          <h2>Best 1</h2>
-          <a href=""><img src="images/product.jpg" style="width:100%">
-          <h4 class="ms-3">상품명1</h4></a>
-          <div class="ms-3"><span>30,000원</span></div>
-        </div>
-        <div class="w3-quarter">
-          <h2>Best 2</h2>
-          <a href=""><img src="images/product.jpg" style="width:100%">
-          <h4 class="ms-3">상품명2</h4></a>
-          <div class="ms-3"><span>30,000원</span></div>
-        </div>
-        <div class="w3-quarter">
-          <h2>Best 3</h2>
-          <a href=""><img src="images/product.jpg" style="width:100%">
-          <h4 class="ms-3">상품명3</h4></a>
-          <div class="ms-3"><span>30,000원</span></div>
-        </div>
-        <div class="w3-quarter">
-          <h2>Best 4</h2>
-          <a href=""><img src="images/product.jpg" style="width:100%">
-          <h4 class="ms-3">상품명4</h4></a>
-          <div class="ms-3"><span>30,000원</span></div>
-        </div>
+      	<c:forEach items="${top4Products }" var="p" varStatus="st">
+      		<div class="w3-quarter">
+          		<h2>Best ${st.index+1 }</h2>
+          		<a href="product/productDetail?product_number=${p.product_number }"><img src="${path }/img/thumb/${p.product_thumb}" style="width:100%">
+          		<h4 class="ms-3">${p.product_name }</h4></a>
+          		<div class="ms-3">
+          			<span><fmt:formatNumber value="${p.product_price * (100-p.product_discountRate)/100 }" pattern=",###" />원</span>
+          		</div>
+        	</div>
+      	</c:forEach>
       </div>
     </div>
 </body>

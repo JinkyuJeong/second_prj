@@ -39,4 +39,8 @@ public class ProductDao {
 		param.put("product_number", product_number);
 		return template.getMapper(cls).getProduct(param);
 	}
+
+	public List<Product> productListAll() {
+		return template.getMapper(cls).productListAll();
+	}
 }

@@ -38,6 +38,7 @@ public class OrderController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMdd");
         String formattedDate = today.format(formatter);
         int num= Integer.parseInt(service.getMaxOrderId().substring(6,10));
+        if(num==9999) num = 0;
         String formattedNumber = String.format("%04d", num+1);
 		String order_id = formattedDate + formattedNumber;
 		System.out.println(order_id);

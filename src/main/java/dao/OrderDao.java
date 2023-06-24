@@ -76,4 +76,12 @@ public class OrderDao {
 		param.put("order_state", order_state);
 		return template.getMapper(cls).getOvDelivered(param);
 	}
+
+	public OrderView getOvItemId(int order_itemId) {
+		return template.getMapper(cls).getOvItemId(order_itemId);
+	}
+
+	public List<OrderView> getOvProductNum(int product_number) {
+		return template.getMapper(cls).getOvProducdtNum(product_number);
+	}
 }

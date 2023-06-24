@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 public class OrderView {
 	private String order_id;
+	private int order_itemId;
 	private String mem_id;
 	private int order_point;
 	private String order_state;

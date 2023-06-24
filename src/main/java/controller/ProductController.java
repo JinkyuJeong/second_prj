@@ -1,9 +1,14 @@
 package controller;
 
+import java.util.Comparator;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -15,7 +20,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import dto.Opt;
+import dto.OrderView;
 import dto.Product;
+import dto.Review;
+import dto.ReviewView;
 import exception.ShopException;
 import service.ShopService;
 
@@ -46,7 +54,6 @@ public class ProductController {
 		} else if(product_type.equals("3")) {
 			product_type_name = "보조용품";
 		}
-//		product_type_name = service.getProduct_type_name(product_type); //카테고리 테이블 만들면 추가
 		if(searchContent == null || searchContent.equals("")) searchContent="";
 		session.setAttribute("product_type", product_type);
 		int limit=9;
@@ -59,14 +66,78 @@ public class ProductController {
 		
 		List<Product> productList = service.productList(pageNum, limit, product_type, searchContent);
 		
-		//정렬
-		String sort = param.get("sort");
-		if(param.get("sort") != null) {
-			switch(sort) {
-			case "2" : Collections.sort(productList, (u1,u2)-> u1.getProduct_price()*(100-u1.getProduct_discountRate())/100 - (u2.getProduct_price()*(100-u2.getProduct_discountRate())/100)); break;
-			case "3" : Collections.sort(productList, (u1,u2)-> u2.getProduct_price()*(100-u2.getProduct_discountRate())/100 - (u1.getProduct_price()*(100-u1.getProduct_discountRate())/100)); break;
+		// 정렬
+	    String sort = param.get("sort");
+	    if (param.get("sort") != null) {
+	        switch (sort) {
+	            case "1":
+	                Collections.sort(productList, (p1, p2) -> {
+	                    int size1 = service.getOvProductNum(p1.getProduct_number()).size();
+	                    int size2 = service.getOvProductNum(p2.getProduct_number()).size();
+	                    return size2 - size1;
+	                });
+	                break;
+	            case "2":
+	                Collections.sort(productList, (u1, u2) -> u1.getProduct_price() * (100 - u1.getProduct_discountRate()) / 100 - (u2.getProduct_price() * (100 - u2.getProduct_discountRate()) / 100));
+	                break;
+	            case "3":
+	                Collections.sort(productList, (u1, u2) -> u2.getProduct_price() * (100 - u2.getProduct_discountRate()) / 100 - (u1.getProduct_price() * (100 - u1.getProduct_discountRate()) / 100));
+	                break;
+	            case "4":
+	                Collections.sort(productList, Comparator.comparing(Product::getProduct_regdate).reversed());
+	                break;
+	        }
+	    }
+	    
+		Map<Product, List<Review>> map = new LinkedHashMap<>();		
+		for(Product p : productList) {
+			int product_number = p.getProduct_number();
+			List<OrderView> ov = service.getOvProductNum(product_number);
+			List<Review> reviewList = new ArrayList<>();
+			for(OrderView o : ov) {
+				Review review = service.getReviewOrderId(o.getOrder_itemId());
+				reviewList.add(review);
 			}
+			map.put(p,reviewList);
 		}
+		
+		
+	    if (param.get("sort") != null) {
+	        switch (sort) {
+	            case "1":
+	                Collections.sort(productList, (p1, p2) -> {
+	                    int size1 = service.getOvProductNum(p1.getProduct_number()).size();
+	                    int size2 = service.getOvProductNum(p2.getProduct_number()).size();
+	                    return size2 - size1;
+	                });
+	                break;
+	            case "2":
+	                Collections.sort(productList, (u1, u2) -> u1.getProduct_price() * (100 - u1.getProduct_discountRate()) / 100 - (u2.getProduct_price() * (100 - u2.getProduct_discountRate()) / 100));
+	                break;
+	            case "3":
+	                Collections.sort(productList, (u1, u2) -> u2.getProduct_price() * (100 - u2.getProduct_discountRate()) / 100 - (u1.getProduct_price() * (100 - u1.getProduct_discountRate()) / 100));
+	                break;
+	            case "4":
+	                Collections.sort(productList, Comparator.comparing(Product::getProduct_regdate).reversed());
+	                break;
+	            case "5":
+	                // Map.Entry 리스트 생성
+	                List<Map.Entry<Product, List<Review>>> entryList = new ArrayList<>(map.entrySet());
+
+	                // 값(리뷰 리스트) 크기로 정렬
+	                Collections.sort(entryList, (e1, e2) -> e2.getValue().size() - e1.getValue().size());
+
+	                // 정렬된 Map 생성
+	                Map<Product, List<Review>> sortedMap = new LinkedHashMap<>();
+	                for (Map.Entry<Product, List<Review>> entry : entryList) {
+	                    sortedMap.put(entry.getKey(), entry.getValue());
+	                }
+	                map = sortedMap;
+	                break;
+	        }
+	    }
+		
+		mav.addObject("map",map);
 		mav.addObject("productList",productList);
 		mav.addObject("pageNum",pageNum);
 		mav.addObject("maxpage",maxpage);
@@ -87,10 +158,14 @@ public class ProductController {
 		}
 		List<Opt> optList = service.getOption(product.getProduct_number());
 		if(optList == null || optList.size() == 0) {
-			throw new ShopException("상품 준비중입니다.", "prductList");
+			throw new ShopException("상품 준비중입니다.", "productList");
 		}
 		String[] product_pictures = product.getProduct_pictures().split(",");
 		List<String> product_pircturesList = Arrays.asList(product_pictures);
+		//리뷰
+		List<ReviewView> reviewList = service.getReviewProNum(product_number);
+		
+		mav.addObject("reviewList", reviewList);
 		mav.addObject("product",product);
 		mav.addObject("product_pircturesList", product_pircturesList);
 		mav.addObject("optList", optList);

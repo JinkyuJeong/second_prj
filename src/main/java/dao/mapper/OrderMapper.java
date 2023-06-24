@@ -40,4 +40,10 @@ public interface OrderMapper {
 
 	@Select("select * from orderView where mem_id=#{mem_id} and order_state=#{order_state} order by order_date desc")
 	List<OrderView> getOvDelivered(Map<String, Object> param);
+
+	@Select("select * from orderView where order_itemId=#{value}")
+	OrderView getOvItemId(int order_itemId);
+
+	@Select("select * from orderView where product_number=#{value}")
+	List<OrderView> getOvProducdtNum(int product_number);
 }

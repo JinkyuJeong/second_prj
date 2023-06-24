@@ -42,15 +42,15 @@
       <hr>
       <div class="row">
         <div class="col" style="margin-bottom:20px; font-size:20px;">
-        	<a href="productList?sort=1" class="noline ${param.sort == 1 ? 'active' : '' }">주문많은순</a>
-        	<a href="productList?sort=2" class="noline ${param.sort == 2 ? 'active' : '' }">낮은가격순</a>
-        	<a href="productList?sort=3" class="noline ${param.sort == 3 ? 'active' : '' }">높은가격순</a>
-        	<a href="productList?sort=4" class="noline ${param.sort == 4 ? 'active' : '' }">최신등록순</a>
-        	<a href="productList?sort=5" class="noline ${param.sort == 5 ? 'active' : '' }">리뷰많은순</a>
+        	<a href="productList?product_type=${param.product_type }&sort=1" class="noline ${param.sort == 1 ? 'active' : '' }">주문많은순</a>
+        	<a href="productList?product_type=${param.product_type }&sort=2" class="noline ${param.sort == 2 ? 'active' : '' }">낮은가격순</a>
+        	<a href="productList?product_type=${param.product_type }&sort=3" class="noline ${param.sort == 3 ? 'active' : '' }">높은가격순</a>
+        	<a href="productList?product_type=${param.product_type }&sort=4" class="noline ${param.sort == 4 ? 'active' : '' }">최신등록순</a>
+        	<a href="productList?product_type=${param.product_type }&sort=5" class="noline ${param.sort == 5 ? 'active' : '' }">리뷰많은순</a>
         </div>     
       </div>
 	
-	  <c:forEach items="${productList }" var="p" varStatus="st">
+	  <c:forEach items="${map }" var="m" varStatus="st">
 	  		<c:if test="${st.index % 3 == 0}">
     			<div class="row">
   			</c:if>
@@ -59,21 +59,33 @@
 	  		<table class="table">
 	  			<tr>
 	  				<td>	  					
-          				<a href="productDetail?product_number=${p.product_number }"><img src="${path }/img/thumb/${p.product_thumb}" style="width:100%"></a>
+          				<a href="productDetail?product_number=${m.key.product_number }"><img src="${path }/img/thumb/${m.key.product_thumb}" style="width:100%"></a>
           				<div class="row"> 
             				<div class="col-7">            					
-              					<div class="text-primary" style="font-size: 20px;">${p.product_discountRate}%</div>              					
+              					<div class="text-primary" style="font-size: 20px;">${m.key.product_discountRate}%</div>              					
             				</div>
             				<div class="col-2 ms-2">
-            					<c:set var="discounted" value="${p.product_price*(100-p.product_discountRate)/100 }" />
+            					<c:set var="discounted" value="${m.key.product_price*(100-m.key.product_discountRate)/100 }" />
               					<div style="font-size: 20px;"><fmt:formatNumber value="${discounted+(1-(discounted%1))%1}" /></div>
             				</div>
             				<div class="col-1">
-              					<div class="text-secondary" style="font-size: 20px;text-decoration:line-through;"><fmt:formatNumber value="${p.product_price }" pattern=",###" /></div>
+              					<div class="text-secondary" style="font-size: 20px;text-decoration:line-through;"><fmt:formatNumber value="${m.key.product_price }" pattern=",###" /></div>
             				</div>
           				</div>        
-          				<div style="font-size:20px;"><a href="productDetail?product_number=${p.product_number }" style="text-decoration:none;">${p.product_name }</a></div>
-         				<div class="text-secondary"><span>평점 4.8</span><span>  리뷰 34</span></div>        				
+          				<div style="font-size:20px;"><a href="productDetail?product_number=${m.key.product_number }" style="text-decoration:none;">${m.key.product_name }</a></div>
+          				<c:if test="${! empty m.value }">
+          					<c:set var="sum" value="0" />
+          					<c:forEach items="${m.value}" var="review">
+      							<c:set var="sum" value="${sum + review.review_value}" />
+   							</c:forEach>
+   							<c:set var="average" value="${sum / m.value.size()}" />
+          				</c:if>
+         				<div class="text-secondary">
+         					<c:if test="${! empty m.value }">
+         						<span>평점 <fmt:formatNumber value="${average}" pattern="#.0" /></span>
+         					</c:if>         					
+         					<span>  리뷰 ${m.value.size() }</span>
+         				</div>        				
 	  				</td>
 	  			</tr>
 	  		</table>

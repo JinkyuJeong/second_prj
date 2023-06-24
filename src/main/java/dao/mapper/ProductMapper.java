@@ -39,4 +39,7 @@ public interface ProductMapper {
 	@Select("select * from product where product_number=#{product_number}")
 	Product getProduct(Map<String, Object> param);
 
+	@Select("select * from product")
+	List<Product> productListAll();
+
 }

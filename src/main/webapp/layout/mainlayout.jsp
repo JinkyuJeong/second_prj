@@ -72,7 +72,7 @@
   <div class="container mt-1" id="header">
     <div id="logoSearch">
       <div>
-        <a href="${path }/index"><img src="${path }/images/homieGymLogo.png" id="logo" ></a>
+        <a href="${path }/index"><img src="${path }/images/logo.png" id="logo" ></a>
       </div>
       <div>
         <div id="prodMenu"class="ms-5 mt-5">

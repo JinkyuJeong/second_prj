@@ -16,6 +16,7 @@ import dao.PointDao;
 import dao.ProductDao;
 import dao.QnaDao;
 import dao.RefundDao;
+import dao.ReviewDao;
 import dto.Cart;
 import dto.Cs;
 import dto.Delivery;
@@ -28,6 +29,8 @@ import dto.Product;
 import dto.ProductOptView;
 import dto.Qna;
 import dto.Refund;
+import dto.Review;
+import dto.ReviewView;
 @Service
 public class ShopService {
 	@Autowired
@@ -62,6 +65,9 @@ public class ShopService {
 	
 	@Autowired
 	private RefundDao refundDao;
+	
+	@Autowired
+	private ReviewDao reviewDao;
 
 	public List<Product> productList(Integer pageNum, int limit, String product_type, String searchContent) {
 		return productDao.list(pageNum, limit, product_type, searchContent);
@@ -258,6 +264,50 @@ public class ShopService {
 
 	public List<OrderView> getOvDelivered(String mem_id, String order_state) {
 		return orderDao.getOvDelivered(mem_id, order_state);
+	}
+
+	public boolean addReview(Integer order_itemId, int review_value, String review_content, String mem_id) {
+		return reviewDao.addReview(order_itemId, review_value, review_content, mem_id);
+	}
+
+	public List<Review> getMyReview(String mem_id) {
+		return reviewDao.getMyReview(mem_id);
+	}
+
+	public OrderView getOvItemId(int order_itemId) {
+		return orderDao.getOvItemId(order_itemId);
+	}
+
+	public Review getReviewNum(Integer review_number) {
+		return reviewDao.getReivewNum(review_number);
+	}
+
+	public boolean updateReview(Integer review_number, int review_value, String review_content) {
+		return reviewDao.updateReview(review_number, review_value, review_content);
+	}
+
+	public Review getReviewIsWritten(Integer order_itemId, String mem_id) {
+		return reviewDao.getReviewIsWritten(order_itemId, mem_id);
+	}
+
+	public List<OrderView> getOvProductNum(int product_number) {
+		return orderDao.getOvProductNum(product_number);
+	}
+
+	public Review getReviewOrderId(int order_itemId) {
+		return reviewDao.getReviewOrderId(order_itemId);
+	}
+
+	public Review getReviewOrderIdPaging(int order_itemId, int i, int j) {
+		return reviewDao.getReviewOrderIdPaging(order_itemId, i, j);
+	}
+
+	public List<ReviewView> getReviewProNum(Integer product_number) {
+		return reviewDao.getReviewProNum(product_number);
+	}
+
+	public List<Product> productListAll() {
+		return productDao.productListAll();
 	}
 
 }

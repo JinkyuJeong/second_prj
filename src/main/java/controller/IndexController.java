@@ -1,5 +1,8 @@
 package controller;
 
+import java.util.Collections;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import dto.Cs;
 import dto.Mem;
+import dto.Product;
 import exception.ShopException;
 import service.ShopService;
 
@@ -22,8 +26,19 @@ public class IndexController {
 	private ShopService service;
 	
     @RequestMapping("/index")
-    public String root() {
-        return "main";
+    public ModelAndView root() {
+    	ModelAndView mav = new ModelAndView();
+    	List<Product> productList = service.productListAll();
+    	Collections.sort(productList, (p1, p2) -> {
+    	    int size1 = service.getOvProductNum(p1.getProduct_number()).size();
+    	    int size2 = service.getOvProductNum(p2.getProduct_number()).size();
+    	    return size2 - size1;
+    	});
+
+    	List<Product> top4Products = productList.subList(0, Math.min(productList.size(), 4));
+    	mav.addObject("top4Products", top4Products);
+    	mav.setViewName("main");
+        return mav;
     }
     
     @RequestMapping("/qna")
