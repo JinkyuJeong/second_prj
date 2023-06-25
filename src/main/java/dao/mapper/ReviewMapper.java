@@ -3,6 +3,7 @@ package dao.mapper;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -36,5 +37,11 @@ public interface ReviewMapper {
 
 	@Select("select * from reviewView where product_number=#{value} ORDER BY review_date desc")
 	List<ReviewView> getReviewProNum(Integer product_number);
+
+	@Delete("delete from review where review_number=#{value}")
+	boolean deleteReview(Integer review_number);
+
+	@Select("select * from reviewView where product_number=#{product_number} ORDER BY review_date DESC LIMIT ${startIndex}, #{pageSize};")
+	List<ReviewView> getReviewList(Map<String, Object> param);
 
 }

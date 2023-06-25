@@ -49,7 +49,7 @@ public class OrderController {
 		if(service.addOrder(order_id, deliver_receiver, mem.getMem_id(), delivery_postcode, delivery_address, delivery_detailAddress,
 				delivery_cost, order_point, phoneno, orderMsg, order_totalPay)) {
 			service.usePoint(order_point, mem.getMem_id());
-			System.out.println("주문, 결제 완료");
+			service.pointUsedStore(order_point, mem.getMem_id());
 		} else {
 			throw new ShopException("죄송합니다. 주문 시 오류가 발생했습니다.", "/second_prj/cart/cartAdd");
 		}

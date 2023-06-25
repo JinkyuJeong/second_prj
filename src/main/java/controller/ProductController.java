@@ -89,15 +89,10 @@ public class ProductController {
 	        }
 	    }
 	    
-		Map<Product, List<Review>> map = new LinkedHashMap<>();		
+		Map<Product, List<ReviewView>> map = new LinkedHashMap<>();		
 		for(Product p : productList) {
 			int product_number = p.getProduct_number();
-			List<OrderView> ov = service.getOvProductNum(product_number);
-			List<Review> reviewList = new ArrayList<>();
-			for(OrderView o : ov) {
-				Review review = service.getReviewOrderId(o.getOrder_itemId());
-				reviewList.add(review);
-			}
+			List<ReviewView> reviewList = service.getReviewProNum(product_number);
 			map.put(p,reviewList);
 		}
 		
@@ -122,14 +117,14 @@ public class ProductController {
 	                break;
 	            case "5":
 	                // Map.Entry 리스트 생성
-	                List<Map.Entry<Product, List<Review>>> entryList = new ArrayList<>(map.entrySet());
+	                List<Map.Entry<Product, List<ReviewView>>> entryList = new ArrayList<>(map.entrySet());
 
 	                // 값(리뷰 리스트) 크기로 정렬
 	                Collections.sort(entryList, (e1, e2) -> e2.getValue().size() - e1.getValue().size());
 
 	                // 정렬된 Map 생성
-	                Map<Product, List<Review>> sortedMap = new LinkedHashMap<>();
-	                for (Map.Entry<Product, List<Review>> entry : entryList) {
+	                Map<Product, List<ReviewView>> sortedMap = new LinkedHashMap<>();
+	                for (Map.Entry<Product, List<ReviewView>> entry : entryList) {
 	                    sortedMap.put(entry.getKey(), entry.getValue());
 	                }
 	                map = sortedMap;
@@ -169,6 +164,7 @@ public class ProductController {
 		mav.addObject("product",product);
 		mav.addObject("product_pircturesList", product_pircturesList);
 		mav.addObject("optList", optList);
+		mav.addObject("pageNum",1);
 		return mav;
 	}
 }

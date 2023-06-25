@@ -25,6 +25,7 @@ import dto.Opt;
 import dto.Order;
 import dto.OrderItem;
 import dto.OrderView;
+import dto.Point;
 import dto.Product;
 import dto.ProductOptView;
 import dto.Qna;
@@ -214,8 +215,8 @@ public class ShopService {
 		refundDao.addRefund(order_id, optId, mem_id, price);
 	}
 
-	public void updateOrderState(String order_id) {
-		orderDao.updateOrderState(order_id);
+	public void updateOrderState(String order_id, String order_state) {
+		orderDao.updateOrderState(order_id, order_state);
 	}
 
 	public List<Refund> getRefundList(String mem_id) {
@@ -258,8 +259,8 @@ public class ShopService {
 		return refundDao.getRefund(order_id, opt_number);
 	}
 
-	public List<Refund> getRefundListAll(String mem_id, String string, String string2) {
-		return refundDao.getRefundListAll(mem_id, string, string2);
+	public List<Refund> getRefundListAll(String mem_id, String string) {
+		return refundDao.getRefundListAll(mem_id, string);
 	}
 
 	public List<OrderView> getOvDelivered(String mem_id, String order_state) {
@@ -308,6 +309,30 @@ public class ShopService {
 
 	public List<Product> productListAll() {
 		return productDao.productListAll();
+	}
+
+	public void pointUsedStore(Integer order_point, String mem_id) {
+		pointDao.pointUsedStore(order_point, mem_id);
+	}
+
+	public boolean deleteReview(Integer review_number) {
+		return reviewDao.deleteReview(review_number);
+	}
+
+	public List<Point> getMyPoint(String mem_id) {
+		return pointDao.getMyPoint(mem_id);
+	}
+
+	public List<Point> getMyPointReceived(String mem_id, String point_type) {
+		return pointDao.getMyPointReceived(mem_id, point_type);
+	}
+
+	public List<Point> getMyPointUsed(String mem_id, String point_type) {
+		return pointDao.getMyPointUsed(mem_id, point_type);
+	}
+
+	public List<ReviewView> getReviewList(int product_number, int startIndex, int pageSize) {
+		return reviewDao.getReviewList(product_number, startIndex, pageSize);
 	}
 
 }

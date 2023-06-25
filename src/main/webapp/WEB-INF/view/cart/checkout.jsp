@@ -403,7 +403,7 @@
                 <p class="card-text">할인: - <fmt:formatNumber value="${discounted }" pattern=",###"/>원</p>
                 <p class="card-text">배송비: + <fmt:formatNumber value="${delivery_cost }" pattern=",###"/>원</p>
                 <p class="card-text"> 포인트 사용 : 
-                	<input type="text" name="order_point" id="order_point"> p &nbsp; <span style="color:grey;">(회원님의 보유 포인트 : <fmt:formatNumber value="${mem.mem_point }" pattern=",###"/> P)</span>
+                	<input type="text" name="order_point" id="order_point"> p <br><span style="color:grey;">(회원님의 보유 포인트 : <fmt:formatNumber value="${mem.mem_point }" pattern=",###"/> P)</span>
                 	<br>
                 	<span id="pointMsg" style="color:red;font-size:10px;"></span>
                 </p>

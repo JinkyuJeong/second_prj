@@ -55,8 +55,11 @@ public class OrderDao {
 		return template.getMapper(cls).getOvList(param);
 	}
 
-	public void updateOrderState(String order_id) {
-		template.getMapper(cls).updateOrderState(order_id);
+	public void updateOrderState(String order_id, String order_state) {
+		param.clear();
+		param.put("order_id", order_id);
+		param.put("order_state", order_state);
+		template.getMapper(cls).updateOrderState(param);
 	}
 
 	public OrderView getOvIdNum(String order_id, Integer opt_number) {

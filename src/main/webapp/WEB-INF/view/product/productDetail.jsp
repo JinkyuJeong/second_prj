@@ -35,8 +35,13 @@
     slides[slideIndex].style.display = "block";
   }
 </script>
-<script>
+<script type="text/javascript">	
+	var pageNum;
 	$(function() {
+		//리뷰 페이징
+		pageNum = 1;
+		listpage(pageNum);
+		
 		$("#optionSelect").change(function () {
 			addSelectedOption();			
 		})
@@ -197,7 +202,69 @@
 
 		  // 총 상품 금액 업데이트
 		  document.getElementById("totalAmount").textContent = totalAmount.toLocaleString() + "원";
-		}	
+	}	
+	
+	//리뷰 페이징
+	var pageNum = ${pageNum};
+	function listpage(newPageNum) {		
+		$.ajax({
+	        type: "POST",
+	        url: "${path}/ajax/reviewAjax",
+	        data: { pageNum: newPageNum, product_number : ${param.product_number}},
+	        success: function (result) {
+	            $("#reviewDiv").html("");
+	            var html = "";
+	            result.forEach(function (r) {
+	                var reviewValue = "";
+	                if (r.review_value == '1') {
+	                    reviewValue = "★☆☆☆☆";
+	                } else if (r.review_value == '2') {
+	                    reviewValue = "★★☆☆☆";
+	                } else if (r.review_value == '3') {
+	                    reviewValue = "★★★☆☆";
+	                } else if (r.review_value == '4') {
+	                    reviewValue = "★★★★☆";
+	                } else if (r.review_value == '5') {
+	                    reviewValue = "★★★★★";
+	                }	                
+	                html += '<div class="row mx-5 mt-1 mb-1">';
+	                html += '	<div class="col">' + reviewValue + '</div>' 
+					if(r.mem_id == null || r.mem_id == '') {
+						html += ' <div class="col">탈퇴한 회원</div>';
+					} else {
+						html += ' <div class="col">' + r.mem_id.substring(0, 3) + '***</div>';
+					}
+	                html += ' <div class="col-7">' + r.review_content + '</div>';
+	                html += ' <div class="col">' + new Date(r.review_date).toLocaleDateString("ko-KR", { year: 'numeric', month: '2-digit', day: '2-digit' }) + '</div>';
+	                html += '</div>'; 	                    
+	            })
+	            $("#reviewDiv").html(html);
+	            pageNum = newPageNum;
+	        },
+	        error: function (e) {
+	            console.log(e.status);
+	        }
+		});
+	}
+	function noPage() {
+		alert("페이지가 존재하지 않습니다.");
+	}
+	// 이전 페이지로 이동하는 함수
+	function goToPreviousPage() {
+	    var previousPage = pageNum - 1;
+	    if (previousPage >= 1) {
+	        listpage(previousPage);
+	    }
+	}
+
+	// 다음 페이지로 이동하는 함수
+	function goToNextPage() {
+	    var nextPage = pageNum + 1;
+	    listpage(nextPage);
+	}
+	//리뷰 페이징 끝
+	
+	
 </script>
 </head>
 <body>
@@ -316,48 +383,15 @@
       <div class="row">
       <hr>
         <div class="row">
-            <div class="col-10 ms-3" style="font-size:20px;">&nbsp;&nbsp;리뷰(${reviewList.size() })</div>
-            <div class="col-1 text-end" style="font-size:25px;">
-            	<c:if test="${pageNum >1 }">
-      				<a href="javascript:listpage('${pageNum -1 }')" class="w3-bar-item w3-button" style="font-size:20px">&laquo;</a>
-      			</c:if>
-      			<c:if test="${pageNum <= 1 }">
-					<a href="javascript:noPage()" class="w3-bar-item w3-button" style="font-size:20px">&laquo;</a>
-				</c:if>
-            	&nbsp;&nbsp;&nbsp;
-            	<c:if test="${pageNum < maxpage }">
-					<a href="javascript:listpage('${pageNum + 1 }')" class="w3-bar-item w3-button w3-hover-black" style="font-size:20px">&raquo;</a>
-				</c:if>
-				<c:if test="${pageNum >= maxpage }">
-					<a href="javascript:noPage()" class="w3-bar-item w3-button" style="font-size:20px">&raquo;</a>
-				</c:if>
+            <div class="col-9 ms-3" style="font-size:20px;">&nbsp;&nbsp;리뷰(${reviewList.size() })</div>
+            <input type="hidden" name="pageNum" id="pageNum" value="1">
+            <div class="col-2 text-end" style="font-size:25px;">
+      			<a href="javascript:goToPreviousPage()" class="w3-bar-item w3-button w3-hover-black" style="font-size:20px">&laquo;</a>
+				<a href="javascript:goToNextPage()" class="w3-bar-item w3-button w3-hover-black" style="font-size:20px">&raquo;</a>
             </div>
         </div>
         <div id="reviewDiv">    
-        <c:forEach items="${reviewList }" var="r">
-        	<div class="row mx-5 mt-1 mb-1">
-          		<div class="col">
-          			<c:if test="${r.review_value== '1' }">
-            			★☆☆☆☆
-            		</c:if>
-            		<c:if test="${r.review_value== '2' }">
-            			★★☆☆☆
-            		</c:if>
-            		<c:if test="${r.review_value== '3' }">
-            			★★★☆☆
-            		</c:if>
-            		<c:if test="${r.review_value== '4' }">
-            			★★★★☆
-            		</c:if>
-            		<c:if test="${r.review_value== '5' }">
-            			★★★★★
-            		</c:if>
-          		</div>
-          		<div class="col">${fn:substring(r.mem_id, 0, 3)}***</div>  
-          		<div class="col-7">${r.review_content }</div>  
-          		<div class="col"><fmt:formatDate value="${r.review_date }" pattern="yyyy.MM.dd" /></div>            
-        	</div>
-        </c:forEach>
+
         </div> 
       <!--상품 상세 설명-->
       <div class="row mt-5 justify-content-center">

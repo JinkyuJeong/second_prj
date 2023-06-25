@@ -23,6 +23,8 @@ import dto.Opt;
 import dto.OrderView;
 import dto.Product;
 import dto.ProductOptView;
+import dto.Refund;
+import dto.ReviewView;
 import exception.CloseException;
 import exception.ShopException;
 import service.ShopService;
@@ -228,8 +230,20 @@ public class AjaxController {
 			int price = ov.getOrder_totalPay();
 			service.addRefund(order_id, optId, sessionMem.getMem_id(), price);			
 		}
-		service.updateOrderState(order_id);
+		service.updateOrderState(order_id, "주문취소");
 		return "주문이 취소되었습니다. 취소 내역은 마이페이지의 취소/환불 내역에서 확인 가능합니다.";
+	}
+	
+	@RequestMapping(value="orderConfig", produces = "text/plain; charset=UTF-8")
+	@ResponseBody
+	public String loginCheckorderConfig(String order_id, HttpSession session) {
+		List<Refund> refundList = service.getRefundListOrderId(order_id);
+		if(refundList != null) {
+			return "환불신청 내역이 있는 주문은 구매확정할 수 없습니다.";
+		} else {
+			service.updateOrderState(order_id, "구매확정");
+			return "감사합니다. 주문이 확정되었습니다.";
+		}		
 	}
 	
 	@RequestMapping("csDetail")
@@ -253,4 +267,13 @@ public class AjaxController {
 		return Integer.parseInt(ov.getOpt_count());
 	}
 	
+	@RequestMapping("reviewAjax")
+	@ResponseBody
+	public List<ReviewView> reviewAjax(@RequestParam("pageNum") int pageNum, int product_number) {
+		int pageSize = 3; // 한 페이지에 표시되는 리뷰 수
+    	int startIndex = (pageNum - 1) * pageSize; // 현재 페이지의 시작 인덱스 계산
+    	int endIndex = startIndex + pageSize; // 현재 페이지의 끝 인덱스 계산
+		List<ReviewView> reviewList = service.getReviewList(product_number, startIndex, pageSize);
+		return reviewList;
+	}
 }

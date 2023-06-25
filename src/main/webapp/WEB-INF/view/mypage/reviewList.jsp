@@ -19,6 +19,7 @@
 			</div>
 			<div style="flex-basis: 80%;">
       <h1 class="mb-3">리뷰관리</h1>
+      <h6 class="text-secondary">*이미 포인트가 지급된 건에 대해서는 리뷰 삭제가 불가합니다. (포인트 지급내역은 <span style="font-weight:bold;">마이페이지 > 포인트 내역</span> 에서 확인 가능합니다.)</h6>
       <div class="row">
         <div class="col-7">
           <h5>총 <span style="color: red;">${map.size() }</span>건</h5>
@@ -63,8 +64,26 @@
             <td>${m.key.review_content }</td>           
             <td>${m.value.product_name }</td>
             <td><button type="button" class="btn btn-outline-danger btn-sm" onclick="location.href='reviewUpdate?mem_id=${sessionScope.loginMem.mem_id}&review_number=${m.key.review_number }'">리뷰수정</button></td>
-            <td><button type="button" class="btn btn-outline-danger btn-sm" onclick="location.href='reviewDelete?mem_id=${sessionScope.loginMem.mem_id}&order_itemId=${m.key.order_itemId }'">리뷰삭제</button></td>
-          </tr>          
+            <td><button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteReview">리뷰삭제</button></td>
+          </tr> 
+          <!-- Modal -->
+<div class="modal fade" id="deleteReview" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">리뷰 삭제</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        '${m.value.product_name }' 에 대한 리뷰를 삭제하시겠습니까?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+        <button type="button" class="btn btn-danger" onclick="location.href='reviewDelete?mem_id=${sessionScope.loginMem.mem_id}&review_number=${m.key.review_number }'">삭제하기</button>
+      </div>
+    </div>
+  </div>
+</div>         
           </c:forEach>
         </table>
         
