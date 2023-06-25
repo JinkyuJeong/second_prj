@@ -66,4 +66,16 @@ public class ReviewDao {
 	public List<ReviewView> getReviewProNum(Integer product_number) {
 		return template.getMapper(cls).getReviewProNum(product_number);
 	}
+
+	public boolean deleteReview(Integer review_number) {
+		return template.getMapper(cls).deleteReview(review_number);
+	}
+
+	public List<ReviewView> getReviewList(int product_number, int startIndex, int pageSize) {
+		param.clear();
+		param.put("product_number", product_number);
+		param.put("startIndex", startIndex);
+		param.put("pageSize", pageSize);
+		return template.getMapper(cls).getReviewList(param);
+	}
 }

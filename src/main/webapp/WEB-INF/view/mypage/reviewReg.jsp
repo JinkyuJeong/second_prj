@@ -20,11 +20,12 @@
 			<div style="flex-basis: 70%; margin-left: 150px;">
 					<h1 style="width:70%; padding: 5px; margin-bottom: 15px;">리뷰쓰기</h1>
 					<form action="reviewReg?mem_id=${sessionScope.loginMem.mem_id }" method="POST" name="f">
+					<input type="hidden" name="order_itemId" id="order_itemId" value="${ov.order_itemId }">
 					<div>
 						<div class="form-group mb-3">
 							<label class="mb-1" for="order_itemId">상품정보</label>
 							<div class="input-group mb-3">
-								<input type="text" class="form-control" name="order_itemId" id="order_itemId" readonly value="${ov.product_name }" >
+								<input type="text" class="form-control" name="product_name" id="product_name" readonly value="${ov.product_name }" >
 							</div>
 						</div>
 						

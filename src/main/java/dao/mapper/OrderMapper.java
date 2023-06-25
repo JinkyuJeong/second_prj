@@ -29,8 +29,8 @@ public interface OrderMapper {
 	@Select("select * from orderView where mem_id=#{mem_id} and order_id=#{order_id} order by order_date desc")
 	List<OrderView> getOvList(Map<String, Object> param);
 
-	@Update("update h_order set order_state = '주문취소' where order_id = #{value}")
-	void updateOrderState(String order_id);
+	@Update("update h_order set order_state = #{order_state} where order_id = #{order_id}")
+	void updateOrderState(Map<String, Object> param);
 
 	@Select("select * from orderView where order_id=#{order_id} and opt_number=#{opt_number}")
 	OrderView getOvIdNum(Map<String, Object> param);

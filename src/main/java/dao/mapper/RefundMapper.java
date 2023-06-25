@@ -30,6 +30,6 @@ public interface RefundMapper {
 	@Select("select * from refund where refund_orderId = #{refund_orderId} and refund_optId=#{refund_optId}")
 	List<Refund> getRefund(Map<String, Object> param);
 
-	@Select("select * from refund WHERE refund_memId=#{mem_id} AND refund_type IN (#{string}, #{string2})")
+	@Select("select * from refund WHERE refund_memId=#{mem_id} AND refund_type != #{string}")
 	List<Refund> getRefundListAll(Map<String, Object> param);
 }

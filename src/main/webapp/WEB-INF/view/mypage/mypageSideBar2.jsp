@@ -29,6 +29,9 @@
     <a href="${path}/mypage/reviewList?mem_id=${sessionScope.loginMem.mem_id}" 
     class="w3-bar-item w3-button w3-padding <c:if test='${url=="user" }'>w3-blue</c:if>">
     <i class="fa fa-users fa-fw"></i>&nbsp; 리뷰관리</a>
+    <a href="${path}/mypage/pointList?mem_id=${sessionScope.loginMem.mem_id}" 
+    class="w3-bar-item w3-button w3-padding <c:if test='${url=="user" }'>w3-blue</c:if>">
+    <i class="fa fa-users fa-fw"></i>&nbsp; 포인트 내역</a>
     <hr>
     <a href="${path}/mypage/cs?mem_id=${sessionScope.loginMem.mem_id}" 
     class="w3-bar-item w3-button w3-padding <c:if test='${url=="board" && boardid=="1" }'>w3-blue </c:if>">

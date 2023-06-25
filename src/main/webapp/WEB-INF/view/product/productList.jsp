@@ -54,7 +54,7 @@
 	  		<c:if test="${st.index % 3 == 0}">
     			<div class="row">
   			</c:if>
-  			<c:if test='${p.product_discountRate != 0 }'>
+  			<c:if test='${m.key.product_discountRate != 0 }'>
   			<div class="col-4">
 	  		<table class="table">
 	  			<tr>
@@ -91,23 +91,35 @@
 	  		</table>
 	  		</div>
 	  		</c:if>
-	  		<c:if test='${p.product_discountRate == 0 }'>
+	  		<c:if test='${m.key.product_discountRate == 0 }'>
   			<div class="col-4">
 	  		<table class="table">
 	  			<tr>
 	  				<td>	  					
-          				<a href="productDetail?product_number=${p.product_number }"><img src="${path }/img/thumb/${p.product_thumb}" style="width:100%"></a>
+          				<a href="productDetail?product_number=${m.key.product_number }"><img src="${path }/img/thumb/${m.key.product_thumb}" style="width:100%"></a>
           				<div class="row"> 
             				<div class="col-7">              					
             				</div>
             				<div class="col-2 ms-2">
             				</div>
             				<div class="col-1">
-              					<div style="font-size: 20px; text-align:right;"><fmt:formatNumber value="${p.product_price }" pattern=",###" /></div>
+              					<div style="font-size: 20px; text-align:right;"><fmt:formatNumber value="${m.key.product_price }" pattern=",###" /></div>
             				</div>
           				</div>        
-          				<div style="font-size:20px;"><a href="productDetail?product_number=${p.product_number }" style="text-decoration:none;">${p.product_name }</a></div>
-         				<div class="text-secondary"><span>평점 4.8</span><span>  리뷰 34</span></div>        				
+          				<div style="font-size:20px;"><a href="productDetail?product_number=${m.key.product_number }" style="text-decoration:none;">${m.key.product_name }</a></div>
+         				<c:if test="${! empty m.value }">
+          					<c:set var="sum" value="0" />
+          					<c:forEach items="${m.value}" var="review">
+      							<c:set var="sum" value="${sum + review.review_value}" />
+   							</c:forEach>
+   							<c:set var="average" value="${sum / m.value.size()}" />
+          				</c:if>
+         				<div class="text-secondary">
+         					<c:if test="${! empty m.value }">
+         						<span>평점 <fmt:formatNumber value="${average}" pattern="#.0" /></span>
+         					</c:if>         					
+         					<span>  리뷰 ${m.value.size() }</span>
+         				</div>      				
 	  				</td>
 	  			</tr>
 	  		</table>

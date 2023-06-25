@@ -60,11 +60,10 @@ public class RefundDao {
 		return template.getMapper(cls).getRefund(param);
 	}
 
-	public List<Refund> getRefundListAll(String mem_id, String string, String string2) {
+	public List<Refund> getRefundListAll(String mem_id, String string) {
 		param.clear();
 		param.put("mem_id", mem_id);
 		param.put("string", string);
-		param.put("string2", string2);
 		return template.getMapper(cls).getRefundListAll(param);
 	}
 }

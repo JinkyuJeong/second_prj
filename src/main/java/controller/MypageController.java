@@ -19,6 +19,7 @@ import dto.Cs;
 import dto.Delivery;
 import dto.Mem;
 import dto.OrderView;
+import dto.Point;
 import dto.ProductOptView;
 import dto.Refund;
 import dto.Review;
@@ -182,11 +183,13 @@ public class MypageController {
 		ModelAndView mav = new ModelAndView();
 		List<Refund> refundList = new ArrayList<>();
 		if(refund_type == null) {
-			refundList = service.getRefundListAll(mem_id, "환불대기", "환불승인");
+			refundList = service.getRefundListAll(mem_id, "주문취소");
 		} else if(refund_type.equals("환불대기")) {
 			refundList = service.getRefundCancelList(mem_id, "환불대기");
 		} else if(refund_type.equals("환불승인")) {
 			refundList = service.getRefundCancelList(mem_id, "환불승인");
+		} else if(refund_type.equals("환불반려")) {
+			refundList = service.getRefundCancelList(mem_id, "환불반려");
 		}
 		Map<Refund, ProductOptView> map = new HashMap<>();
 		for (Refund refund : refundList) {
@@ -212,8 +215,8 @@ public class MypageController {
 	}
 	
 	@PostMapping("reviewReg")
-	public ModelAndView idCheckReviewRegPost(Integer order_itemId, Review review, String mem_id, HttpSession session) {
-		if(service.addReview(order_itemId, review.getReview_value(), review.getReview_content(), mem_id)) {
+	public ModelAndView idCheckReviewRegPost(Integer order_itemId, Integer review_value, String review_content,String mem_id, HttpSession session) {
+		if(service.addReview(order_itemId, review_value, review_content, mem_id)) {
 			throw new ShopException("감사합니다. 리뷰가 등록되었습니다.", "reviewList?mem_id="+mem_id);
 		} else {
 			throw new ShopException("죄송합니다. 리뷰 등록 중 오류가 발생했습니다.", "orderList?mem_id="+mem_id);
@@ -250,4 +253,33 @@ public class MypageController {
 			throw new ShopException("죄송합니다. 리뷰 수정 중 오류가 발생했습니다.", "reviewList?mem_id="+mem_id);
 		}
 	}
+	
+	@RequestMapping("reviewDelete")
+	public String idCheckReviewDelete(Integer review_number, String mem_id, HttpSession session) {
+		Review review = service.getReviewNum(review_number);
+		if(review.getReview_state().equals("지급완료")) {
+			throw new ShopException("이미 포인트가 지급된 건에 대해서는 리뷰 삭제가 불가합니다.", "reviewList?mem_id="+mem_id);
+		}
+		if(!service.deleteReview(review_number)) {
+			throw new ShopException("죄송합니다. 리뷰 삭제 중 오류가 발생했습니다.", "reviewList?mem_id="+mem_id);
+		} else {
+			return "redirect:reviewList?mem_id="+mem_id;
+		}
+	}
+	
+	@GetMapping("pointList")
+	public ModelAndView idCheckPointList(String point_type, String mem_id, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		List<Point> pointList = new ArrayList<>();
+		if(point_type == null || point_type.equals("")) {
+			pointList = service.getMyPoint(mem_id);
+		} else if (point_type.equals("else")) {
+			pointList = service.getMyPointReceived(mem_id, "포인트 사용");
+		} else if (point_type.equals("used")) {
+			pointList = service.getMyPointUsed(mem_id, "포인트 사용");
+		}
+		mav.addObject("pointList",pointList);
+		return mav;
+	}
+	
 }

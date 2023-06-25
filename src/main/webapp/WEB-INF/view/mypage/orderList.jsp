@@ -26,7 +26,7 @@
 					html += "<td>" + o.product_price + "원 </td>";
 					html += "<td>" + o.opt_count + "개 </td>";
 					html += "<td>" + (o.product_price * (100-o.product_discountRate)/100) * o.opt_count + "원 </td>";
-					if(o.order_state == '배송완료') {
+					if(o.order_state == '구매확정') {
 						html += "<td>";
 						html += "<button type='button' class='btn btn-outline-danger btn-sm' onclick=\"location.href='reviewReg?mem_id=${sessionScope.loginMem.mem_id}&order_itemId=" + o.order_itemId + "'\">";
 						html += "리뷰쓰기</button>";
@@ -53,6 +53,19 @@
 			}
 		});
 	}
+	function orderConfig(order_id) {
+		$.ajax({
+			url : "${path}/ajax/orderConfig",
+			method : "POST",
+			data : { order_id: order_id },
+			success : function(result) {
+				alert(result);
+			}, 
+			error : function(e) {
+				alert("[ajax] 주문취소 오류 : " + e.status);
+			}
+		});
+	}
 </script>
 </head>
 <body>
@@ -63,6 +76,8 @@
 			</div>
 			<div style="flex-basis: 80%;">
       <h1 class="mb-3">주문조회</h1>
+      <h6 class="text-secondary">*환불신청은 마이페이지 > 환불신청에서 하실 수 있습니다.</h6>
+      <h6 class="text-secondary">*리뷰작성은 구매확정이 된 주문 건만 작성 가능합니다.</h6>
       <div class="row">
         <div class="col-2">
           <h5>총 <span style="color: red;">${map.size() }</span>건</h5>
@@ -79,6 +94,7 @@
             <th>결제금액</th>
             <th>처리현황</th>
             <th>결제취소</th>
+            <th>구매확정</th>
           </tr>
         <c:forEach items="${map }" var="map" varStatus="st">
           <tr style="text-align:center;">
@@ -95,6 +111,11 @@
             <td>
             	<c:if test="${map.value.get(0).order_state=='결제완료' }">
             		<button type="button" class="btn btn-outline-danger btn-sm" onclick="cancel('${map.key}')">주문취소</button>
+            	</c:if>             	           
+            </td>
+            <td>
+            	<c:if test="${map.value.get(0).order_state=='배송완료' }">
+            		<button type="button" class="btn btn-outline-danger btn-sm" onclick="orderConfig('${map.key}')">주문확정</button>
             	</c:if>             	           
             </td>
           </tr>
