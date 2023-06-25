@@ -11,12 +11,14 @@ import admin.dao.AdminManagerDao;
 import admin.dao.AdminMemDao;
 import admin.dao.AdminPointDao;
 import admin.dao.AdminQnaDao;
+import admin.dao.AdminReviewDao;
 import dto.Cs;
 import dto.Delivery;
 import dto.Manager;
 import dto.Mem;
 import dto.Point;
 import dto.Qna;
+import dto.ReviewView;
 
 @Service
 public class AdminManageService {
@@ -31,6 +33,8 @@ public class AdminManageService {
 	private AdminMemDao memDao;
 	@Autowired
 	private AdminPointDao pointDao;
+	@Autowired
+	private AdminReviewDao reviewDao;
 
 	public boolean regQna(Qna qna) {
 		return qnaDao.regQna(qna);
@@ -184,6 +188,15 @@ public class AdminManageService {
 
 	public boolean pointDel(Integer point_number) {
 		return pointDao.pointDel(point_number);
+	}
+
+	public int reviewCnt(String f, String query, String sd, String ed, String review_state) {
+		return reviewDao.reviewCnt(f, query, sd, ed, review_state);
+	}
+
+	public List<ReviewView> getReviewList(Integer pageNum, String f, String query, String sd, String ed,
+			String review_state) {
+		return reviewDao.getReviewList(pageNum, f, query, sd, ed, review_state);
 	}
 
 

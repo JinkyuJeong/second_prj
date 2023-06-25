@@ -14,4 +14,6 @@ public class ReviewView {
 	private Date review_date;
 	private String review_state;
 	private int product_number;
+	private String product_name;
+	private String product_thumb;
 }

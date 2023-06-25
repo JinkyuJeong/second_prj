@@ -237,7 +237,7 @@
 				  <button type="button" onclick="location.href='orderList?pageNum=${pageNum}&sd=${sd}&ed=${ed}&f=${param.f}&query=${param.query}&order_state=배송중'" class="btn btn-outline-custom-orange btn-sm ${order_state eq '배송중' ? 'active-orange' : '' }">배송중</button>
 				  <button type="button" onclick="location.href='orderList?pageNum=${pageNum}&sd=${sd}&ed=${ed}&f=${param.f}&query=${param.query}&order_state=배송완료'" class="btn btn-outline-custom-orange btn-sm ${order_state eq '배송완료' ? 'active-orange' : '' }">배송완료</button>
 				  <button type="button" onclick="location.href='orderList?pageNum=${pageNum}&sd=${sd}&ed=${ed}&f=${param.f}&query=${param.query}&order_state=주문취소'" class="btn btn-outline-custom-orange btn-sm ${order_state eq '주문취소' ? 'active-orange' : '' }">주문취소</button>
-				  <button type="button" onclick="location.href='orderList?pageNum=${pageNum}&sd=${sd}&ed=${ed}&f=${param.f}&query=${param.query}&order_state=구매확정'" class="btn btn-outline-custom-orange btn-sm ${order_state eq '구매확정' ? 'active-orange' : '' }">구메확정</button>
+				  <button type="button" onclick="location.href='orderList?pageNum=${pageNum}&sd=${sd}&ed=${ed}&f=${param.f}&query=${param.query}&order_state=구매확정'" class="btn btn-outline-custom-orange btn-sm ${order_state eq '구매확정' ? 'active-orange' : '' }">구매확정</button>
 				</div>
         
         <c:if test="${empty orderList }">
