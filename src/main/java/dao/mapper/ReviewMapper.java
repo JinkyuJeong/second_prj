@@ -12,8 +12,8 @@ import dto.ReviewView;
 
 public interface ReviewMapper {
 
-	@Insert("insert into review (order_itemId, mem_id, review_value, review_content, review_date) "
-			+ " values (#{order_itemId}, #{mem_id}, #{review_value}, #{review_content}, now())")
+	@Insert("insert into review (order_itemId, mem_id, review_value, review_content, review_date, review_state) "
+			+ " values (#{order_itemId}, #{mem_id}, #{review_value}, #{review_content}, now(), '지급대기')")
 	boolean addReview(Map<String, Object> param);
 
 	@Select("select * from review where mem_id=#{value}")
