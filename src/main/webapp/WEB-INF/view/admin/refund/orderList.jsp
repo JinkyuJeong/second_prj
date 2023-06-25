@@ -10,24 +10,24 @@
 <meta charset="UTF-8">
 <title>호미짐 관리자</title>
 <style type="text/css">
-	#tr, .orange, .btn-outline-custom-orange:hover {
-		background-color: orange;
+	#tr, .red, .btn-outline-custom-red:hover {
+		background-color: red;
 		color : white;
 	}
-	.btn-outline-custom-orange {
-	  color: orange;
-	  border-color: orange;
+	.btn-outline-custom-red {
+	  color: red;
+	  border-color: red;
 	}
 	
-	.active-orange{
+	.active-red{
 		color: white;
-	  background-color: orange;
+	  background-color: red;
 	}
 </style>
 <script type="text/javascript">
-	function orderDetail(order_id, idx){
+	function refundDetail(refund_id, idx){
 		$.ajax({
-			url : "orderDetail?order_id=" + order_id,
+			url : "refundDetail?refund_number=" + refund_id,
 			success : function(data){
 				console.log(data);
 				let html = "";
@@ -199,8 +199,8 @@
 <body>
 	<br><br>
     <div class="container w3-white pt-1">
-      <h3><i class="fa fa-caret-square-o-right text-primary" aria-hidden="true"></i> 주문 내역</h3>
-      <p class="mb-3">주문 내역을 보여주는 페이지 입니다.</p>
+      <h3><i class="fa fa-caret-square-o-right text-primary" aria-hidden="true"></i> 환불 내역</h3>
+      <p class="mb-3">환불 내역을 보여주는 페이지 입니다.</p>
       
       <div class="container">
       	<form action="orderList">
@@ -230,17 +230,13 @@
         </form>
         
        <div class="btn-group mb-3">
-				  <button type="button" onclick="location.href='orderList?pageNum=${pageNum}&sd=${sd}&ed=${ed}&f=${param.f}&query=${param.query}'" class="btn btn-outline-custom-orange btn-sm ${empty order_state ? 'active-orange' : '' }">전체</button>
-				  <button type="button" onclick="location.href='orderList?pageNum=${pageNum}&sd=${sd}&ed=${ed}&f=${param.f}&query=${param.query}&order_state=결제완료'" class="btn btn-outline-custom-orange btn-sm ${order_state eq '결제완료' ? 'active-orange' : '' }">결제완료</button>
-				  <button type="button" onclick="location.href='orderList?pageNum=${pageNum}&sd=${sd}&ed=${ed}&f=${param.f}&query=${param.query}&order_state=상품준비'" class="btn btn-outline-custom-orange btn-sm ${order_state eq '상품준비' ? 'active-orange' : '' }">상품준비</button>
-				  <button type="button" onclick="location.href='orderList?pageNum=${pageNum}&sd=${sd}&ed=${ed}&f=${param.f}&query=${param.query}&order_state=배송준비'" class="btn btn-outline-custom-orange btn-sm ${order_state eq '배송준비' ? 'active-orange' : '' }">배송준비</button>
-				  <button type="button" onclick="location.href='orderList?pageNum=${pageNum}&sd=${sd}&ed=${ed}&f=${param.f}&query=${param.query}&order_state=배송중'" class="btn btn-outline-custom-orange btn-sm ${order_state eq '배송중' ? 'active-orange' : '' }">배송중</button>
-				  <button type="button" onclick="location.href='orderList?pageNum=${pageNum}&sd=${sd}&ed=${ed}&f=${param.f}&query=${param.query}&order_state=배송완료'" class="btn btn-outline-custom-orange btn-sm ${order_state eq '배송완료' ? 'active-orange' : '' }">배송완료</button>
-				  <button type="button" onclick="location.href='orderList?pageNum=${pageNum}&sd=${sd}&ed=${ed}&f=${param.f}&query=${param.query}&order_state=주문취소'" class="btn btn-outline-custom-orange btn-sm ${order_state eq '주문취소' ? 'active-orange' : '' }">주문취소</button>
+				  <button type="button" onclick="location.href='orderList?pageNum=${pageNum}&sd=${sd}&ed=${ed}&f=${param.f}&query=${param.query}'" class="btn btn-outline-custom-red btn-sm ${empty order_state ? 'active-red' : '' }">전체</button>
+				  <button type="button" onclick="location.href='orderList?pageNum=${pageNum}&sd=${sd}&ed=${ed}&f=${param.f}&query=${param.query}&order_state=배송완료'" class="btn btn-outline-custom-red btn-sm ${order_state eq '배송완료' ? 'active-red' : '' }">배송완료</button>
+				  <button type="button" onclick="location.href='orderList?pageNum=${pageNum}&sd=${sd}&ed=${ed}&f=${param.f}&query=${param.query}&order_state=주문취소'" class="btn btn-outline-custom-red btn-sm ${order_state eq '주문취소' ? 'active-red' : '' }">주문취소</button>
 				</div>
         
         <c:if test="${empty orderList }">
-        	<h4 class="text-center">등록된 문의 등록 내역이 없습니다.</h4>
+        	<h4 class="text-center">등록된 환불 내역이 없습니다.</h4>
         </c:if>
         
         <c:if test="${!empty orderList }">

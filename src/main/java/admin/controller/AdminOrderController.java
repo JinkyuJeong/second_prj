@@ -10,13 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import admin.service.AdminOrderService;
 import admin.service.AdminShopService;
 import dto.Order;
-import dto.OrderItem;
 import dto.OrderView;
 import exception.ShopException;
 
@@ -31,7 +31,7 @@ public class AdminOrderController {
 
 	@RequestMapping("orderStateList")
 	@ResponseBody
-	public List<Order> adminOrdertateList(Integer pageNum, String f, String query, String sd, String ed, String order_state, HttpSession session){
+	public List<Order> adminOrderStateList(Integer pageNum, String f, String query, String sd, String ed, String order_state, HttpSession session){
 		if(pageNum == null || pageNum.toString().equals("")) {
 			pageNum = 1;
 		}
@@ -114,9 +114,7 @@ public class AdminOrderController {
 
 	@PostMapping("orderStateChg")
 	@ResponseBody
-	public Map<String, Object> adminOrderStateChg(String order_id, String order_state) {
-		Map<String, Object> map = new HashMap<>();
-		
+	public void adminOrderStateChg(@RequestParam("order_id") String order_id, @RequestParam("order_state") String order_state, HttpSession session) {
 		String state = "";
 		
 		if(order_state.equals("결제완료")) {
@@ -138,11 +136,6 @@ public class AdminOrderController {
 		}
 
 		service.orderStateChg(order_id, state);
-		
-		map.put("order_id", order_id);
-		map.put("order_state", state);
-		
-		return map;
 	}
 
 }
