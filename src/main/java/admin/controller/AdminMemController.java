@@ -1,5 +1,5 @@
 package admin.controller;
-
+// jjk test
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
