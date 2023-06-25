@@ -36,7 +36,7 @@ public interface AdminOrderMapper {
 		" <if test='order_state != null and order_state != \"\"'> ",
 		"  AND order_state = #{order_state} ",
 		" </if>",
-		" ORDER BY order_id DESC LIMIT #{start}, 10",
+		" ORDER BY order_date DESC, order_id DESC LIMIT #{start}, 10",
 		"</script>"
 	})	
 	List<Order> getOrderList(Map<String, Object> param);

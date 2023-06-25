@@ -66,8 +66,8 @@
 <body>
 	<br><br>
     <div class="container w3-white pt-1" style="width:50%;">
-      <h3><i class="fa fa-caret-square-o-right text-primary" aria-hidden="true"></i> 포인트 지급</h3>
-      <p class="mb-3">포인트를 지급하는 페이지 입니다.</p>
+      <h3><i class="fa fa-caret-square-o-right text-primary" aria-hidden="true"></i> 포인트 내역 수정</h3>
+      <p class="mb-3">포인트 내역을 수정하는 페이지 입니다.</p>
       <form action="pointChg" method="post" name="f" onsubmit="return inputChk(this)">
       	<input type="hidden" value="${point.point_number }" name="point_number">
         <table class="table table-bordered align-middle">
@@ -76,7 +76,7 @@
             <td><input class="form-control" name="mem_id" value="${point.mem_id }" readonly></td>
           </tr>
           <tr>
-          	<td class="navy text-center">지급 포인트(P)<span class="text-danger">*</span></td>
+          	<td class="navy text-center">변경 포인트(P)<span class="text-danger">*</span></td>
             <td>
               <input type="number" value="${point.point_value }" name="point_value" id="point" class="form-control" onkeyup="validPoint()" readonly placeholder="지급 포인트를 입력하세요.">
               <span class="mt-1" id="pointMsg">&nbsp;</span> <br><br>
@@ -87,7 +87,7 @@
             </td>
           </tr>
           <tr>
-          	<td class="navy text-center">지급 사유<span class="text-danger">*</span></td>
+          	<td class="navy text-center">비고<span class="text-danger">*</span></td>
           	<td><input type="text" name="point_type" class="form-control" required value="${point.point_type }"></td>
           </tr>
         </table>

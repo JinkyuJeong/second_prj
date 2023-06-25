@@ -62,4 +62,12 @@ public class AdminOptDao {
 		
 		return template.getMapper(cls).diffQuantity(param);
 	}
+
+	public boolean addQuantity(int opt_number, int addQuantity) {
+		param.clear();
+		param.put("opt_number", opt_number);
+		param.put("addQuantity", addQuantity);
+		
+		return template.getMapper(cls).addQuantity(param);
+	}
 }

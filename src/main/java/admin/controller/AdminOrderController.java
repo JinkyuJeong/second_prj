@@ -57,7 +57,7 @@ public class AdminOrderController {
 
 	@RequestMapping("orderDetail")
 	@ResponseBody
-	public Map<String, Object> adminOrderDetail(String order_id){
+	public Map<String, Object> adminOrderDetail(String order_id, HttpSession session){
 		Map<String, Object> map = new HashMap<>();
 		Order order = service.getOrder(order_id);
 		List<OrderView> orderItem = service.getOrderItem(order_id);

@@ -37,4 +37,7 @@ public interface AdminOptMapper {
 	@Update("update opt set opt_quantity = opt_quantity - #{diffQuantity} where opt_number = #{opt_number}")
 	boolean diffQuantity(Map<String, Object> param);
 
+	@Update("update opt set opt_quantity = opt_quantity + #{addQuantity} where opt_number = #{opt_number}")
+	boolean addQuantity(Map<String, Object> param);
+
 }

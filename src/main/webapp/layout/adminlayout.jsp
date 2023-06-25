@@ -79,8 +79,11 @@
         <li class="nav-item dropdown-item <c:if test='${url eq "order"}'>w3-blue</c:if>">
           <h4><a href="${path }/admin/order/orderList" ><i class="fa fa-paper-plane-o" aria-hidden="true"></i> 주문 관리</a></h4>
         </li>
-        <li class="nav-item dropdown-item">
-          <h4><a href="" ><i class="fa fa-reply" aria-hidden="true"></i> 환불 관리</a></h4>
+        <li class="nav-item dropdown-item <c:if test='${url eq "refund"}'>w3-blue</c:if>">
+          <h4><a href="${path }/admin/refund/refundList" ><i class="fa fa-reply" aria-hidden="true"></i> 환불 관리</a></h4>
+        </li>
+        <li class="nav-item dropdown-item <c:if test='${url eq "review"}'>w3-blue</c:if>">
+          <h4><a href="${path }/admin/review/reviewList" ><i class="fa fa-comment-o" aria-hidden="true"></i> 리뷰 관리</a></h4>
         </li>
         <li class="nav-item dropdown-item">
           <h4><a href="" ><i class="fa fa-line-chart" aria-hidden="true"></i> 통계분석</a></h4>

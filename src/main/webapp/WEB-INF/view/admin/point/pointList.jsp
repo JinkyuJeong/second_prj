@@ -28,8 +28,8 @@
 <body>
 	<br><br>
     <div class="container w3-white pt-1">
-      <h3><i class="fa fa-caret-square-o-right text-primary" aria-hidden="true"></i> 포인트 지급 내역</h3>
-      <p class="mb-3">포인트 지급 내역을 보여주는 페이지 입니다.</p>
+      <h3><i class="fa fa-caret-square-o-right text-primary" aria-hidden="true"></i> 포인트 사용 내역</h3>
+      <p class="mb-3">포인트 사용 내역을 보여주는 페이지 입니다.</p>
       
       <div class="container">
       	<form action="pointList">
@@ -43,18 +43,18 @@
         </form>
         
         <c:if test="${empty pointList }">
-        	<h4 class="text-center">등록된 재고 등록 내역이 없습니다.</h4>
+        	<h4 class="text-center">등록된 포인트 내역이 없습니다.</h4>
         </c:if>
         
         <c:if test="${!empty pointList }">
         	<form action="pointDel" method="post">
 		        <table class="table table-hover table-bordered text-center align-middle">
 		          <tr id="tr">
-		            <th width="10%">포인트 지급 번호</th>
+		            <th width="10%">번호</th>
 		            <th width="20%">회원 아이디</th>
-		            <th width="10%">지급 포인트</th>
-		            <th width="35%">지급 사유</th>
-		            <th width="15%">지급 날짜</th>
+		            <th width="10%">포인트</th>
+		            <th width="35%">비고</th>
+		            <th width="15%">날짜</th>
 		            <th width="10%">&nbsp;</th>
 		          </tr>
 		          <c:forEach var="point" items="${pointList }">

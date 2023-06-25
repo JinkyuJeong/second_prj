@@ -15,4 +15,5 @@ public class Refund {
 	private int refund_price;
 	private String refund_type;
 	private Date refund_date;
+	private Date refund_compdate;
 }
