@@ -42,4 +42,10 @@ public class AdminReviewDao {
 		
 		return template.getMapper(cls).getReviewList(param);
 	}
+	public ReviewView getReview(Integer review_number) {
+		return template.getMapper(cls).getReview(review_number);
+	}
+	public boolean reviewStateChg(Integer review_number) {
+		return template.getMapper(cls).reviewStateChg(review_number);
+	}
 }

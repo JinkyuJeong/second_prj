@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import admin.service.AdminManageService;
 import dto.ReviewView;
+import exception.ShopException;
 
 @Controller
 @RequestMapping("admin/review")
@@ -62,6 +63,33 @@ public class AdminReviewController {
 		mv.addObject("ed", ed);
 		mv.addObject("review_state", review_state);
 		return mv;
+	}
+	
+	@RequestMapping("reviewDetail")
+	public ModelAndView adminReviewDetail(Integer review_number, HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		
+		ReviewView review = service.getReview(review_number);
+		
+		if(review == null) {
+			throw new ShopException("해당 리뷰는 존재하지 않습니다.", "reviewList");
+		}
+		mv.addObject("review", review);
+		return mv;
+	}
+	
+	@RequestMapping("reviewStateChg")
+	public ModelAndView adminReviewStateChg(Integer review_number, HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		
+		ReviewView review = service.getReview(review_number);
+		
+		if(service.reviewStateChg(review)) {
+			mv.setViewName("redirect:reviewDetail?review_number="+review_number);
+			return mv;
+		}else {
+			throw new ShopException("리뷰 포인트 지급 실패", "reviewDetail?review_number="+review_number);
+		}
 	}
 	
 }

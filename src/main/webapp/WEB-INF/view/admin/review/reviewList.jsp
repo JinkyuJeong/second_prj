@@ -87,7 +87,7 @@
 		            <td>${review.mem_id }</td>
 		            <td>
 		            	${review.review_value }/5<br>
-		            	<a class="btn btn-dark btn-sm" href="reviewDetail?review_number=${review_number }">상세보기</a>
+		            	<a class="btn btn-dark btn-sm" href="reviewDetail?review_number=${review.review_number }">상세보기</a>
 		            </td>
 		            <td><fmt:formatDate value="${review.review_date }" pattern="yyyy-MM-dd" /></td>
 		            <td>${review.review_state}</td>

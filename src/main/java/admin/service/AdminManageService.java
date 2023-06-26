@@ -199,5 +199,22 @@ public class AdminManageService {
 		return reviewDao.getReviewList(pageNum, f, query, sd, ed, review_state);
 	}
 
+	public ReviewView getReview(Integer review_number) {
+		return reviewDao.getReview(review_number);
+	}
+
+	@Transactional
+	public boolean reviewStateChg(ReviewView review) {
+		Point point = new Point();
+		point.setMem_id(review.getMem_id());
+		point.setPoint_type("리뷰 작성으로인한 포인트 지급");
+		point.setPoint_value(500);
+		boolean b1 = pointDao.regPoint(point);
+		boolean b2 = reviewDao.reviewStateChg(review.getReview_number());
+		boolean b3 = memDao.pointChg(point);
+		
+		return b1 && b2 && b3;
+	}
+
 
 }

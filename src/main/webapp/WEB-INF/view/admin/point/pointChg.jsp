@@ -72,7 +72,7 @@
       	<input type="hidden" value="${point.point_number }" name="point_number">
         <table class="table table-bordered align-middle">
           <tr class="text-center">
-            <td class="navy text-center" width="30%">사용자 아이디</td>
+            <td class="navy text-center" width="30%">회원 아이디</td>
             <td><input class="form-control" name="mem_id" value="${point.mem_id }" readonly></td>
           </tr>
           <tr>

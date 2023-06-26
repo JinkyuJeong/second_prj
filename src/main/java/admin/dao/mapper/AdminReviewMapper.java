@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import dto.ReviewView;
 
@@ -38,5 +39,11 @@ public interface AdminReviewMapper {
 		"</script>"
 	})	
 	List<ReviewView> getReviewList(Map<String, Object> param);
+
+	@Select("select * from reviewView where review_number=#{value}")
+	ReviewView getReview(Integer review_number);
+
+	@Update("update review set review_state = '지급완료' where review_number = #{value}")
+	boolean reviewStateChg(Integer review_number);
 
 }
