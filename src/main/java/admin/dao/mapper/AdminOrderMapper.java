@@ -1,5 +1,6 @@
 package admin.dao.mapper;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -49,5 +50,15 @@ public interface AdminOrderMapper {
 
 	@Update("update h_order set order_state=#{state} where order_id=#{order_id}")
 	void orderStateChg(Map<String, Object> param);
+
+	@Select("SELECT COUNT(*) AS '주문 건 수', SUM(order_totalPay) AS '주문 금액' "
+			+ " FROM orderView "
+			+ " WHERE order_state != '주문취소' and order_date = #{date}")
+	Map<String, Object> orderPay(LocalDate date);
+
+	@Select("SELECT COUNT(*) AS '취소 건 수', SUM(order_totalPay) AS '취소 금액' "
+			+ " FROM orderView "
+			+ " WHERE order_state = '주문취소' and order_date = #{date}")
+	Map<String, Object> cancelPay(LocalDate date);
 
 }

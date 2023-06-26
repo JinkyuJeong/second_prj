@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -89,6 +90,17 @@ public class AdminReviewController {
 			return mv;
 		}else {
 			throw new ShopException("리뷰 포인트 지급 실패", "reviewDetail?review_number="+review_number);
+		}
+	}
+	
+	@PostMapping("reviewDel")
+	public ModelAndView managerReviewDel(Integer review_number, HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(service.reviewDel(review_number)) {
+			mv.setViewName("redirect:reviewList");
+			return mv;
+		}else {
+			throw new ShopException("리뷰 삭제 실패", "reviewDetail?review_number="+review_number);
 		}
 	}
 	

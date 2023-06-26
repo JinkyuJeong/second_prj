@@ -3,6 +3,7 @@ package admin.dao.mapper;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -45,5 +46,8 @@ public interface AdminReviewMapper {
 
 	@Update("update review set review_state = '지급완료' where review_number = #{value}")
 	boolean reviewStateChg(Integer review_number);
+
+	@Delete("delete from review where review_number=#{value}")
+	boolean reviewDel(Integer review_number);
 
 }

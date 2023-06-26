@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:formatDate value="${today }" pattern="yyyy년 MM월 dd일" var="d"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,23 +12,27 @@
 	<br><br>
     <div class="container">
       <h3><i class="fa fa-caret-square-o-right text-primary" aria-hidden="true"></i> 오늘의 주문 현황</h3>
-      <p class="text-danger text-end">2023년 6월 11일</p>
+      <p class="text-danger text-end">${d}</p>
       <div class="container w3-white p-3">
         <table class="table table-bordered text-center align-middle">
           <tr class="table-secondary">
-            <th rowspan="2">결제</th>
-            <th rowspan="2">상품준비중</th>
-            <th rowspan="2">배송대기</th>
+            <th rowspan="2">결제완료</th>
+            <th rowspan="2">상품준비</th>
+            <th rowspan="2">배송준비</th>
             <th rowspan="2">배송중</th>
-            <th>취소</th>
-            <th>반품</th>
-            <th rowspan="2">상품문의</th>
+            <th rowspan="2">배송완료</th>
+            <th rowspan="2">구매확정</th>
+            <th rowspan="2">취소</th>
+            <th>환불</th>
+            <th>상품문의</th>
           </tr>
           <tr class="table-secondary">
             <th>신청/처리완료</th>
-            <th>신청/처리완료</th>
+            <th>미처리</th>
           </tr>
           <tr>
+            <td>2</td>
+            <td>2</td>
             <td>2</td>
             <td>2</td>
             <td>2</td>
@@ -38,76 +44,94 @@
         </table>
       </div>
 
-      <h3 class="mt-5"><i class="fa fa-caret-square-o-right text-primary" aria-hidden="true"></i> 쇼핑몰 현황</h3>
+      <h3 class="mt-5"><i class="fa fa-caret-square-o-right text-primary" aria-hidden="true"></i> 쇼핑몰 매출 현황</h3>
       <div class="container w3-white p-3">
-
-        <div>
-          <button type="button" class="btn text-primary">일일매출현황</button>
-          <button type="button" class="btn">주문현황</button>
-          <button type="button" class="btn">상품문의현황</button>
+        
+        <div style="margin-bottom: 20px;">
+        	<h4 class="ms-3 mb-3">
+        		※ 최근 업데이트 일시 : <span id="realTime"></span> (자정 12시에 초기화됨)
+        	</h4>
+        	<a class="btn btn-lg btn-primary ms-3" href="javascript:shopReload()">새로고침 <i class="fa fa-refresh" aria-hidden="true"></i></a>
         </div>
 
-        <div class="row mt-3">
-          <div class="col-6" id="todayChart">
+        <div class="row mt-3" id="sale">
+          <div class="col-6 p-5">
             <br>
-            <canvas id="canvas1" style="width:100%"></canvas>
+            <div id="shopChart"></div>
             <br>
-            <p class="ms-3">※ 최근 업데이트 일시 : 2023년 6월 11일 (자정 12시에 초기화됨)</p>
           </div>
-          <div class="col-6" id="todayShop">
-            <table class="table table-bordered align-middle">
-              <tr class="table-secondary text-center">
-                <th width="30%">날짜</th>
-                <th width="22.5%">주문</th>
-                <th width="22.5%">결제완료</th>
-                <th width="25%">환불(취소/반품)</th>
-              </tr>
-              <tr class="text-danger text-end">
-                <td class="text-center">2023년 6월 11일</td>
-                <td>100,000원<br>(4건)</td>
-                <td>90,000원<br>(4건)</td>
-                <td>10,000원<br>(1건)</td>
-              </tr>
-              <tr class="text-end">
-                <td class="text-center">2023년 6월 10일</td>
-                <td>100,000원<br>(4건)</td>
-                <td>90,000원<br>(4건)</td>
-                <td>10,000원<br>(1건)</td>
-              </tr>
-              <tr class="text-end">
-                <td class="text-center">최근 7일 합계</td>
-                <td>100,000원<br>(4건)</td>
-                <td>90,000원<br>(4건)</td>
-                <td>10,000원<br>(1건)</td>
-              </tr>
-              <tr class="text-end">
-                <td class="text-center">최근 7일 평균</td>
-                <td>100,000원</td>
-                <td>90,000원</td>
-                <td>10,000원</td>
-              </tr>
-              <tr class="text-end">
-                <td class="text-center">최근 30일 합계</td>
-                <td>100,000원<br>(4건)</td>
-                <td>90,000원<br>(4건)</td>
-                <td>10,000원<br>(1건)</td>
-              </tr>   
-              <tr class="text-end">
-                <td class="text-center">최근 30일 평균</td>
-                <td>100,000원</td>
-                <td>90,000원</td>
-                <td>10,000원</td>
-              </tr>             
-            </table>
-          </div>
+          <div class="col-6" id="shop"></div>
         </div>
+        
       </div>
     </div>
     
-    <script>
+  <script>
+  function shopReload(){
+  	barGraph();
+    salesTable();
+  }
+  
   $(()=> {
-    barGraphPrint();
+  	//orderState();
+    barGraph();
+    salesTable();
   });
+  
+  function salesTable(){
+  	$.ajax({
+  		url : "salesList",
+  		success : function(data){
+  			let html = "<table class='table table-bordered align-middle'>";
+        html += '<tr class="table-secondary text-center">';
+        html += '<th width="25%">날짜</th>';
+        html += '<th width="25%">주문(결제완료)</th>';
+        html += '<th width="25%">취소</th>';
+        html += '<th width="25%">환불(처리완료)</th>';
+        html += '</tr>'
+        $.each(data, function(i, sale){
+        	html += "<tr "+ (i==0? "class= 'text-danger'" : "") +">";
+        	html += "<td class='text-center'>" + sale.date + "</td>";
+       	 	html += "<td class='text-end'>" + formatAmount(sale.saleAmount) + "원<br>(" + sale.saleCnt + "건)</td>";
+       	  html += "<td class='text-end'>" + formatAmount(sale.cancelAmount) + "원<br>(" + sale.cancelCnt + "건)</td>";
+       	  html += "<td class='text-end'>" + formatAmount(sale.backAmount) + "원<br>(" + sale.backCnt + "건)</td>";
+        	html += "</tr>";
+        });
+      	html += "</table>";
+      	
+      	$("#shop").html(html);
+      	
+     	 	var currentDate = new Date();
+     	  var year = currentDate.getFullYear();
+     	  var month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+     	  var day = currentDate.getDate().toString().padStart(2, '0');
+     	  var hours = currentDate.getHours().toString().padStart(2, '0');
+     	  var minutes = currentDate.getMinutes().toString().padStart(2, '0');
+     	  var seconds = currentDate.getSeconds().toString().padStart(2, '0');
+
+     	  var formattedDate = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+     	  $("#realTime").html(formattedDate);
+  		},
+  		error : function(e){ alert(e.status) }
+  	});
+  }
+  
+  function formatAmount(amount) {
+    return amount.toLocaleString();
+  }
+  
+  function barGraph(){
+  	$.ajax({
+  		url : "salesList",
+  		success : function(data){
+				console.log(data);
+				let canvas = "<canvas id='canvas1' style='width:100%'></canvas>";
+				$("#shopChart").html(canvas);
+				barGraphPrint(data);
+			},
+			error : function(e) {}
+  	})
+  }
 
   let rsf = function(){
     return Math.round(Math.random()*255);
@@ -116,23 +140,29 @@
     return "rgba("+ rsf() + "," + rsf() + "," + rsf() + "," + (opacity || '0.3') +")";
   }
 
-  function barGraphPrint(){
-		let regdates = ['2023-06-11','2023-06-10','2023-06-09'];	
-		let datas = ['7','6','5'];
-		let colors = [randomColor(0.7),randomColor(0.5),randomColor(0.9)];
+  function barGraphPrint(arr){
+		let dates = [];	
+		let datas = [];
+		let colors = [];
+		
+		$.each(arr, function(i, sale){
+			colors[i] = randomColor(0.5);
+			dates.push(sale.date);
+			datas.push(sale.saleAmount);
+		});
 		
 		let chartData = {
-			labels : regdates,
+			labels : dates,
 			datasets : [{
 				type : "line",
 				borderWidth : 2,
 				boraderColor : colors,
-				label : "매출금액",
+				label : "매출 금액",
 				fill : false,
 				data : datas
 			},{
 				type : "bar",
-				label : "매출금액",
+				label : "매출 금액",
 				backgroundColor : colors,
 				data : datas
 			}]
@@ -143,10 +173,10 @@
 			data : {        //데이터 정보
 				datasets : [
 				  { type : "line",	borderWidth : 2,   borderColor : colors,
-					label :'매출금액',	fill : false,  	   data : datas },
+					label :'매출 금액',	fill : false,  	   data : datas },
                   {	type : "bar",  backgroundColor : colors,  label :'매출 금액',	data : datas }
                  ],
-			     labels : regdates,
+			     labels : dates,
 			},
 			options : {
 				responsive : true,
@@ -160,7 +190,7 @@
 			    		       scaleLabel : {display : true, labelString : "날짜"}
 			    	         }],
 			    	yAxes : [{
-			    		scaleLabel : { display : true, labelString : "매출 금액(만원)"  },
+			    		scaleLabel : { display : true, labelString : "매출 금액"  },
 			    		ticks : {beginAtZero : true}
 			    	  }]
 			    }

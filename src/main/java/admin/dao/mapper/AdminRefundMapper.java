@@ -1,5 +1,6 @@
 package admin.dao.mapper;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -45,5 +46,10 @@ public interface AdminRefundMapper {
 
 	@Select("select * from refundView where refund_number=#{value}")
 	RefundView getRefund(String refund_number);
+
+	@Select("SELECT COUNT(*) AS '환불 건 수', SUM(refund_price) AS '환불 금액' "
+			+ " FROM refund "
+			+ " WHERE refund_type = '환불완료' and refund_compdate = #{date}")
+	Map<String, Object> refundPay(LocalDate date);
 
 }

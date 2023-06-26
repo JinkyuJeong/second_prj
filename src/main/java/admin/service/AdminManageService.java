@@ -1,6 +1,10 @@
 package admin.service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,8 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 import admin.dao.AdminCsDao;
 import admin.dao.AdminManagerDao;
 import admin.dao.AdminMemDao;
+import admin.dao.AdminOrderDao;
 import admin.dao.AdminPointDao;
 import admin.dao.AdminQnaDao;
+import admin.dao.AdminRefundDao;
 import admin.dao.AdminReviewDao;
 import dto.Cs;
 import dto.Delivery;
@@ -35,6 +41,10 @@ public class AdminManageService {
 	private AdminPointDao pointDao;
 	@Autowired
 	private AdminReviewDao reviewDao;
+	@Autowired
+	private AdminOrderDao orderDao;
+	@Autowired
+	private AdminRefundDao refundDao;
 
 	public boolean regQna(Qna qna) {
 		return qnaDao.regQna(qna);
@@ -216,5 +226,49 @@ public class AdminManageService {
 		return b1 && b2 && b3;
 	}
 
+	public boolean reviewDel(Integer review_number) {
+		return reviewDao.reviewDel(review_number);
+	}
+
+	public Map<String, Object> salesList(LocalDate date) {
+		/*
+		 * 판매금액 : 300원
+		 * 판매건수 : 3건
+		 * 취소금액 : 300원
+		 * 취소건수 : 0건
+		 * 환불금액 : 300원
+		 * 환불건수 : 300
+		 * */
+		Map<String, Object> map = new HashMap<>();
+		Map<String, Object> map1 = orderDao.orderPay(date);
+		Map<String, Object> map2 = orderDao.cancelPay(date);
+		Map<String, Object> map3 = refundDao.refundPay(date);
+		
+		String formattedDate = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		
+		map.put("date", formattedDate);
+		if(map1.get("주문 금액") != null) {
+			map.put("saleAmount", map1.get("주문 금액"));
+		}else {
+			map.put("saleAmount", 0);
+		}
+		map.put("saleCnt", map1.get("주문 건 수"));
+		
+		if(map2.get("취소 금액") != null) {
+			map.put("cancelAmount", map2.get("취소 금액"));
+		}else {
+			map.put("cancelAmount", 0);
+		}
+		map.put("cancelCnt", map2.get("취소 건 수"));
+		
+		if(map3.get("환불 금액") != null) {
+			map.put("backAmount", map3.get("환불 금액"));
+		}else {
+			map.put("backAmount", 0);
+		}
+		map.put("backCnt", map3.get("환불 건 수"));
+		
+		return map;
+	}
 
 }

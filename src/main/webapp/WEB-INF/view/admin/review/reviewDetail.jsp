@@ -53,7 +53,24 @@
             <td>
             	${review.review_state } <br>
             	<c:if test="${review.review_state eq '지급대기'}">
-            		<a class="btn btn-sm btn-dark" href="reviewStateChg?review_number=${review.review_number}">포인트 지급</a>
+            		<a type="button" class="btn btn-dark btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop1${review.review_number }">포인트 지급</a>
+													
+								<%-- Modal --%>
+								<div class="modal fade" id="staticBackdrop1${review.review_number }" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+								  <div class="modal-dialog">
+								    <div class="modal-content">
+								      <div class="modal-header">
+								        <h5 class="modal-title" id="staticBackdropLabel">호미짐 관리자</h5>
+								        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+								      </div> 
+								      <div class="modal-body">해당 회원에게 포인트를 지급 하시겠습니까?</div>
+								      <div class="modal-footer">
+								        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+								        <a class="btn btn-dark" href="reviewStateChg?review_number=${review.review_number}">지급</a>
+								      </div>
+								    </div>
+								  </div>
+								</div>
             	</c:if>
             </td>
           </tr>
@@ -61,7 +78,7 @@
         	
         <div class="text-center mt-3">
         	<c:if test="${sessionScope.loginManager.manager_grant eq '총괄'}">
-       		<a type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#staticBackdrop${review.review_number }">삭제</a>
+       			<a type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#staticBackdrop${review.review_number }">삭제</a>
 													
 						<%-- Modal --%>
 						<div class="modal fade" id="staticBackdrop${review.review_number }" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -71,7 +88,7 @@
 						        <h5 class="modal-title" id="staticBackdropLabel">호미짐 관리자</h5>
 						        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						      </div> 
-						      <div class="modal-body">해당 리뷰를 삭제 처리 하시겠습니까?</div>
+						      <div class="modal-body">해당 리뷰를 삭제 하시겠습니까?</div>
 						      <div class="modal-footer">
 						        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
 						        <button type="submit" class="btn btn-dark">삭제</button>

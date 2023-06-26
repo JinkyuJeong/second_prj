@@ -1,5 +1,6 @@
 package admin.dao;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,6 +59,14 @@ public class AdminOrderDao {
 		param.put("state", state);
 		
 		template.getMapper(cls).orderStateChg(param);
+	}
+
+	public Map<String, Object> orderPay(LocalDate date) {
+		return template.getMapper(cls).orderPay(date);
+	}
+
+	public Map<String, Object> cancelPay(LocalDate date) {
+		return template.getMapper(cls).cancelPay(date);
 	}
 
 }

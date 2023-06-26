@@ -1,5 +1,6 @@
 package admin.dao;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,5 +52,8 @@ public class AdminRefundDao {
 	}
 	public RefundView getRefund(String refund_number) {
 		return template.getMapper(cls).getRefund(refund_number);
+	}
+	public Map<String, Object> refundPay(LocalDate date) {
+		return template.getMapper(cls).refundPay(date);
 	}
 }

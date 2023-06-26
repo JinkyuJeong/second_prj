@@ -48,4 +48,7 @@ public class AdminReviewDao {
 	public boolean reviewStateChg(Integer review_number) {
 		return template.getMapper(cls).reviewStateChg(review_number);
 	}
+	public boolean reviewDel(Integer review_number) {
+		return template.getMapper(cls).reviewDel(review_number);
+	}
 }
