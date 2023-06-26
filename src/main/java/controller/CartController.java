@@ -32,8 +32,6 @@ public class CartController {
 	@RequestMapping("cartAdd")
 	public ModelAndView idCheckcart(String mem_id, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		Mem loginMem = (Mem) session.getAttribute("loginMem");
-		String sessionMem = loginMem.getMem_id(); 
 		List<Cart> cartList = service.getCartList(mem_id);
 		Map<Cart, ProductOptView> map = new HashMap<>();
 		int total = 0;
@@ -55,7 +53,7 @@ public class CartController {
 	@RequestMapping("checkout")
 	public ModelAndView loginCheckcheckout(@RequestParam(value = "opt_numberChecked", required = false) String[] opt_numberChecked, String product_number, Integer[] opt_number, String[] quantity, HttpSession session) {
 		ModelAndView mav = new ModelAndView();	
-		Mem loginMem = (Mem)session.getAttribute("loginMem");
+		Mem loginMem = (Mem)session.getAttribute("loginMem"); //이거 mem_id로 db에서 조회하는 걸로 바꾸기
 		if(product_number == null) { //장바구니에서 구매로
 			if(opt_numberChecked == null) {
 				throw new ShopException("주문할 상품이 없습니다.", "cartAdd?mem_id=" + loginMem.getMem_id());
@@ -133,8 +131,7 @@ public class CartController {
         int num= Integer.parseInt(service.getMaxOrderId().substring(6,10));
         String formattedNumber = String.format("%04d", num+1);
 		String order_id = formattedDate + formattedNumber;	
-		System.out.println(order_id);
-		map.put("merchant_uid", order_id);
+		map.put("merchant_uid", "2306260013");
 		map.put("name", product_name[0] + " 외 " + (product_name.length-1) + "개");
 		map.put("amount", final_amount);
 //		String email = service.emailDecrypt(user);

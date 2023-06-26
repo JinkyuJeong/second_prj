@@ -39,7 +39,7 @@ public class IamPortService {
         }
         return null;
     }
-    public boolean confrimBuyerInfor(String imp_uid,int price,String email) {
+    public boolean confrimBuyerInfo(String imp_uid,int price,String email) {
     	IamPortDto iamPortDto=getToken();
         try {
             if(iamPortDto==null){
@@ -62,7 +62,7 @@ public class IamPortService {
         }
         return false;
     }
-    public void cancleBuy(String merchant_uid,int returnPrice) {
+    public void cancelBuy(String merchant_uid,int returnPrice) {
         try {
         	IamPortDto iamPortDto=getToken();
             if(iamPortDto==null){
@@ -79,7 +79,7 @@ public class IamPortService {
             HttpEntity<JSONObject>entity=new HttpEntity<JSONObject>(body, headers);
             CancelBuy cancle =restTemplate.postForObject("https://api.iamport.kr/payments/cancel",entity,CancelBuy.class);
 
-            System.out.println(cancle+" full cancle");
+            System.out.println(cancle);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("cancleBuy가 실패 했습니다 직접 환불 바랍니다");

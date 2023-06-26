@@ -114,6 +114,8 @@
 			  
 			  html += '<input type="hidden"id="i' + i + '" name="refund_number" value="' + refund.refund_number + '">';
 			  html += '<input type="hidden" id="t' + i + '" name="refund_type" value="' + refund.refund_type + '">';
+			  html += '<input type="hidden" id="oi' + i + '"  value="' + refund.refund_orderId + '">';
+			  html += '<input type="hidden" id="p' + i + '"  value="' + refund.refund_price + '">';
 			  html += '<a type="button" class="btn btn-sm btn-' + btnColor1 +'" data-bs-toggle="modal" data-bs-target="#staticBackdrop' + i + '">'+ btnName1+'</a>';
 			  html += '<div class="modal fade" id="staticBackdrop' + i + '" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">';
 			  html += '<div class="modal-dialog">';
@@ -157,6 +159,8 @@
 
 	  const refundNumber = $("#i"+i).val();
 	  const refundType = $("#t"+i).val();
+	  const refundOrderId = $("#oi"+i).val();
+	  const refundPrice = $("#p"+i).val();
 
 	  console.log(refundNumber);
 	  console.log(refundType);
@@ -166,7 +170,9 @@
 	    type: 'POST',
 	    data: {
 	      refund_number : refundNumber,
-	      refund_type : refundType
+	      refund_type : refundType,
+	      refund_orderId : refundOrderId,
+	      refund_price : refundPrice
 	    },
 	    success: getTypeList,
 	    error: function(error) {

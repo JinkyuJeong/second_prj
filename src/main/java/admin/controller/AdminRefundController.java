@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import admin.service.AdminOrderService;
 import dto.RefundView;
+import service.IamPortService;
 
 @Controller
 @RequestMapping("admin/refund")
@@ -23,6 +24,9 @@ public class AdminRefundController {
 
 	@Autowired
 	private AdminOrderService service;
+	
+	@Autowired
+	private IamPortService iamService;
 
 	@RequestMapping("refundTypeList")
 	@ResponseBody
@@ -107,13 +111,15 @@ public class AdminRefundController {
 
 	@PostMapping("refundComp")
 	@ResponseBody
-	public void adminRefundCompChg(@RequestParam("refund_number") String refund_number, @RequestParam("refund_type") String refund_type, HttpSession session) {
+	public void adminRefundCompChg(@RequestParam("refund_number") String refund_number, @RequestParam("refund_type") String refund_type, 
+			@RequestParam("refund_orderId") String refund_orderId, @RequestParam("refund_price") Integer refund_price, HttpSession session) {
 		String type = "";
 		
 		if(refund_type.equals("환불대기")) {
 			type = "환불완료";
 			service.refundComp(refund_number, type);
 		}
+		iamService.cancelBuy(refund_orderId, refund_price);
 	}
 	
 	@PostMapping("refundBack")
@@ -126,5 +132,5 @@ public class AdminRefundController {
 			service.refundBack(refund_number, type);
 		}
 	}
-
+	
 }

@@ -32,4 +32,8 @@ public interface RefundMapper {
 
 	@Select("select * from refund WHERE refund_memId=#{mem_id} AND refund_type != #{string}")
 	List<Refund> getRefundListAll(Map<String, Object> param);
+
+	@Insert("insert into refund (refund_orderId, refund_memId, refund_reason, refund_price, refund_type) "
+			+ " values (#{order_id}, #{mem_id}, '사용자 주문취소', #{order_totalPay}, '결제 및 주문 취소')")
+	void addCancel(Map<String, Object> param);
 }

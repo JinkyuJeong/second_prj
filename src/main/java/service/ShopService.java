@@ -351,4 +351,8 @@ public class ShopService {
 		return orderDao.getOrder(order_id);
 	}
 
+	public void addCancel(String order_id, String mem_id, int order_totalPay) {
+		refundDao.addCancel(order_id, mem_id, order_totalPay);
+	}
+
 }

@@ -66,4 +66,12 @@ public class RefundDao {
 		param.put("string", string);
 		return template.getMapper(cls).getRefundListAll(param);
 	}
+
+	public void addCancel(String order_id, String mem_id, int order_totalPay) {
+		param.clear();
+		param.put("order_id", order_id);
+		param.put("mem_id", mem_id);
+		param.put("order_totalPay", order_totalPay);
+		template.getMapper(cls).addCancel(param);		
+	}
 }

@@ -41,12 +41,11 @@ public class OrderController {
         if(num==9999) num = 0;
         String formattedNumber = String.format("%04d", num+1);
 		String order_id = formattedDate + formattedNumber;
-		System.out.println(order_id);
 		String phoneno = receiver_phoneNo1 + receiver_phoneNo2 + receiver_phoneNo3;
 		String orderMsg = order_msg;
 		order_totalPay = order_totalPay - order_point;
 		if(order_msg.equals("직접입력")) orderMsg=order_msgSelf;
-		if(service.addOrder(order_id, deliver_receiver, mem.getMem_id(), delivery_postcode, delivery_address, delivery_detailAddress,
+		if(service.addOrder("2306260013", deliver_receiver, mem.getMem_id(), delivery_postcode, delivery_address, delivery_detailAddress,
 				delivery_cost, order_point, phoneno, orderMsg, order_totalPay)) {
 			service.usePoint(order_point, mem.getMem_id());
 			service.pointUsedStore(order_point, mem.getMem_id());
@@ -55,13 +54,13 @@ public class OrderController {
 		}
 		//주문 제품 정보
 		for(int i=0; i<opt_number.length; i++) {
-			if(service.addOrderItem(order_id, opt_number[i], product_number[i], opt_count[i])) {
+			if(service.addOrderItem("2306260013", opt_number[i], product_number[i], opt_count[i])) {
 //				System.out.println("주문정보 저장 성공");
 			} else {
 				throw new ShopException("죄송합니다. 주문 시 오류가 발생했습니다.", "/second_prj/cart/cartAdd");
 			}
 		}
-		mav.addObject("order_id", order_id);
+		mav.addObject("order_id", "2306260013");
 		return mav;
 	}
 	
