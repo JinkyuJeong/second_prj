@@ -1,8 +1,8 @@
 package admin.controller;
 
-import java.util.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -74,11 +74,18 @@ public class AdminMainController {
 		LocalDate currentDate = LocalDate.now();
 
 		for (int i = 0; i < 7; i++) {
-			LocalDate date = currentDate.minusDays(i); // 시작 날짜부터 i일 후의 날짜를 계산합니다.
-			Map<String, Object> map = service.salesList(date); // 해당 날짜의 매출 정보를 가져오는 서비스 메소드를 호출합니다.
+			LocalDate date = currentDate.minusDays(i);
+			Map<String, Object> map = service.salesList(date);
 			list.add(map);
 		}
 
 		return list;
+	}
+	
+	@RequestMapping("orderState")
+	@ResponseBody
+	public Map<String, Object> orderState(){
+		Map<String, Object> map = service.orderState();
+		return map;
 	}
 }

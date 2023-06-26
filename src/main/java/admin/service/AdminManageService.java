@@ -2,6 +2,7 @@ package admin.service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +29,7 @@ import dto.ReviewView;
 
 @Service
 public class AdminManageService {
-	
+
 	@Autowired
 	private AdminQnaDao qnaDao;
 	@Autowired
@@ -89,7 +90,7 @@ public class AdminManageService {
 	public Manager getManager(String manager_id) {
 		return managerDao.getManager(manager_id);
 	}
-	
+
 	public Manager getManager2(String manager_name) {
 		return managerDao.getManager2(manager_name);
 	}
@@ -185,15 +186,15 @@ public class AdminManageService {
 			if(diff>0) {
 				b2 = memDao.pointChg(point);
 				b3 = pointDao.pointChg(point);
-				
+
 				return b1&&b2&&b3;
 			}else {
 				b3 = pointDao.pointChg(point);
-				
+
 				return b1&&b3;
 			}
 		}
-		
+
 	}
 
 	public boolean pointDel(Integer point_number) {
@@ -222,7 +223,7 @@ public class AdminManageService {
 		boolean b1 = pointDao.regPoint(point);
 		boolean b2 = reviewDao.reviewStateChg(review.getReview_number());
 		boolean b3 = memDao.pointChg(point);
-		
+
 		return b1 && b2 && b3;
 	}
 
@@ -230,22 +231,15 @@ public class AdminManageService {
 		return reviewDao.reviewDel(review_number);
 	}
 
+	@Transactional
 	public Map<String, Object> salesList(LocalDate date) {
-		/*
-		 * 판매금액 : 300원
-		 * 판매건수 : 3건
-		 * 취소금액 : 300원
-		 * 취소건수 : 0건
-		 * 환불금액 : 300원
-		 * 환불건수 : 300
-		 * */
 		Map<String, Object> map = new HashMap<>();
 		Map<String, Object> map1 = orderDao.orderPay(date);
 		Map<String, Object> map2 = orderDao.cancelPay(date);
 		Map<String, Object> map3 = refundDao.refundPay(date);
-		
+
 		String formattedDate = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-		
+
 		map.put("date", formattedDate);
 		if(map1.get("주문 금액") != null) {
 			map.put("saleAmount", map1.get("주문 금액"));
@@ -253,22 +247,51 @@ public class AdminManageService {
 			map.put("saleAmount", 0);
 		}
 		map.put("saleCnt", map1.get("주문 건 수"));
-		
+
 		if(map2.get("취소 금액") != null) {
 			map.put("cancelAmount", map2.get("취소 금액"));
 		}else {
 			map.put("cancelAmount", 0);
 		}
 		map.put("cancelCnt", map2.get("취소 건 수"));
-		
+
 		if(map3.get("환불 금액") != null) {
 			map.put("backAmount", map3.get("환불 금액"));
 		}else {
 			map.put("backAmount", 0);
 		}
 		map.put("backCnt", map3.get("환불 건 수"));
-		
+
 		return map;
+	}
+
+	public Map<String, Object> orderState() {
+		List<String> orderStates = Arrays.asList("결제완료", "상품준비", "배송준비", "배송중", "배송완료", "구매확정", "주문취소");
+
+		List<Map<String, Object>> list = orderDao.orderState(); // DB에서 조회한 주문 상태별 건수 리스트
+
+		// 주문 상태별 건수를 담을 맵 생성
+		Map<String, Object> resultMap = new HashMap<>();
+
+		// 주문 상태별 건수 리스트를 맵에 추가
+		for (Map<String, Object> map : list) {
+			String state = (String) map.get("state");
+			Integer cnt = Integer.parseInt(map.get("cnt").toString());
+			resultMap.put(state, cnt);
+		}
+
+		// 주문 상태 목록에 있는 상태 중 맵에 없는 상태는 0으로 설정하여 맵에 추가
+		for (String state : orderStates) {
+			if (!resultMap.containsKey(state)) {
+				resultMap.put(state, 0);
+			}
+		}
+		
+		Integer refundCnt = refundDao.refundTodayCnt();
+		resultMap.put("환불", refundCnt);
+		
+		System.out.println(resultMap);
+		return resultMap;
 	}
 
 }

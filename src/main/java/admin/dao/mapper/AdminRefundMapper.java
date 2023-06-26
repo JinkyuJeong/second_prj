@@ -52,4 +52,7 @@ public interface AdminRefundMapper {
 			+ " WHERE refund_type = '환불완료' and refund_compdate = #{date}")
 	Map<String, Object> refundPay(LocalDate date);
 
+	@Select("select count(*) from refund WHERE date(refund_date) = CURDATE()")
+	Integer refundTodayCnt();
+
 }

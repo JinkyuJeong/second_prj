@@ -61,4 +61,10 @@ public interface AdminOrderMapper {
 			+ " WHERE order_state = '주문취소' and order_date = #{date}")
 	Map<String, Object> cancelPay(LocalDate date);
 
+	@Select("SELECT order_state AS 'state', COUNT(*) AS 'cnt' "
+			+ " FROM orderView "
+			+ " WHERE date(order_date) = CURDATE() "
+			+ " GROUP BY order_state ")
+	List<Map<String, Object>> orderState();
+
 }

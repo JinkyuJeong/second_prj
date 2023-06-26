@@ -69,4 +69,8 @@ public class AdminOrderDao {
 		return template.getMapper(cls).cancelPay(date);
 	}
 
+	public List<Map<String, Object>> orderState() {
+		return template.getMapper(cls).orderState();
+	}
+
 }

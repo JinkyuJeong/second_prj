@@ -13,35 +13,8 @@
     <div class="container">
       <h3><i class="fa fa-caret-square-o-right text-primary" aria-hidden="true"></i> 오늘의 주문 현황</h3>
       <p class="text-danger text-end">${d}</p>
-      <div class="container w3-white p-3">
-        <table class="table table-bordered text-center align-middle">
-          <tr class="table-secondary">
-            <th rowspan="2">결제완료</th>
-            <th rowspan="2">상품준비</th>
-            <th rowspan="2">배송준비</th>
-            <th rowspan="2">배송중</th>
-            <th rowspan="2">배송완료</th>
-            <th rowspan="2">구매확정</th>
-            <th rowspan="2">취소</th>
-            <th>환불</th>
-            <th>상품문의</th>
-          </tr>
-          <tr class="table-secondary">
-            <th>신청/처리완료</th>
-            <th>미처리</th>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-          </tr>
-        </table>
+      <div class="container w3-white p-3" id="state">
+        
       </div>
 
       <h3 class="mt-5"><i class="fa fa-caret-square-o-right text-primary" aria-hidden="true"></i> 쇼핑몰 매출 현황</h3>
@@ -73,10 +46,47 @@
   }
   
   $(()=> {
-  	//orderState();
+  	orderState();
     barGraph();
     salesTable();
   });
+  
+  function orderState(){
+  	$.ajax({
+  		url : "orderState",
+  		success : function(data){
+  			let html = '<table class="table table-bordered text-center align-middle">';
+	      html += '<tr class="table-secondary">';
+	      html += '<th rowspan="2">결제완료</th>';
+	      html += '<th rowspan="2">상품준비</th>';
+	      html += '<th rowspan="2">배송준비</th>';
+	      html += '<th rowspan="2">배송중</th>';
+	      html += '<th rowspan="2">배송완료</th>';
+	      html += '<th rowspan="2">구매확정</th>';
+	      html += '<th rowspan="2">취소</th>';
+	      html += '<th>환불</th>';
+	      html += '<th>상품문의</th>';
+	      html += '</tr>';
+	      html += '<tr class="table-secondary">';
+	      html += '<th>신청/처리완료</th>';
+	      html += '<th>미처리</th>';
+	      html += '</tr>';
+	      html += '<tr>';
+	      html += '<td>'+data.결제완료+'</td>';
+	      html += '<td>'+data.상품준비+'</td>';
+	      html += '<td>'+data.배송준비+'</td>';
+	      html += '<td>'+data.배송중+'</td>';
+	      html += '<td>'+data.배송완료+'</td>';
+	      html += '<td>'+data.구매확정+'</td>';
+	      html += '<td>'+data.주문취소+'</td>';
+	      html += '<td>'+data.환불+'</td>';
+	      html += '</tr>';
+	      html += '</table>';
+	      
+	      $("#state").html(html);
+  		}
+  	})
+  }
   
   function salesTable(){
   	$.ajax({

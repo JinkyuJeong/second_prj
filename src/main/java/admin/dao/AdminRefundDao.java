@@ -56,4 +56,7 @@ public class AdminRefundDao {
 	public Map<String, Object> refundPay(LocalDate date) {
 		return template.getMapper(cls).refundPay(date);
 	}
+	public Integer refundTodayCnt() {
+		return template.getMapper(cls).refundTodayCnt();
+	}
 }
