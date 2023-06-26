@@ -28,4 +28,7 @@ public interface MemMapper {
 	@Delete("delete from mem where mem_id=#{value}")
 	boolean deleteMem(String mem_id);
 
+	@Update("update mem set mem_pw=#{mem_pw} where mem_id=#{email}")
+	boolean updatePw(Map<String, Object> param);
+
 }

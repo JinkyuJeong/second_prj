@@ -7,6 +7,15 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +29,7 @@ import dto.Cs;
 import dto.Delivery;
 import dto.Mem;
 import dto.Opt;
+import dto.Order;
 import dto.OrderView;
 import dto.Product;
 import dto.ProductOptView;
@@ -27,6 +37,7 @@ import dto.Refund;
 import dto.ReviewView;
 import exception.CloseException;
 import exception.ShopException;
+import service.IamPortService;
 import service.ShopService;
 
 @Controller
@@ -34,6 +45,8 @@ import service.ShopService;
 public class AjaxController {
 	@Autowired
 	private ShopService service;
+	@Autowired
+	private IamPortService iamService;
 	
 	@RequestMapping("optionSelect")
 	public ModelAndView optionSelect(@RequestParam(name = "opt_number") Integer opt_number) {
@@ -231,8 +244,38 @@ public class AjaxController {
 			service.addRefund(order_id, optId, sessionMem.getMem_id(), price);			
 		}
 		service.updateOrderState(order_id, "주문취소");
-		return "주문이 취소되었습니다. 취소 내역은 마이페이지의 취소/환불 내역에서 확인 가능합니다.";
+		
+		// IAMPORT API에 Access Token 요청
+        Order order = service.getOrder(order_id);
+        iamService.cancleBuy(order_id, order.getOrder_totalPay());
+		return "주문이 취소되었습니다. 취소내역은 마이페이지 > 주문 취소 내역에서 확인가능합니다.";
 	}
+	
+//	private String getAccessToken() {
+//        String imp_key = "2525013140373035";
+//        String imp_secret = "2iIwEiOGxOcJziGXqFawD4fnRBbkoYGropaMwsueDfCVod4Hmw5lvtRCFslTm69CwxKMlhgHYjD4S2e2";
+//        
+//        // IAMPORT API에 Access Token 요청을 위한 URL 설정
+//        String url = "https://api.iamport.kr/users/getToken";
+//        
+//        // 요청 헤더 설정
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setContentType(MediaType.APPLICATION_JSON);
+//        
+//        // 요청 바디 설정
+//        JSONObject body=new JSONObject();
+//        body.put("imp_key", imp_key);
+//        body.put("imp_secret", imp_secret);
+//        
+//        // RestTemplate을 사용하여 IAMPORT API에 요청
+//        RestTemplate restTemplate = new RestTemplate();
+//        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, new HttpEntity<>(body, headers), String.class);
+//        
+//        // 응답에서 Access Token 추출
+//        String accessToken = response.getBody();
+//        
+//        return accessToken;
+//    }
 	
 	@RequestMapping(value="orderConfig", produces = "text/plain; charset=UTF-8")
 	@ResponseBody

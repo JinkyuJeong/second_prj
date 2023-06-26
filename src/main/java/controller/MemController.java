@@ -37,12 +37,19 @@ import dto.Mem;
 import exception.OpenerException;
 import exception.ShopException;
 import service.ShopService;
+import util.CipherUtil;
 
 @Controller
 @RequestMapping("mem")
 public class MemController {
 	@Autowired
 	private ShopService service;
+	@Autowired
+	private CipherUtil cipher;
+	
+	private String passwordHash(String password) throws Exception {
+		return cipher.makehash(password, "SHA-512");
+	}
 	
 	@GetMapping("*")
 	public ModelAndView all() {
@@ -56,6 +63,11 @@ public class MemController {
 		int maxMemNum = service.maxMemNum();
 		mem.setMem_number(maxMemNum+1);
 		mem.setMem_id(email1 + "@" + email2);
+		try {
+			mem.setMem_pw(passwordHash(mem.getMem_pw()));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		if(service.userInsert(mem)) {			
 			service.pointInsert(mem.getMem_id());
 			throw new ShopException("반갑습니다. " + mem.getMem_name() + "님 :)", "login");			
@@ -120,6 +132,65 @@ public class MemController {
 		}		
 		return mav;
 	}
+	
+	@PostMapping("emailPwForm")
+	public ModelAndView emailForm2(@RequestParam(value="email", required=false)String email, HttpSession ses) {
+		ModelAndView mav = new ModelAndView();
+		System.out.println(email);
+		if(service.getMemEmail(email) == null) {
+			throw new OpenerException("가입되지 않은 이메일입니다.", "login");
+		}  else if(email != null) {
+			//인증번호 랜덤 생성
+		    String randomkey = authCodeMaker();
+		    // 발신자 정보
+			String sender = "zxc2289@naver.com";
+			String password = "slfflflakaqh";
+			// 메일 받을 주소
+			String recipient = email;
+			System.out.println("inputedEmail : " + email);
+			Properties prop = new Properties();
+			try {
+				FileInputStream fis = new FileInputStream("D:\\twerkinghamtori\\workspace\\spring\\second_prj\\src\\main\\resources\\mail.properties"); 
+				// 진규 경로 : D:\java_gdu_workspace\second_prj\src\main\resources\mail.properties
+				// 수빈 경로 : D:\\springstudy\\second_prj\\src\\main\\resources\mail.properties
+				prop.load(fis);
+				prop.put("mail.smtp.user", sender);
+				System.out.println(prop);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			Session session = Session.getDefaultInstance(prop, new javax.mail.Authenticator() {
+				protected PasswordAuthentication getPasswordAuthentication() {
+					return new PasswordAuthentication(sender, password);
+				}
+			});
+			MimeMessage msg = new MimeMessage(session);
+			// email 전송
+			try {
+				try {
+					msg.setFrom(new InternetAddress(sender, "HOMIEGYM 인증센터", "UTF-8"));
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
+				msg.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
+
+				// 메일 제목
+				msg.setSubject("이메일 인증");
+				// 메일 내용
+				msg.setText(randomkey);
+				Transport.send(msg);
+				System.out.println("이메일 전송 : " + randomkey);
+
+			} catch (AddressException e) {
+				e.printStackTrace();
+			} catch (MessagingException e) {
+				e.printStackTrace();
+			}
+			ses.setAttribute("randomkey", randomkey);
+		}	
+		mav.addObject("email",email);
+		return mav;
+	}
 	//인증번호 확인
 	@RequestMapping("emailFormchk")
 	public ModelAndView emailFormchk(String authNum, @RequestParam(value="pwchg", required=false)String pwchg, HttpSession session) {
@@ -133,6 +204,37 @@ public class MemController {
 			mav.addObject("able", able);
 			mav.setViewName("mem/emailForm");
 			return mav;
+		}
+	}
+	// 인증번호 확인
+	@PostMapping("emailPwchk")
+	public ModelAndView emailPwchk(String authNum, @RequestParam(value = "pwchg", required = false) String pwchg, String email, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		String randomkey = (String) session.getAttribute("randomkey");
+		boolean able = true;
+		if (!authNum.equals(randomkey)) {
+			throw new ShopException("인증번호가 틀립니다.", "emailPwForm");
+		} else {
+			able = true;
+			mav.addObject("able", able);
+			mav.addObject("email",email);
+			mav.setViewName("redirect:pwChgForm");
+			return mav;
+		}
+	}
+	@GetMapping("pwChgForm")
+	public ModelAndView pwChgForm(@RequestParam(value = "email", required = false) String email) {
+		ModelAndView mav = new ModelAndView();
+		return mav;
+	}
+	@PostMapping("password1")
+	public String password1(String email, String mem_pw, String mem_pw2) {
+		System.out.println(email);
+		System.out.println(mem_pw);
+		if(!service.updatePw(email, mem_pw)) {
+			throw new OpenerException("죄송합니다. 비밀번호 변경 중 오류가 발생했습니다.", "login");
+		} else {
+			throw new OpenerException("비밀번호가 변경되었습니다. 새로운 비밀번호로 로그인하세요.", "login");
 		}
 	}
 	//인증번호 생성 함수
@@ -194,8 +296,14 @@ public class MemController {
 		if(dbMem == null) {
 			throw new ShopException("가입되지 않은 회원입니다.", "login");
 		}
+		String hashPass = "";
+		try {
+			hashPass = passwordHash(mem.getMem_pw());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		if(dbMem.getMem_channel() == null) {
-			if(dbMem.getMem_pw().equals(mem.getMem_pw())) {
+			if(dbMem.getMem_pw().equals(hashPass)) {
 				session.setAttribute("loginMem", dbMem);
 				mav.addObject("userid",dbMem.getMem_id());
 				mav.setViewName("redirect:/mypage/myInfo?mem_id=" + dbMem.getMem_id());

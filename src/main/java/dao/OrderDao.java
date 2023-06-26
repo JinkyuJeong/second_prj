@@ -87,4 +87,8 @@ public class OrderDao {
 	public List<OrderView> getOvProductNum(int product_number) {
 		return template.getMapper(cls).getOvProducdtNum(product_number);
 	}
+
+	public Order getOrder(String order_id) {
+		return template.getMapper(cls).getOrder(order_id);
+	}
 }

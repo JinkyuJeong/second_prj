@@ -343,4 +343,12 @@ public class ShopService {
 		return memDao.deleteMem(mem_id);
 	}
 
+	public boolean updatePw(String email, String mem_pw) {
+		return memDao.updatePw(email, mem_pw);
+	}
+
+	public Order getOrder(String order_id) {
+		return orderDao.getOrder(order_id);
+	}
+
 }

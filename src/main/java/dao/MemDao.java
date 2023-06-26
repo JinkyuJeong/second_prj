@@ -43,4 +43,11 @@ public class MemDao {
 	public boolean deleteMem(String mem_id) {
 		return template.getMapper(cls).deleteMem(mem_id);
 	}
+
+	public boolean updatePw(String email, String mem_pw) {
+		param.clear();
+		param.put("email", email);
+		param.put("mem_pw",mem_pw);
+		return template.getMapper(cls).updatePw(param);
+	}
 }

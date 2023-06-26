@@ -41,18 +41,19 @@
 		})
 	}
 	function cancel(order_id) {
-		$.ajax({
-			url : "${path}/ajax/cancelOrder",
-			method : "POST",
-			data : { order_id: order_id },
-			success : function(result) {
-				alert(result);
-			}, 
-			error : function(e) {
-				alert("[ajax] 주문취소 오류 : " + e.status);
-			}
-		});
-	}
+		  $.ajax({
+		    url: "${path}/ajax/cancelOrder",
+		    method: "POST",
+		    data: { order_id: order_id },
+		    success: function(result) {
+		      console.log("access token: " + result);
+		      alert(result);
+		    },
+		    error: function(e) {
+		      alert("[ajax] 주문취소 오류: " + e.status);
+		    }
+		  });
+		}
 	function orderConfig(order_id) {
 		$.ajax({
 			url : "${path}/ajax/orderConfig",
@@ -95,7 +96,7 @@
             <th>제품명</th>
             <th>결제금액</th>
             <th>처리현황</th>
-            <th>결제취소</th>
+            <th>취소</th>
             <th>구매확정</th>
           </tr>
         <c:forEach items="${map }" var="map" varStatus="st">

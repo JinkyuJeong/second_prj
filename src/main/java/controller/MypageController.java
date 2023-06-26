@@ -26,12 +26,19 @@ import dto.Review;
 import exception.CloseException;
 import exception.ShopException;
 import service.ShopService;
+import util.CipherUtil;
 
 @Controller
 @RequestMapping("mypage")
 public class MypageController {
 	@Autowired
 	private ShopService service;
+	@Autowired
+	private CipherUtil cipher;
+	
+	private String passwordHash(String password) throws Exception {
+		return cipher.makehash(password, "SHA-512");
+	}
 	
 	@GetMapping("*")
 	public ModelAndView all() {
@@ -304,7 +311,13 @@ public class MypageController {
 	@PostMapping("memDelete")
 	public String idCheckmemDelete(String mem_pw, String mem_id, HttpSession session) {
 		Mem dbMem = service.getMemEmail(mem_id);
-		if(!dbMem.getMem_pw().equals(mem_pw)) {
+		String hashPass = "";
+		try {
+			hashPass = passwordHash(mem_pw);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if(!dbMem.getMem_pw().equals(hashPass)) {
 			throw new ShopException("비밀번호를 확인하세요.", "memDelete?mem_id="+mem_id);
 		} else {
 			if(!service.deleteMem(mem_id)) {

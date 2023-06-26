@@ -46,4 +46,7 @@ public interface OrderMapper {
 
 	@Select("select * from orderView where product_number=#{value}")
 	List<OrderView> getOvProducdtNum(int product_number);
+
+	@Select("select * from h_order where order_id=#{value}")
+	Order getOrder(String order_id);
 }
