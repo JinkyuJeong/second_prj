@@ -19,7 +19,10 @@
 			</div>
 			<div style="flex-basis: 80%;">
       <h1 class="mb-3">리뷰관리</h1>
-      <h6 class="text-secondary">*이미 포인트가 지급된 건에 대해서는 리뷰 삭제가 불가합니다. (포인트 지급내역은 <span style="font-weight:bold;">마이페이지 > 포인트 내역</span> 에서 확인 가능합니다.)</h6>
+      <p class="mb-3 text-secondary">
+      	· 이미 <span class="text-danger"> 포인트가 지급된 건</span> 에 대해서는 <span class="text-danger">리뷰 삭제가 불가</span>합니다. <br>
+      	· 포인트 지급내역은 <span class="text-danger">마이페이지 > 포인트 내역</span> 에서 확인 가능합니다.<br>
+      </p>
       <div class="row">
         <div class="col-7">
           <h5>총 <span style="color: red;">${map.size() }</span>건</h5>

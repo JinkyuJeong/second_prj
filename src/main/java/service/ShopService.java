@@ -335,4 +335,12 @@ public class ShopService {
 		return reviewDao.getReviewList(product_number, startIndex, pageSize);
 	}
 
+	public boolean updateMem(Mem mem) {
+		return memDao.updateMem(mem);
+	}
+
+	public boolean deleteMem(String mem_id) {
+		return memDao.deleteMem(mem_id);
+	}
+
 }

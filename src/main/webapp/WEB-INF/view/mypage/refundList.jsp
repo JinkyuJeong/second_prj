@@ -44,7 +44,9 @@
 			</div>
 			<div style="flex-basis: 80%;">
       <h1 class="mb-3">환불 내역</h1>
-      <h6 class="text-secondary">*환불반려에 대한 문의사항은 고객센터로 문의주세요.</h6>
+      <p class="mb-3 text-secondary">
+      	· <span class="text-danger"> 환불반려</span> 에 대한 문의사항은 <span class="text-danger">고객센터</span>로 문의주세요. <br>
+      </p>
       <div class="row">
         <div class="col-7">
           <h5>총 <span style="color: red;">${map.size() }</span>건</h5>

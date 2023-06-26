@@ -9,6 +9,19 @@
 <meta charset="UTF-8">
 <title>호미짐</title>
 <script>
+	function input_chk(f) {
+		if(f.review_value.value().trim() === "") {
+			alert("별점을 선택하세요.")
+			f.review_value.focus();
+			return false;
+		}
+		if(f.review_content.value().trim() === "") {
+			alert("리뷰 내용을 입력하세요.");
+			f.review_content.focus();
+			return false;
+		}
+		return true;
+	} 
 </script>
 </head>
 <body>
@@ -19,7 +32,7 @@
 			</div>
 			<div style="flex-basis: 70%; margin-left: 150px;">
 					<h1 style="width:70%; padding: 5px; margin-bottom: 15px;">리뷰쓰기</h1>
-					<form action="reviewReg?mem_id=${sessionScope.loginMem.mem_id }" method="POST" name="f">
+					<form action="reviewReg?mem_id=${sessionScope.loginMem.mem_id }" method="POST" name="f" onsubmit="return input_chk(this)">
 					<input type="hidden" name="order_itemId" id="order_itemId" value="${ov.order_itemId }">
 					<div>
 						<div class="form-group mb-3">
@@ -30,21 +43,21 @@
 						</div>
 						
 						<div class="form-group">
-							<label class="mb-1" for="nickname">별점</label>
+							<label class="mb-1" for="review_value">별점</label>
 							<div class="input-group mb-3">
 								<select class="form-select" id="review_value" name="review_value">
                       				<option value="optionNotSelected" disabled selected>별점을 선택하세요.</option>
-                      				<option value="1">★</option>
-          							<option value="2">★★</option>
-          							<option value="3">★★★</option>
-          							<option value="4">★★★★</option>
-          							<option value="5">★★★★★</option>
+                      				<option value="5">★★★★★</option>
+                      				<option value="4">★★★★☆</option>
+                      				<option value="3">★★★☆☆</option>
+                      				<option value="2">★★☆☆☆</option>
+                      				<option value="1">★☆☆☆☆</option>							
                     			</select>
 							</div>
 						</div>
 						
 						<div class="form-group">
-							<label class="mb-1" for="nickname">리뷰내용</label>
+							<label class="mb-1" for="review_content">리뷰내용</label>
 							<div class="input-group mb-3">
 								<input type="text" class="form-control" name="review_content" id="review_content">
 							</div>

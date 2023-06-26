@@ -42,7 +42,7 @@ public class MypageController {
 	@GetMapping("myInfo")
 	public ModelAndView idCheckmyInfo(String mem_id, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		Mem mem = (Mem) session.getAttribute("loginMem");
+		Mem mem = service.getMemEmail(mem_id);
 		mav.addObject("mem", mem);
 		return mav;
 	}
@@ -280,6 +280,39 @@ public class MypageController {
 		}
 		mav.addObject("pointList",pointList);
 		return mav;
+	}
+	
+	@GetMapping("myInfoUpdate")
+	public ModelAndView idCheckmyInfoUpdate(String mem_id, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		Mem mem = service.getMemEmail(mem_id);
+		mav.addObject("mem", mem);
+		return mav;
+	}
+	
+	@PostMapping("myInfoUpdate")
+	public ModelAndView idCheckmyInfoUpdatePost(Mem mem, String mem_id, HttpSession session) {
+		if(!service.updateMem(mem)) {
+			throw new ShopException("죄송합니다. 회원 정보 수정 과정에서 오류가 발생했습니다.","myInfo?mem_id="+mem_id);
+		} else {
+			Mem newMem = service.getMemEmail(mem_id);
+			session.setAttribute("loginMem", newMem);
+			throw new ShopException("회원 정보 수정이 완료되었습니다.", "myInfo?mem_id="+mem_id);
+		}		
+	}
+	
+	@PostMapping("memDelete")
+	public String idCheckmemDelete(String mem_pw, String mem_id, HttpSession session) {
+		Mem dbMem = service.getMemEmail(mem_id);
+		if(!dbMem.getMem_pw().equals(mem_pw)) {
+			throw new ShopException("비밀번호를 확인하세요.", "memDelete?mem_id="+mem_id);
+		} else {
+			if(!service.deleteMem(mem_id)) {
+				throw new ShopException("죄송합니다. 회원 탈퇴 과정에서 오류가 발생했습니다.", "/second_prj/");
+			} else {
+				throw new ShopException("회원 탈퇴가 완료되었습니다.", "/second_prj/");
+			}
+		}
 	}
 	
 }

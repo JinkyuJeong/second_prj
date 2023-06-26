@@ -71,7 +71,9 @@
 			</div>
 			<div style="flex-basis: 80%;">
       			<h1 class="mb-3">환불 신청</h1>
-      			<h6 class="text-secondary">*구매 후 <span style="color:red;">2주가 지난 상품</span> 및 <span style="color:red;">배송완료 되지 않은 상품</span>은 환불이 불가합니다.</h6>
+      			<p class="mb-3 text-secondary">
+      				· 구매 후<span class="text-danger"> 2주가 지난 상품</span> 및 <span class="text-danger">배송완료 되지 않은 상품</span>은 환불이 불가합니다. <br>
+      			</p>
       			<div class="row">
       				<c:if test="${empty orderItems }">
       					<div class="text-secondary mt-5">

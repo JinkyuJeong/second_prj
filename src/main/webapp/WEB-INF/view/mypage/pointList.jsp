@@ -9,31 +9,6 @@
 <meta charset="UTF-8">
 <title>호미짐</title>
 <script>
-	function list_disp(order_id) {
-		$("#saleLine"+order_id).toggle();
-		console.log(order_id)
-		$.ajax({
-			url : "${path}/ajax/orderDetail",
-			method : "POST",
-			data : {order_id : order_id}, 
-			success : function(result) {
-				var html = ""
-				html+="<tr style='background-color:pink; color:white;'><th>상품명</th><th>옵션명</th><th>상품가격</th><th>주문수량</th><th>상품총액</th></tr>"              	
-				$.each(result, function(index, o) {
-					html += "<tr>";
-					html += "<td>" + o.product_name + "</td>";
-					html += "<td>" + o.opt_name + "</td>";
-					html += "<td>" + o.product_price + "원 </td>";
-					html += "<td>" + o.opt_count + "개 </td>";
-					html += "<td>" + o.product_price * o.opt_count + "원 </td>";
-					html += "</tr>";
-				})
-				$("#orderDetail"+order_id).html(html);
-			}, error : function(e) {
-				alert("주문 상세정보 불러오기 오류 : " + e.status)
-			}
-		})
-	}
 </script>
 </head>
 <body>
@@ -50,9 +25,9 @@
         </div>
         <div class="col-5 text-end">
         	<div class="btn-group mb-3">
-			<button type="button" onclick="location.href='pointList?mem_id=${sessionScope.loginMem.mem_id}'" class="btn btn-outline-danger ${empty param.refund_type ? 'active' : '' }">전체</button>
-			<button type="button" onclick="location.href='pointList?mem_id=${sessionScope.loginMem.mem_id}&point_type=else'" class="btn btn-outline-danger  ${param.refund_type == 'else' ? 'active' : '' }">받은 포인트</button>
-			<button type="button" onclick="location.href='pointList?mem_id=${sessionScope.loginMem.mem_id}&point_type=used'" class="btn btn-outline-danger  ${param.refund_type == 'used' ? 'active' : '' }">사용한 포인트</button>
+			<button type="button" onclick="location.href='pointList?mem_id=${sessionScope.loginMem.mem_id}'" class="btn btn-outline-danger ${empty param.point_type ? 'active' : '' }">전체</button>
+			<button type="button" onclick="location.href='pointList?mem_id=${sessionScope.loginMem.mem_id}&point_type=else'" class="btn btn-outline-danger  ${param.point_type == 'else' ? 'active' : '' }">받은 포인트</button>
+			<button type="button" onclick="location.href='pointList?mem_id=${sessionScope.loginMem.mem_id}&point_type=used'" class="btn btn-outline-danger  ${param.point_type == 'used' ? 'active' : '' }">사용한 포인트</button>
 	  </div>
         </div>
       </div>

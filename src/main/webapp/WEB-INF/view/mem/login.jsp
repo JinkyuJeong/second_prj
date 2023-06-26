@@ -85,6 +85,10 @@
 		    }
 		    return unescape(cookieValue); //unescape로 디코딩 후 값 리턴
 		}
+		function win_open(page){		
+	    	let op = "width=500, height=450, left=50, top=150";
+	    	open(page,"",op);
+	  	}
 </script>
 </head>
 <body>

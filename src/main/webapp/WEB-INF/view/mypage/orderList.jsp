@@ -76,8 +76,10 @@
 			</div>
 			<div style="flex-basis: 80%;">
       <h1 class="mb-3">주문조회</h1>
-      <h6 class="text-secondary">*환불신청은 마이페이지 > 환불신청에서 하실 수 있습니다.</h6>
-      <h6 class="text-secondary">*리뷰작성은 구매확정이 된 주문 건만 작성 가능합니다.</h6>
+      <p class="mb-3 text-secondary">
+      	·<span class="text-danger"> 환불신청</span>은 <span class="text-danger">마이페이지 > 환불신청</span>에서 하실 수 있습니다. <br>
+      	·<span class="text-danger"> 리뷰작성</span>은 <span class="text-danger">구매확정</span>이 된 주문 건만 작성 가능합니다. <br>
+      </p>
       <div class="row">
         <div class="col-2">
           <h5>총 <span style="color: red;">${map.size() }</span>건</h5>

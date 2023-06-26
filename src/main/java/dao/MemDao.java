@@ -35,4 +35,12 @@ public class MemDao {
 		param.put("mem_id", mem_id);
 		template.getMapper(cls).usePoint(param);
 	}
+
+	public boolean updateMem(Mem mem) {
+		return template.getMapper(cls).updateMem(mem);
+	}
+
+	public boolean deleteMem(String mem_id) {
+		return template.getMapper(cls).deleteMem(mem_id);
+	}
 }
