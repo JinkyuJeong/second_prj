@@ -88,7 +88,7 @@
 	      html += '</tr>';
 	      html += '<tr class="table-secondary">';
 	      html += '<th>신청/처리완료</th>';
-	      html += '<th>미처리</th>';
+	      html += '<th>미처리 건</th>';
 	      html += '</tr>';
 	      html += '<tr>';
 	      html += '<td>'+data.결제완료+'</td>';
