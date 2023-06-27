@@ -85,8 +85,8 @@
         <li class="nav-item dropdown-item <c:if test='${url eq "review"}'>w3-blue</c:if>">
           <h4><a href="${path }/admin/review/reviewList" ><i class="fa fa-comment-o" aria-hidden="true"></i> 리뷰 관리</a></h4>
         </li>
-        <li class="nav-item dropdown-item">
-          <h4><a href="" ><i class="fa fa-line-chart" aria-hidden="true"></i> 통계분석</a></h4>
+        <li class="nav-item dropdown-item <c:if test='${url eq "stat"}'>w3-blue</c:if>">
+          <h4><a href="${path }/admin/stat/sale" ><i class="fa fa-line-chart" aria-hidden="true"></i> 통계분석</a></h4>
         </li>
         <li class="nav-item dropdown-item <c:if test='${url eq "point"}'>w3-blue</c:if>">
           <h4><a href="${path}/admin/point/pointList"><i class="fa fa-product-hunt" aria-hidden="true"></i> 포인트 관리</a></h4>

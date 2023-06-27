@@ -19,6 +19,7 @@ import admin.dao.AdminPointDao;
 import admin.dao.AdminQnaDao;
 import admin.dao.AdminRefundDao;
 import admin.dao.AdminReviewDao;
+import admin.dao.AdminStatDao;
 import dto.Cs;
 import dto.Delivery;
 import dto.Manager;
@@ -26,6 +27,7 @@ import dto.Mem;
 import dto.Point;
 import dto.Qna;
 import dto.ReviewView;
+import dto.StatSale;
 
 @Service
 public class AdminManageService {
@@ -46,6 +48,8 @@ public class AdminManageService {
 	private AdminOrderDao orderDao;
 	@Autowired
 	private AdminRefundDao refundDao;
+	@Autowired
+	private AdminStatDao statDao;
 
 	public boolean regQna(Qna qna) {
 		return qnaDao.regQna(qna);
@@ -294,6 +298,14 @@ public class AdminManageService {
 		resultMap.put("문의", csCnt);
 		
 		return resultMap;
+	}
+
+	public int statCnt(String sd, String ed) {
+		return statDao.statCnt(sd, ed);
+	}
+
+	public List<StatSale> getStatSaleList(Integer pageNum, String sd, String ed) {
+		return statDao.getStatSaleList(pageNum, sd, ed);
 	}
 
 }
