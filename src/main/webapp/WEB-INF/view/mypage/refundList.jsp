@@ -78,7 +78,7 @@
           <tr style="text-align:center;">
             <td><fmt:formatDate value="${entry.key.refund_date}" pattern="yyyy-MM-dd" /></td>
             <td>${entry.key.refund_orderId }</td>
-            <td>${entry.value.product_name} / ${entry.value.opt_name }</td> 
+            <td style="white-space: pre-line; max-width: 250px; overflow: hidden; text-overflow: ellipsis;">${entry.value.product_name} / ${entry.value.opt_name }</td> 
             <td>${entry.key.refund_optCount }</td> 
             <td>${entry.key.refund_reason }</td>         
             <td><fmt:formatNumber value="${entry.key.refund_price}" pattern="###,###"/>원</td>

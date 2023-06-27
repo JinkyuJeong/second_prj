@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import admin.service.AdminOrderService;
+import dto.CancelBuy;
 import dto.Order;
 import dto.RefundView;
 import service.IamPortService;
@@ -112,16 +113,11 @@ public class AdminRefundController {
 	}
 
 	@Transactional
-	@PostMapping("refundComp")
+	@PostMapping(value="refundComp", produces = "text/plain; charset=UTF-8")
 	@ResponseBody
-	public void adminRefundCompChg(@RequestParam("refund_number") String refund_number, @RequestParam("refund_type") String refund_type, 
+	public String adminRefundCompChg(@RequestParam("refund_number") String refund_number, @RequestParam("refund_type") String refund_type, 
 			@RequestParam("refund_orderId") String refund_orderId, @RequestParam("refund_price") Integer refund_price, HttpSession session) {
 		String type = "";
-		
-		if(refund_type.equals("환불대기")) {
-			type = "환불완료";
-			service.refundComp(refund_number, type);
-		}
 		Order order = service.getOrder(refund_orderId);
 		int usedPoint = order.getOrder_point();
 		int totalPay = order.getOrder_totalPay();
@@ -131,15 +127,28 @@ public class AdminRefundController {
 				refund_price = refund_price - usedPoint;
 				refundPoint = usedPoint;
 			} else {
-				refundPoint = refund_price;
 				refund_price = 0;
+				refundPoint = refund_price;				
 			}
 		} else {
 			refund_price = totalPay -  refund_price;
 		}
+		String msg = "";
+		System.out.println(refund_orderId + refund_price);
+		CancelBuy cancel = iamService.cancelBuy(refund_orderId, refund_price);
+		//결제 취소 실패 시 메세지 보냄
+		if(cancel.getCode() != "0") {
+			msg = cancel.getMessage();
+			return msg;
+		}
+		if(refund_type.equals("환불대기")) {
+			type = "환불완료";
+			service.refundComp(refund_number, type);
+		}		
 		RefundView refund = service.getRefund(refund_number);
 		service.pointBack(refund.getRefund_memId(), refundPoint);
-		iamService.cancelBuy(refund_orderId, refund_price);
+		return msg;
+		
 	}
 	
 	@PostMapping("refundBack")

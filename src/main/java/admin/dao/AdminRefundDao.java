@@ -46,8 +46,7 @@ public class AdminRefundDao {
 	public boolean refundBack(String refund_number, String type) {
 		param.clear();
 		param.put("refund_number", refund_number);
-		param.put("type", type);
-		
+		param.put("type", type);		
 		return template.getMapper(cls).refundBack(param);
 	}
 	public RefundView getRefund(String refund_number) {

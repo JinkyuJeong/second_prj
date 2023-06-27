@@ -174,7 +174,14 @@
 	      refund_orderId : refundOrderId,
 	      refund_price : refundPrice
 	    },
-	    success: getTypeList,
+	    success: function(result) {
+	    	if(result != "") {
+	    		alert(result);
+		    	return;
+	    	} else {
+	    		getTypeList
+	    	}	    	
+	    } ,
 	    error: function(error) {
 	      alert(error);
 	    }

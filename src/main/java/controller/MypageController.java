@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import dto.Cs;
@@ -136,7 +138,13 @@ public class MypageController {
 	}
 	
 	@PostMapping("refundReq")
-	public ModelAndView idCheckRefundReqPost (String[] order_id, Integer[] opt_numbers, Integer[] opt_count, String[] refund_reasons, String refund_memId, String mem_id, HttpSession session) {
+	public ModelAndView idCheckRefundReqPost (
+			@RequestParam("mem_id") String refund_memId,
+            @RequestParam("order_id") String[] order_id,
+            @RequestParam("opt_number") Integer[] opt_numbers,
+            @RequestParam("opt_count") Integer[] opt_count,
+            @RequestParam("refund_reason") String[] refund_reasons, 
+            String mem_id, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		Mem sessionMem = (Mem) session.getAttribute("loginMem");
 		//refund table insert
@@ -145,7 +153,7 @@ public class MypageController {
 			  					  -> 주문한 수량보다 적다면 -> 환불 insert
      		   -> 환불 내역 없음 -> 환불 insert
 		 */
-		Map<Integer, Integer> optMap = new HashMap<>();		
+		Map<Integer, Integer> optMap = new HashMap<>();	
 		for(int i=0; i< opt_numbers.length; i++) {
 			List<Refund> rf = service.getRefund(order_id[i], opt_numbers[i]);
 			int refund_optCount = 0;
