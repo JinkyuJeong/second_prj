@@ -114,7 +114,7 @@
     <div class="container w3-white pt-1">
       <h3><i class="fa fa-caret-square-o-right text-primary" aria-hidden="true"></i> 제품 등록</h3>
       <p class="mb-3">제품을 등록하는 페이지 입니다.</p>
-      <form:form modelAttribute="product" action="reg" method="post" name="f" onsubmit="return inputChk(this)" enctype="multipart/form-data">
+      <form:form modelAttribute="product" action="prodReg" method="post" name="f" onsubmit="return inputChk(this)" enctype="multipart/form-data">
         <table class="table align-middle">
           <tr>
             <td width="15%" class="table-secondary text-center">제품명<span class="text-danger">*</span></td>

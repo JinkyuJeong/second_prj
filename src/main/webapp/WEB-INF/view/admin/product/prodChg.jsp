@@ -185,7 +185,7 @@
             <td class="table-secondary text-center">제품 썸네일</td>
             <td colspan="3">
               <input class="form-control mb-3" type="file" name="thumbFile" id="productThumbInput">
-              <input type="hidden" value="${product.product_thumb}">
+              <input type="hidden" name="product_thumb" value="${product.product_thumb}">
               <img id="thumbPreview" src="${path }/img/thumb/${product.product_thumb }" style="max-width: 300px;">
               <input type="hidden" id="isPicValid" value="1">
               <span id="thumbError" class="text-danger">&nbsp;</span>
@@ -195,7 +195,7 @@
             <td class="table-secondary text-center">제품 사진</td>
             <td colspan="3" >
               <input class="form-control" type="file" name="picFiles[]" multiple>
-              <input type="hidden" value="${product.product_pictures}">
+              <input type="hidden" name="product_pictures" value="${product.product_pictures}">
             </td>
           </tr>
         </table>

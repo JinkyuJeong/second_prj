@@ -55,7 +55,7 @@
           </tr>
           <tr>
             <td class="table-secondary">제품 설명</td>
-            <td colspan="3">${prod.product_desc}</td>
+            <td colspan="3">${product.product_desc}</td>
           </tr>
         </table>
 
