@@ -128,9 +128,9 @@ public class CartController {
 		LocalDate today = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMdd");
         String formattedDate = today.format(formatter);
-        int num= Integer.parseInt(service.getMaxOrderId().substring(6,10));
+        int num= Integer.parseInt(service.getMaxOrderId().substring(6));
         String formattedNumber = String.format("%04d", num+1);
-		String order_id = formattedDate + formattedNumber;	
+		String order_id = formattedDate + formattedNumber;
 		map.put("merchant_uid", order_id);
 		map.put("name", product_name[0] + " 외 " + (product_name.length-1) + "개");
 		map.put("amount", final_amount);

@@ -60,8 +60,7 @@ public class MypageController {
 		ModelAndView mav = new ModelAndView();		
 		Mem mem = (Mem) session.getAttribute("loginMem");
 		List<OrderView> ov = service.getOv(mem.getMem_id());
-		Map<String, List<OrderView>> map = new HashMap<>();
-		List<Integer> priceList = new ArrayList<>();
+		Map<String, List<OrderView>> map = new LinkedHashMap<>();
 		for(OrderView o : ov) {
 			List<OrderView> ovList = service.getOvList(mem.getMem_id(), o.getOrder_id());
 			map.put(o.getOrder_id(), ovList);
@@ -124,11 +123,14 @@ public class MypageController {
 	    List<OrderView> recentOrders = new ArrayList<>();
 	    Calendar twoWeeksAgo = Calendar.getInstance();
 	    twoWeeksAgo.add(Calendar.DATE, -14);
+	    
 	    for (OrderView order : orderItems) {
 	        if (order.getOrder_date().after(twoWeeksAgo.getTime())) {
 	            recentOrders.add(order);
 	        }
 	    }
+	    
+	    
 		mav.addObject("orderItems", recentOrders);	
 		return mav;
 	}

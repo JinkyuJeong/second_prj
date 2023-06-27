@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import dto.CancelBuy;
 import dto.Cart;
 import dto.Cs;
 import dto.Delivery;
@@ -65,23 +66,25 @@ public class AjaxController {
 	
 	@RequestMapping("cartAdd")
 	@ResponseBody
-	public String loginCheckcartAdd(@RequestParam(value="opt_number", required=false)String[] opt_number, @RequestParam(value="quantity", required=false)String[] quantity, HttpSession session) {
+	public String cartAdd(@RequestParam(value="opt_number", required=false)String[] opt_number, @RequestParam(value="quantity", required=false)String[] quantity, HttpSession session) {
 		Mem loginMem = (Mem) session.getAttribute("loginMem");
-		String mem_id = loginMem.getMem_id(); 
 		String msg = "";
 		if(loginMem == null) {
-			
-		}
-		if(opt_number!=null || quantity != null) {
-			for(int i=0; i<opt_number.length; i++) {
-				String optionNumber = opt_number[i];
-				String optionCount = quantity[i];
-				if(!service.addCart(mem_id, optionNumber, optionCount)) { //addCart : 장바구니 insert, update
-					throw new ShopException("장바구니 등록 시 오류 발생", "../product/productList");
-				} 			
-			}
-		} 
-		return "장바구니 담기 성공";
+			msg = "shouldLogin";
+			return msg;
+		} else {
+			String mem_id = loginMem.getMem_id(); 		
+			if(opt_number!=null || quantity != null) {
+				for(int i=0; i<opt_number.length; i++) {
+					String optionNumber = opt_number[i];
+					String optionCount = quantity[i];
+					if(!service.addCart(mem_id, optionNumber, optionCount)) { //addCart : 장바구니 insert, update
+						throw new ShopException("장바구니 등록 시 오류 발생", "../product/productList");
+					} 			
+				}
+			} 
+			return msg;
+		}		
 	}
 	
 	@RequestMapping("passChk")
@@ -241,9 +244,16 @@ public class AjaxController {
 	@Transactional
 	@RequestMapping(value="cancelOrder", produces = "text/plain; charset=UTF-8")
 	@ResponseBody
-	public String loginCheckCancel(String order_id, HttpSession session) {
+	public String loginCheckCancel(String order_id, HttpSession session) {		
 		Mem sessionMem = (Mem) session.getAttribute("loginMem");
 		Order order = service.getOrder(order_id);
+		String msg = "";
+		CancelBuy cancel = iamService.cancelBuy(order_id, order.getOrder_totalPay());
+		//취소 실패시 cancel msg 보내고 return
+		if(cancel.getCode() != "0") {
+			msg = cancel.getMessage();
+			return msg;
+		}
 		service.addCancel(order_id, sessionMem.getMem_id(), order.getOrder_totalPay());
 //		List<OrderView> orderList = service.getOvList(sessionMem.getMem_id(), order_id);
 //		for(OrderView ov : orderList) {
@@ -251,10 +261,7 @@ public class AjaxController {
 //			int price = ov.getOrder_totalPay();
 //			service.addRefund(order_id, optId, sessionMem.getMem_id(), price);			
 //		}
-		service.updateOrderState(order_id, "주문취소");
-		
-        iamService.cancelBuy(order_id, order.getOrder_totalPay());
-        
+		service.updateOrderState(order_id, "주문취소");        
         service.pointBack(order.getMem_id(), order.getOrder_point());
 		return "주문이 취소되었습니다. 취소내역은 마이페이지 > 주문 취소 내역에서 확인가능합니다.";
 	}

@@ -9,57 +9,71 @@
 <meta charset="UTF-8">
 <title>호미짐</title>
 <script>
-	function input_chk(f) {		
-		var checkboxes = $("input[type='checkbox']:checked");
-		if (checkboxes.length === 0) {
-		  alert("환불하실 상품을 선택해주세요.");
-		  return false;
-		}
-		var isValid = false; 
-		checkboxes.each(function() {
-			var opt_count = $(this).closest("tr").find("input[name='opt_count']").val().trim();
-			if (opt_count === '') {
-				alert("수량을 입력해주세요.");
-				$(this).closest("tr").find("input[name='opt_count']").focus();
-				return false;
+	function input_chk(f) {
+		var checkboxes = f.elements["opt_numbers"];
+		var quantities = f.elements["opt_count"];
+		var refundReasons = f.elements["refund_reasons"];
+		var qChkElements = document.getElementsByName("qChk");
+
+		var checkedCount = 0;
+		for (var i = 0; i < checkboxes.length; i++) {
+			if (checkboxes[i].checked) {
+				checkedCount++;
 			}
-		});
-		if(f.refund_reason.value.trim() === 'optionNotSelected') {
-			alert("환불사유를 선택해주세요.");
-			f.refund_reason.focus();
+		}
+		if (checkedCount === 0) {
+			alert("환불할 상품을 선택해주세요.");
 			return false;
 		}
-		var qChks = $("input[name='qChk']");
-		qChks.each(function() {
-			if(f.qChk.value.trim() !== 'quantityChecked') {
-				alert("환불수량을 확인해주세요");
+
+		for (var j = 0; j < quantities.length; j++) {
+			if (quantities[j].value.trim() === "") {
+				alert("수량을 입력해주세요.");
 				return false;
 			}
-		})		
-		return true;
+		}
+
+		for (var k = 0; k < refundReasons.length; k++) {
+			if (refundReasons[k].value === "optionNotSelected") {
+				alert("환불사유를 선택해주세요.");
+				return false;
+			}
+		}
+		
+		for (var i = 0; i < qChkElements.length; i++) {
+			var qChk = qChkElements[i];
+			if (qChk.value === "quantityNotChecked") {
+			  alert("주문수량 이상 환불신청할 수 없습니다.");
+			  return false;
+			}
+		}
+		return true; // 모든 조건을 만족하면 submit을 진행
 	}
+
 	function quantityChk(opt_number) {
 		$.ajax({
 			url : "${path}/ajax/ov_quantityChk",
 			method : "POST",
-			data : {opt_number : opt_number, order_id : $("#order_id").val()}, 
+			data : {
+				opt_number : opt_number,
+				order_id : $("#order_id").val()
+			},
 			success : function(result) {
-				console.log("result : " + result)
-				console.log($("#order_id").val())
-				if(result <  $("#quantity_"+opt_number).val()) {
+				if (result < $("#quantity_" + opt_number).val()) {
 					alert("주문수량 이상 환불신청할 수 없습니다.");
-					$("#qChk").val("quantityNotChecked")
+					$(this).closest("tr").find("input[name='qChk']").val(
+							"quantityNotChecked");
+					$("#quantity_" + opt_number).val('');
 					return;
 				} else {
-					$("#qChk").val("quantityChecked")
+					$(this).closest("tr").find("input[name='qChk']").val(
+							"quantityChecked");
 				}
-			}, error : function(e) {
-				alert("환불 수량 체크 오류 : " + e.status)
+			},
+			error : function(e) {
+				alert("환불 수량 체크 오류: " + e.status);
 			}
-		})
-	}
-	function open(index) {
-		
+		});
 	}
 </script>
 </head>
@@ -88,7 +102,7 @@
 								<c:forEach items="${ orderItems}" var="i" varStatus="st">									
 								<c:if test="${i.order_state == '배송완료' }">	
 								<input type="hidden" name="order_id" value="${i.order_id }" id="order_id">					
-									<tr>
+								<tr>
 									<td>
 										<div class="form-check">
   											<input class="form-check-input" type="checkbox" value="${i.opt_number }" id="checkbox_${st.index }" name="opt_numbers">

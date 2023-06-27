@@ -46,7 +46,6 @@
 		    method: "POST",
 		    data: { order_id: order_id },
 		    success: function(result) {
-		      console.log("access token: " + result);
 		      alert(result);
 		    },
 		    error: function(e) {
@@ -80,6 +79,7 @@
       <p class="mb-3 text-secondary">
       	·<span class="text-danger"> 환불신청</span>은 <span class="text-danger">마이페이지 > 환불신청</span>에서 하실 수 있습니다. <br>
       	·<span class="text-danger"> 리뷰작성</span>은 <span class="text-danger">구매확정</span>이 된 주문 건만 작성 가능합니다. <br>
+      	·<span class="text-danger"> 주문취소</span>는 <span class="text-danger">상품 준비 중 이전</span>(결제완료)의 상품만 가능합니다. <br>
       </p>
       <div class="row">
         <div class="col-2">
@@ -106,10 +106,10 @@
             <td><fmt:formatDate value="${map.value.get(0).order_date }" pattern="yyyy년 MM월 dd일" /></td>
             <td><a href="javascript:list_disp('${map.key }')">${map.key }</a></td>
             <c:if test="${map.value.size() ==1 }">
-            	<td>${map.value.get(0).product_name }</td>
+            	<td style="white-space: pre-line; max-width: 250px; overflow: hidden; text-overflow: ellipsis;">${map.value.get(0).product_name }</td>
             </c:if>
             <c:if test="${map.value.size() !=1 }">
-            	<td>${map.value.get(0).product_name } 외 ${map.value.size() -1 } 개</td>
+            	<td style="white-space: pre-line; max-width: 250px; overflow: hidden; text-overflow: ellipsis;">${map.value.get(0).product_name } 외 ${map.value.size() -1 } 개</td>
             </c:if>            
             <td><fmt:formatNumber value="${map.value.get(0).order_totalPay }" pattern="###,###"/>원</td>
             <td><fmt:formatNumber value="${map.value.get(0).delivery_cost }" pattern="###,###"/>원</td>

@@ -119,8 +119,10 @@
 	        			processData: false,
 	        		    contentType: false,
 	        			success : function(result) {
-	        				if(result = 'shouldLogin') {
-	        					
+	        				if(result == 'shouldLogin') {
+	        					alert("로그인이 필요한 서비스 입니다.");
+	        					location.href="/second_prj/mem/login"
+	        					return;
 	        				}
 	        				console.log(result)
 	        			},

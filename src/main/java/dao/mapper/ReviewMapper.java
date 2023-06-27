@@ -17,7 +17,7 @@ public interface ReviewMapper {
 			+ " values (#{order_itemId}, #{mem_id}, #{review_value}, #{review_content}, now(), '지급대기')")
 	boolean addReview(Map<String, Object> param);
 
-	@Select("select * from review where mem_id=#{value} ordre by review_date desc")
+	@Select("select * from review where mem_id=#{value} order by review_date desc")
 	List<Review> getMyReview(String mem_id);
 
 	@Select("select * from review where review_number=#{value}")

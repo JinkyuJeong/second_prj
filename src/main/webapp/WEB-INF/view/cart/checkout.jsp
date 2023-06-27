@@ -209,7 +209,7 @@
               </td>
               <td class="align-middle">${map.value.product_name }</td>
               <td class="align-middle">${map.value.opt_name }</td>
-              <td class="align-middle">${map.key.opt_count }</td>
+              <td class="align-middle">${map.key.opt_count }개</td>
             </tr>
             </c:forEach>
             </c:if>
