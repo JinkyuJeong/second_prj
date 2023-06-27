@@ -23,5 +23,8 @@ public interface PointMapper {
 
 	@Select("select * from point where mem_id=#{mem_id} and point_type = #{point_type}")
 	List<Point> getMyPointUsed(Map<String, Object> param);
+	
+	@Insert("insert into point (mem_id, point_type, point_value, point_regdate) values(#{mem_id}, '포인트 환불', #{order_point}, now())")
+	void pointBack(Map<String, Object> param);
 
 }

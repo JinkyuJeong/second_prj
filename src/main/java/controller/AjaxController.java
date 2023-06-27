@@ -18,6 +18,7 @@ import org.springframework.web.client.RestTemplate;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -67,6 +68,10 @@ public class AjaxController {
 	public String loginCheckcartAdd(@RequestParam(value="opt_number", required=false)String[] opt_number, @RequestParam(value="quantity", required=false)String[] quantity, HttpSession session) {
 		Mem loginMem = (Mem) session.getAttribute("loginMem");
 		String mem_id = loginMem.getMem_id(); 
+		String msg = "";
+		if(loginMem == null) {
+			
+		}
 		if(opt_number!=null || quantity != null) {
 			for(int i=0; i<opt_number.length; i++) {
 				String optionNumber = opt_number[i];
@@ -233,6 +238,7 @@ public class AjaxController {
 		return "배송지 추가 성공";
 	}
 	
+	@Transactional
 	@RequestMapping(value="cancelOrder", produces = "text/plain; charset=UTF-8")
 	@ResponseBody
 	public String loginCheckCancel(String order_id, HttpSession session) {
@@ -247,8 +253,9 @@ public class AjaxController {
 //		}
 		service.updateOrderState(order_id, "주문취소");
 		
-		// IAMPORT API에 Access Token 요청        
         iamService.cancelBuy(order_id, order.getOrder_totalPay());
+        
+        service.pointBack(order.getMem_id(), order.getOrder_point());
 		return "주문이 취소되었습니다. 취소내역은 마이페이지 > 주문 취소 내역에서 확인가능합니다.";
 	}
 	

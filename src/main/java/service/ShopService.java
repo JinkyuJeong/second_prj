@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import dao.CartDao;
 import dao.CsDao;
@@ -353,6 +354,12 @@ public class ShopService {
 
 	public void addCancel(String order_id, String mem_id, int order_totalPay) {
 		refundDao.addCancel(order_id, mem_id, order_totalPay);
+	}
+
+	@Transactional
+	public void pointBack(String mem_id, int order_point) {
+		memDao.pointBack(mem_id, order_point);
+		pointDao.pointBack(mem_id, order_point);
 	}
 
 }

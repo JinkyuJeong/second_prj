@@ -109,12 +109,13 @@
 					opt_number : optNumber, opt_count : quantityInput.val()
 				},
 				success : function(result) {
-					if (quantityInput.val() == parseInt(result)) {
+					if (quantityInput.val() >= parseInt(result)) {
 		        	   alert("상품 재고보다 많이 주문할 수 없습니다.");
 		        	   quantityInput.val(result);
 		        	   return;
-		        	}
-					location.reload();
+		        	} else {
+		        		location.reload();
+		        	}					
 				},
 				error : function(e) {
 					alert("장바구니 수량 수정 오류: " + e.status);

@@ -93,7 +93,7 @@
 										<div class="form-check">
   											<input class="form-check-input" type="checkbox" value="${i.opt_number }" id="checkbox_${st.index }" name="opt_numbers">
   											<label class="form-check-label" for="checkbox_${st.index }">
-    											상품명 : ${i.product_name} / 옵션명 :  ${i.opt_name } / 주문 개수 : ${i.opt_count } 개
+    											[주문번호 : ${i.order_id}] 상품명 : ${i.product_name} / 옵션명 :  ${i.opt_name } / 주문 개수 : ${i.opt_count } 개
   											</label>
 										</div>
 									</td>

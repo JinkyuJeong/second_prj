@@ -119,6 +119,9 @@
 	        			processData: false,
 	        		    contentType: false,
 	        			success : function(result) {
+	        				if(result = 'shouldLogin') {
+	        					
+	        				}
 	        				console.log(result)
 	        			},
 	        			error : function(e) {
@@ -214,30 +217,34 @@
 	        success: function (result) {
 	            $("#reviewDiv").html("");
 	            var html = "";
-	            result.forEach(function (r) {
-	                var reviewValue = "";
-	                if (r.review_value == '1') {
-	                    reviewValue = "★☆☆☆☆";
-	                } else if (r.review_value == '2') {
-	                    reviewValue = "★★☆☆☆";
-	                } else if (r.review_value == '3') {
-	                    reviewValue = "★★★☆☆";
-	                } else if (r.review_value == '4') {
-	                    reviewValue = "★★★★☆";
-	                } else if (r.review_value == '5') {
-	                    reviewValue = "★★★★★";
-	                }	                
-	                html += '<div class="row mx-5 mt-1 mb-1">';
-	                html += '	<div class="col">' + reviewValue + '</div>' 
-					if(r.mem_id == null || r.mem_id == '') {
-						html += ' <div class="col">탈퇴한 회원</div>';
-					} else {
-						html += ' <div class="col">' + r.mem_id.substring(0, 3) + '***</div>';
-					}
-	                html += ' <div class="col-7">' + r.review_content + '</div>';
-	                html += ' <div class="col">' + new Date(r.review_date).toLocaleDateString("ko-KR", { year: 'numeric', month: '2-digit', day: '2-digit' }) + '</div>';
-	                html += '</div>'; 	                    
-	            })
+	            if(result == null || result.length == 0) {
+	            	html += "<p class='text-secondary' style='margin-left:100px;'>아직 등록된 리뷰가 없습니다.</p>"
+	            } else {
+	            	result.forEach(function (r) {
+		                var reviewValue = "";
+		                if (r.review_value == '1') {
+		                    reviewValue = "★☆☆☆☆";
+		                } else if (r.review_value == '2') {
+		                    reviewValue = "★★☆☆☆";
+		                } else if (r.review_value == '3') {
+		                    reviewValue = "★★★☆☆";
+		                } else if (r.review_value == '4') {
+		                    reviewValue = "★★★★☆";
+		                } else if (r.review_value == '5') {
+		                    reviewValue = "★★★★★";
+		                }	                
+		                html += '<div class="row mx-5 mt-1 mb-1">';
+		                html += '	<div class="col">' + reviewValue + '</div>' 
+						if(r.mem_id == null || r.mem_id == '') {
+							html += ' <div class="col">탈퇴한 회원</div>';
+						} else {
+							html += ' <div class="col">' + r.mem_id.substring(0, 3) + '***</div>';
+						}
+		                html += ' <div class="col-7">' + r.review_content + '</div>';
+		                html += ' <div class="col">' + new Date(r.review_date).toLocaleDateString("ko-KR", { year: 'numeric', month: '2-digit', day: '2-digit' }) + '</div>';
+		                html += '</div>'; 	                    
+		            })
+	            }	            
 	            $("#reviewDiv").html(html);
 	            pageNum = newPageNum;
 	        },

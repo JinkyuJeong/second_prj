@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="path" value="${pageContext.request.contextPath}" />
 <%-- 여기는 이메일을 입력하고 인증번호 입력하러 오는곳임 --%>
 <!DOCTYPE html>
 <html lang="en">

@@ -80,7 +80,7 @@
               호미짐 오픈기념 덤벨 10% 할인!!
               <br>
               <br>
-              <a class="btn btn-danger btn-lg" href="${path }/product/productList" role="button">바로가기</a>
+              <a class="btn btn-danger btn-lg" href="${path }/product/productList?product_type=1" role="button">바로가기</a>
             </h5>
           </div>
           <img src="images/item.jpg" class="d-block w-100" alt="...">

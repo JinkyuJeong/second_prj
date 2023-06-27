@@ -50,4 +50,11 @@ public class MemDao {
 		param.put("mem_pw",mem_pw);
 		return template.getMapper(cls).updatePw(param);
 	}
+
+	public void pointBack(String mem_id, int order_point) {
+		param.clear();
+		param.put("mem_id", mem_id);
+		param.put("order_point", order_point);
+		template.getMapper(cls).pointBack(param);
+	}
 }

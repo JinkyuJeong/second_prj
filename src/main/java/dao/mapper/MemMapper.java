@@ -30,5 +30,8 @@ public interface MemMapper {
 
 	@Update("update mem set mem_pw=#{mem_pw} where mem_id=#{email}")
 	boolean updatePw(Map<String, Object> param);
+	
+	@Update("update mem set mem_point = mem_point + #{order_point} where mem_id=#{mem_id}")
+	void pointBack(Map<String, Object> param);
 
 }

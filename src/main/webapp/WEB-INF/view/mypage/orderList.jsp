@@ -23,9 +23,9 @@
 					html += "<tr>";
 					html += "<td>" + o.product_name + "</td>";
 					html += "<td>" + o.opt_name + "</td>";
-					html += "<td>" + o.product_price + "원 </td>";
+					html += "<td>" + o.product_price + "원 </td>";					
 					html += "<td>" + o.opt_count + "개 </td>";
-					html += "<td>" + (o.product_price * (100-o.product_discountRate)/100) * o.opt_count + "원 </td>";
+					html += "<td>" + (o.product_price * (100-o.product_discountRate)/100) * o.opt_count + "원 </td>";				
 					if(o.order_state == '구매확정') {
 						html += "<td>";
 						html += "<button type='button' class='btn btn-outline-danger btn-sm' onclick=\"location.href='reviewReg?mem_id=${sessionScope.loginMem.mem_id}&order_itemId=" + o.order_itemId + "'\">";
@@ -95,6 +95,8 @@
             <th>주문번호</th>
             <th>제품명</th>
             <th>결제금액</th>
+            <th>배송비</th>
+            <th>사용 포인트</th>
             <th>처리현황</th>
             <th>취소</th>
             <th>구매확정</th>
@@ -110,6 +112,8 @@
             	<td>${map.value.get(0).product_name } 외 ${map.value.size() -1 } 개</td>
             </c:if>            
             <td><fmt:formatNumber value="${map.value.get(0).order_totalPay }" pattern="###,###"/>원</td>
+            <td><fmt:formatNumber value="${map.value.get(0).delivery_cost }" pattern="###,###"/>원</td>
+            <td><fmt:formatNumber value="${map.value.get(0).order_point }" pattern="###,###"/>P</td>
             <td>${map.value.get(0).order_state }</td>
             <td>
             	<c:if test="${map.value.get(0).order_state=='결제완료' }">
@@ -125,7 +129,7 @@
                     
           <!-- 주문 상세정보 -->
           <tr style="text-align:center;" class="saleLine" id="saleLine${map.key }">
-            <td colspan="7">
+            <td colspan="9">
             <table id="orderDetail${map.key }" class="table table-borderless">                    
             </table>
             </td>

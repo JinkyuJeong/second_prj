@@ -29,8 +29,9 @@
         <div class="col-3" style="font-size:40px;">${product_type_name }</div> 
         <div class="col-5"></div>
         <div class="col">
-          <form action="productList" method="post" name="searchForm">
+          <form action="productList" name="searchForm">
           	<input type="hidden" name="pageNum" value="1">
+          	<input type="hidden" name="sort" value="${param.sort != null? param.sort : '' }">
           	<input type="hidden" name="product_type" value="${param.product_type }">
             <div class="input-group">
               <input type="text" class="form-control" id="searchContent" name="searchContent" placeholder="상품을 검색하세요." value="${searchContent }">
@@ -42,12 +43,12 @@
       <hr>
       <div class="row">
         <div class="col" style="margin-bottom:20px; font-size:20px;">
-        	<a href="productList?product_type=${param.product_type }&sort=1" class="noline ${param.sort == 1 ? 'active' : '' }">주문많은순</a>
-        	<a href="productList?product_type=${param.product_type }&sort=2" class="noline ${param.sort == 2 ? 'active' : '' }">낮은가격순</a>
-        	<a href="productList?product_type=${param.product_type }&sort=3" class="noline ${param.sort == 3 ? 'active' : '' }">높은가격순</a>
-        	<a href="productList?product_type=${param.product_type }&sort=4" class="noline ${param.sort == 4 ? 'active' : '' }">최신등록순</a>
-        	<a href="productList?product_type=${param.product_type }&sort=5" class="noline ${param.sort == 5 ? 'active' : '' }">리뷰많은순</a>
-        </div>     
+  			<a href="productList?product_type=${param.product_type}&sort=1&searchContent=${param.searchContent != null ? param.searchContent : ''}" class="noline ${param.sort == 1 ? 'active' : ''}">주문많은순</a>
+  			<a href="productList?product_type=${param.product_type}&sort=2&searchContent=${param.searchContent != null ? param.searchContent : ''}" class="noline ${param.sort == 2 ? 'active' : ''}">낮은가격순</a>
+  			<a href="productList?product_type=${param.product_type}&sort=3&searchContent=${param.searchContent != null ? param.searchContent : ''}" class="noline ${param.sort == 3 ? 'active' : ''}">높은가격순</a>
+  			<a href="productList?product_type=${param.product_type}&sort=4&searchContent=${param.searchContent != null ? param.searchContent : ''}" class="noline ${param.sort == 4 ? 'active' : ''}">최신등록순</a>
+  			<a href="productList?product_type=${param.product_type}&sort=5&searchContent=${param.searchContent != null ? param.searchContent : ''}" class="noline ${param.sort == 5 ? 'active' : ''}">리뷰많은순</a>
+		</div>     
       </div>
 	
 	  <c:forEach items="${map }" var="m" varStatus="st">

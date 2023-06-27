@@ -3,6 +3,7 @@ package controller;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -95,7 +96,7 @@ public class MypageController {
 	public ModelAndView idCheckcancelList(String refund_type, String mem_id, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		List<Refund> refundList = service.getRefundCancelList(mem_id, "결제 및 주문 취소");
-		Map<String, List<Refund>> map = new HashMap<>();
+		Map<String, List<Refund>> map = new LinkedHashMap<>();
 		for (Refund refund : refundList) {
 		    String orderId = refund.getRefund_orderId();
 		    List<Refund> reRefundList = service.getRefundListOrderId(orderId);
@@ -190,7 +191,7 @@ public class MypageController {
 		ModelAndView mav = new ModelAndView();
 		List<Refund> refundList = new ArrayList<>();
 		if(refund_type == null) {
-			refundList = service.getRefundListAll(mem_id, "주문취소");
+			refundList = service.getRefundListAll(mem_id, "주문취소"); //refund_type이 주문취소인거 빼고 다
 		} else if(refund_type.equals("환불대기")) {
 			refundList = service.getRefundCancelList(mem_id, "환불대기");
 		} else if(refund_type.equals("환불승인")) {
@@ -198,7 +199,7 @@ public class MypageController {
 		} else if(refund_type.equals("환불반려")) {
 			refundList = service.getRefundCancelList(mem_id, "환불반려");
 		}
-		Map<Refund, ProductOptView> map = new HashMap<>();
+		Map<Refund, ProductOptView> map = new LinkedHashMap<>();
 		for (Refund refund : refundList) {
 		    int opt_number = refund.getRefund_optId();
 		    ProductOptView pov = service.getProductOptView(opt_number);
@@ -234,7 +235,7 @@ public class MypageController {
 	public ModelAndView idCheckReviewList(String mem_id, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		List<Review> reviewList = service.getMyReview(mem_id);
-		Map<Review, OrderView> map = new HashMap<>();
+		Map<Review, OrderView> map = new LinkedHashMap<>();
 		for(Review r : reviewList) {
 			OrderView ov = service.getOvItemId(r.getOrder_itemId());
 			map.put(r, ov);

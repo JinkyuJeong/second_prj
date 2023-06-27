@@ -46,6 +46,13 @@ public class PointDao {
 		param.put("mem_id", mem_id);
 		param.put("point_type", point_type);
 		return template.getMapper(cls).getMyPointUsed(param);
+	}
+
+	public void pointBack(String mem_id, int order_point) {
+		param.clear();
+		param.put("mem_id", mem_id);
+		param.put("order_point", order_point);
+		template.getMapper(cls).pointBack(param);
 	}	
 
 }

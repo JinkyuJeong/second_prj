@@ -99,22 +99,6 @@ public class ProductController {
 		
 	    if (param.get("sort") != null) {
 	        switch (sort) {
-	            case "1":
-	                Collections.sort(productList, (p1, p2) -> {
-	                    int size1 = service.getOvProductNum(p1.getProduct_number()).size();
-	                    int size2 = service.getOvProductNum(p2.getProduct_number()).size();
-	                    return size2 - size1;
-	                });
-	                break;
-	            case "2":
-	                Collections.sort(productList, (u1, u2) -> u1.getProduct_price() * (100 - u1.getProduct_discountRate()) / 100 - (u2.getProduct_price() * (100 - u2.getProduct_discountRate()) / 100));
-	                break;
-	            case "3":
-	                Collections.sort(productList, (u1, u2) -> u2.getProduct_price() * (100 - u2.getProduct_discountRate()) / 100 - (u1.getProduct_price() * (100 - u1.getProduct_discountRate()) / 100));
-	                break;
-	            case "4":
-	                Collections.sort(productList, Comparator.comparing(Product::getProduct_regdate).reversed());
-	                break;
 	            case "5":
 	                // Map.Entry 리스트 생성
 	                List<Map.Entry<Product, List<ReviewView>>> entryList = new ArrayList<>(map.entrySet());

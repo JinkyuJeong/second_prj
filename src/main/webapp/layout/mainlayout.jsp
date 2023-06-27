@@ -115,7 +115,7 @@
   <!-- 푸터 -->
   <footer class="w3-container w3-padding-16 w3-center">  
     <div class="w3-xlarge w3-padding-32 fw-bold">
-      <h5><i class="fa fa-map-marker"></i> 구디아카데미 GDJ62기 CNT2조 정진규, 강수빈</h5>
+      <h5><i class="fa fa-map-marker"></i> 구디아카데미 GDJ62기 두리두리차두리 정진규, 강수빈</h5>
       <h5><i class="fa fa-envelope"></i> rritjy@naver.com | zxc2289@naver.com</h5>
       <h5><i class="fa fa-instagram"></i> @jeongjingyu63 | @sub__b.in</h5>
     </div>
