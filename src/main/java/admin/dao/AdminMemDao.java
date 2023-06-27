@@ -57,4 +57,11 @@ public class AdminMemDao {
 		
 		return template.getMapper(cls).setPointZero(param);
 	}
+	public void pointBack(String refund_memId, int refundPoint) {
+		param.clear();
+		param.put("refund_memId", refund_memId);
+		param.put("refundPoint", refundPoint);
+		template.getMapper(cls).pointBack(param);
+		
+	}
 }

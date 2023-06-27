@@ -30,4 +30,7 @@ public interface AdminPointMapper {
 	@Delete("delete from point where point_number=#{point_number}")
 	boolean pointDel(Integer point_number);
 
+	@Insert("insert into point (mem_id, point_type, point_value, point_regdate) values(#{refund_memId}, '포인트 환불', #{refundPoint}, now())")
+	void pointBack(Map<String, Object> param);
+
 }

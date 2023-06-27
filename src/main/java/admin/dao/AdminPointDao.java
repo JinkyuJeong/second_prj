@@ -48,4 +48,11 @@ public class AdminPointDao {
 		return template.getMapper(cls).pointDel(point_number);
 	}
 
+	public void pointBack(String refund_memId, int refundPoint) {
+		param.clear();
+		param.put("refund_memId", refund_memId);
+		param.put("refundPoint", refundPoint);
+		template.getMapper(cls).pointBack(param);
+	}
+
 }

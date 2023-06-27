@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import admin.dao.AdminMemDao;
 import admin.dao.AdminOptDao;
 import admin.dao.AdminOrderDao;
+import admin.dao.AdminPointDao;
 import admin.dao.AdminRefundDao;
 import admin.dao.AdminStockDao;
 import dto.Order;
@@ -23,6 +25,10 @@ public class AdminOrderService {
 	private AdminRefundDao refundDao;
 	@Autowired
 	private AdminOptDao optDao;
+	@Autowired
+	private AdminMemDao memDao;
+	@Autowired
+	private AdminPointDao pointDao;
 
 	public int orderCnt(String f, String query, String sd, String ed, String order_state) {
 		return orderDao.orderCnt(f, query, sd, ed, order_state);
@@ -69,10 +75,10 @@ public class AdminOrderService {
 			optDao.addQuantity(refund.getRefund_optId(), refund.getRefund_optCount());
 		}
 	}
-
-//	public void pointBack(String refund_memId, int refundPoint) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-
+	
+	@Transactional
+	public void pointBack(String refund_memId, int refundPoint) {
+		memDao.pointBack(refund_memId, refundPoint);
+		pointDao.pointBack(refund_memId, refundPoint);
+	}
 }

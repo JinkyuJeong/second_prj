@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -110,6 +111,7 @@ public class AdminRefundController {
 		return mv;
 	}
 
+	@Transactional
 	@PostMapping("refundComp")
 	@ResponseBody
 	public void adminRefundCompChg(@RequestParam("refund_number") String refund_number, @RequestParam("refund_type") String refund_type, 
@@ -136,7 +138,7 @@ public class AdminRefundController {
 			refund_price = totalPay -  refund_price;
 		}
 		RefundView refund = service.getRefund(refund_number);
-//		service.pointBack(refund.getRefund_memId(), refundPoint);
+		service.pointBack(refund.getRefund_memId(), refundPoint);
 		iamService.cancelBuy(refund_orderId, refund_price);
 	}
 	
