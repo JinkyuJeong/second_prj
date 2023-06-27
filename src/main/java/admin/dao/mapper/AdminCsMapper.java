@@ -50,5 +50,8 @@ public interface AdminCsMapper {
 	@Delete("delete from cs where cs_number=#{cs_number}")
 	boolean csDel(Integer cs_number);
 
+	@Select("select count(*) from cs where date(cs_qdate) = CURDATE() and cs_state = '답변대기'")
+	Integer csTodayCnt();
+
 	
 }

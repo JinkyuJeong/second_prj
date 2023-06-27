@@ -13,18 +13,22 @@
     <div class="container">
       <h3><i class="fa fa-caret-square-o-right text-primary" aria-hidden="true"></i> 오늘의 주문 현황</h3>
       <p class="text-danger text-end">${d}</p>
-      <div class="container w3-white p-3" id="state">
-        
-      </div>
-
+      <div class="container w3-white p-3">
+	      <h5 class="ms-3 mb-3" style="display: inline-block;">
+	     		※ 최근 업데이트 일시 : <span id="realTime1"></span> (자정 12시에 초기화됨)
+	     	</h5>
+	     	<a class="btn btn-sm btn-primary ms-3" href="javascript:stateReload()">새로고침 <i class="fa fa-refresh" aria-hidden="true"></i></a>
+	      <div id="state"></div>
+			</div>
+			
       <h3 class="mt-5"><i class="fa fa-caret-square-o-right text-primary" aria-hidden="true"></i> 쇼핑몰 매출 현황</h3>
       <div class="container w3-white p-3">
         
         <div style="margin-bottom: 20px;">
-        	<h4 class="ms-3 mb-3">
-        		※ 최근 업데이트 일시 : <span id="realTime"></span> (자정 12시에 초기화됨)
-        	</h4>
-        	<a class="btn btn-lg btn-primary ms-3" href="javascript:shopReload()">새로고침 <i class="fa fa-refresh" aria-hidden="true"></i></a>
+        	<h5 class="ms-3 mb-3">
+        		※ 최근 업데이트 일시 : <span id="realTime2"></span> (자정 12시에 초기화됨)
+        	</h5>
+        	<a class="btn btn-sm btn-primary ms-3" href="javascript:shopReload()">새로고침 <i class="fa fa-refresh" aria-hidden="true"></i></a>
         </div>
 
         <div class="row mt-3" id="sale">
@@ -43,6 +47,21 @@
   function shopReload(){
   	barGraph();
     salesTable();
+  }
+  function stateReload(){
+  	orderState();
+  }
+  function formatDate(){
+  	var currentDate = new Date();
+ 	  var year = currentDate.getFullYear();
+ 	  var month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+ 	  var day = currentDate.getDate().toString().padStart(2, '0');
+ 	  var hours = currentDate.getHours().toString().padStart(2, '0');
+ 	  var minutes = currentDate.getMinutes().toString().padStart(2, '0');
+ 	  var seconds = currentDate.getSeconds().toString().padStart(2, '0');
+
+ 	  var formattedDate = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+ 	  return formattedDate;
   }
   
   $(()=> {
@@ -80,10 +99,13 @@
 	      html += '<td>'+data.구매확정+'</td>';
 	      html += '<td>'+data.주문취소+'</td>';
 	      html += '<td>'+data.환불+'</td>';
+	      html += '<td>'+data.문의+'</td>';
 	      html += '</tr>';
 	      html += '</table>';
 	      
 	      $("#state").html(html);
+	      const realTime = formatDate();
+     	  $("#realTime1").html(realTime);
   		}
   	})
   }
@@ -110,17 +132,8 @@
       	html += "</table>";
       	
       	$("#shop").html(html);
-      	
-     	 	var currentDate = new Date();
-     	  var year = currentDate.getFullYear();
-     	  var month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
-     	  var day = currentDate.getDate().toString().padStart(2, '0');
-     	  var hours = currentDate.getHours().toString().padStart(2, '0');
-     	  var minutes = currentDate.getMinutes().toString().padStart(2, '0');
-     	  var seconds = currentDate.getSeconds().toString().padStart(2, '0');
-
-     	  var formattedDate = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
-     	  $("#realTime").html(formattedDate);
+      	const realTime = formatDate();
+     	  $("#realTime2").html(realTime);
   		},
   		error : function(e){ alert(e.status) }
   	});

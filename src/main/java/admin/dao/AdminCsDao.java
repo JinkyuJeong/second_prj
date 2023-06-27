@@ -52,4 +52,8 @@ public class AdminCsDao {
 	public boolean csDel(Integer cs_number) {
 		return template.getMapper(cls).csDel(cs_number);
 	}
+
+	public Integer csTodayCnt() {
+		return template.getMapper(cls).csTodayCnt();
+	}
 }

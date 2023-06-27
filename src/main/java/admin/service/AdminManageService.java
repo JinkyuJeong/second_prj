@@ -290,7 +290,9 @@ public class AdminManageService {
 		Integer refundCnt = refundDao.refundTodayCnt();
 		resultMap.put("환불", refundCnt);
 		
-		System.out.println(resultMap);
+		Integer csCnt = csDao.csTodayCnt();
+		resultMap.put("문의", csCnt);
+		
 		return resultMap;
 	}
 
