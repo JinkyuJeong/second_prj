@@ -131,7 +131,7 @@ public class CartController {
         int num= Integer.parseInt(service.getMaxOrderId().substring(6,10));
         String formattedNumber = String.format("%04d", num+1);
 		String order_id = formattedDate + formattedNumber;	
-		map.put("merchant_uid", "2306260013");
+		map.put("merchant_uid", order_id);
 		map.put("name", product_name[0] + " 외 " + (product_name.length-1) + "개");
 		map.put("amount", final_amount);
 //		String email = service.emailDecrypt(user);

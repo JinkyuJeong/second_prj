@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import admin.service.AdminOrderService;
+import dto.Order;
 import dto.RefundView;
 import service.IamPortService;
 
@@ -119,6 +120,23 @@ public class AdminRefundController {
 			type = "환불완료";
 			service.refundComp(refund_number, type);
 		}
+		Order order = service.getOrder(refund_orderId);
+		int usedPoint = order.getOrder_point();
+		int totalPay = order.getOrder_totalPay();
+		int refundPoint = 0;
+		if(totalPay<refund_price) {
+			if(refund_price > usedPoint) {
+				refund_price = refund_price - usedPoint;
+				refundPoint = usedPoint;
+			} else {
+				refundPoint = refund_price;
+				refund_price = 0;
+			}
+		} else {
+			refund_price = totalPay -  refund_price;
+		}
+		RefundView refund = service.getRefund(refund_number);
+//		service.pointBack(refund.getRefund_memId(), refundPoint);
 		iamService.cancelBuy(refund_orderId, refund_price);
 	}
 	
