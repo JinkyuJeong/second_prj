@@ -127,7 +127,7 @@
           <label class="mb-1" for="manager_birth">생년월일</label>
           <div class="mb-4">
             <input placeholder="생년월일(ex_990101)" type="text" name="manager_birth" id="manager_birth" class="form-control" value="${manager.manager_birth}" required maxlength="6" onkeyup="validateBirth()">
-            <input type="hidden" id="isValidBirth" value="0">
+            <input type="hidden" id="isValidBirth" value="1">
             <span id="BirthValidMsg"></span>
           </div>
 

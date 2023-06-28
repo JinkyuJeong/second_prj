@@ -66,7 +66,6 @@
 			            <td><fmt:formatDate value="${point.point_regdate }" pattern="yyyy-MM-dd" /></td>
 			            <td>
 			            	<input type="hidden" name="point_number" value="${point.point_number }">
-		            		<a class="btn btn-sm btn-dark" href="pointChg?point_number=${point.point_number}">수정</a>
 			            	<c:if test="${sessionScope.loginManager.manager_grant eq '총괄'}">
 				            	<a type="button" class="btn btn-sm btn-dark" data-bs-toggle="modal" data-bs-target="#staticBackdrop${point.point_number }">삭제</a>
 																		

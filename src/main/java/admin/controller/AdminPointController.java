@@ -77,30 +77,6 @@ public class AdminPointController {
 		return mv;
 	}
 	
-	@GetMapping("pointChg")
-	public ModelAndView adminPointChg(Integer point_number, HttpSession session) {
-		ModelAndView mv = new ModelAndView();
-		Point point = service.getPoint(point_number);
-		
-		if(point == null) {
-			throw new ShopException("해당 포인트 지급 내역은 존재하지 않습니다.", "pointList");
-		}
-		
-		mv.addObject("point",point);
-		return mv;
-	}
-	
-	@PostMapping("pointChg")
-	public ModelAndView adminPointChg(Point point, Integer cur_point, HttpSession session) {
-		ModelAndView mv = new ModelAndView();
-		if(service.pointChg(point, cur_point)) {
-			mv.setViewName("redirect:pointList");
-			return mv;
-		}else {
-			throw new ShopException("포인트 지급 내역 변경 실패", "pointChg?point_number="+point.getPoint_number());
-		}
-	}
-	
 	@PostMapping("pointDel")
 	public ModelAndView managerPointDel(Integer point_number, HttpSession session) {
 		ModelAndView mv = new ModelAndView();

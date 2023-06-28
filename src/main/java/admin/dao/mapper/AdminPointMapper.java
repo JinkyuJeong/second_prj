@@ -6,7 +6,6 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
 
 import dto.Point;
 
@@ -23,9 +22,6 @@ public interface AdminPointMapper {
 
 	@Select("select * from point where point_number=#{value}")
 	Point getPoint(Integer point_number);
-
-	@Update("update point set point_value=#{point_value}, point_type=#{point_type} where point_number=#{point_number}")
-	boolean pointChg(Point point);
 
 	@Delete("delete from point where point_number=#{point_number}")
 	boolean pointDel(Integer point_number);

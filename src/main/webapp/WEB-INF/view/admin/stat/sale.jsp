@@ -27,15 +27,7 @@
 </head>
 <body>
 	<br><br>
-  <div class="row p-3">
-    <div class="col-2 w3-white pt-1" style="height: 400px;">
-      <div class="w3-padding-64 w3-large w3-text-grey text-center fw-bold">
-        <span style="font-size: 2em; color: black;">통계</span> <br><br>
-        <a href="${path }/admin/stat/sale" class="w3-bar-item w3-button">· 매출</a> <br>
-        <a href="${path }/admin/stat/item" class="w3-bar-item w3-button">· 제품</a>
-      </div>
-    </div>
-    <div class="container w3-white pt-1 col-10" style="width:70%">
+    <div class="container w3-white pt-1" style="width:70%">
       <h3><i class="fa fa-caret-square-o-right text-primary" aria-hidden="true"></i> 통계</h3>
       <p class="mb-3">쇼핑몰 통계를 보여주는 페이지 입니다.</p>
       
@@ -44,7 +36,7 @@
       	<form action="sale">
 	        <div style="border-bottom: 2px solid black;margin-bottom: 10px;">
 	          <div class="input-group p-3">
-						  <input type="date" name="sd" value="${sd}" class="form-control mr-3">
+						  <input type="date" name="sd" value="${sd}" class="form-control mr-3" required="required">
 						  <div class="input-group-prepend">
 						    <span class="input-group-text">부터</span>
 						  </div>
@@ -133,6 +125,5 @@
 			  </div>
       </div>
     </div>
-  </div>
 </body>
 </html>

@@ -273,7 +273,7 @@
 		          <tr>
 		            <td>
 		            	${refund.refund_number} <br>
-		            	<a type="button" class="btn btn-sm btn-dark" data-bs-toggle="modal" data-bs-target="#staticBackdrop${refund.refund_number}" onclick="javascript:refundDetail('${refund.refund_number}','${st.index }')">환불 상세보기</a>
+		            	<a type="button" class="btn btn-sm btn-dark" data-bs-toggle="modal" data-bs-target="#staticBackdrop${refund.refund_number}" onclick="javascript:refundDetail('${refund.refund_number}','${st.index }')">상세보기</a>
 																	
 									<%-- Modal --%>
 									<div class="modal fade" id="staticBackdrop${refund.refund_number}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

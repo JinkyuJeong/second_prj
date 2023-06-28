@@ -114,7 +114,6 @@ public class AdminManagerController {
 	public ModelAndView managerChg(String manager_id,HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		Manager manager = service.getManager(manager_id);
-		System.out.println(manager);
 		mv.addObject("manager", manager);
 		return mv;
 	}
