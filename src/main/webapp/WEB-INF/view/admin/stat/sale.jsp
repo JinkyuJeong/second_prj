@@ -36,7 +36,7 @@
       	<form action="sale">
 	        <div style="border-bottom: 2px solid black;margin-bottom: 10px;">
 	          <div class="input-group p-3">
-						  <input type="date" name="sd" value="${sd}" class="form-control mr-3">
+						  <input type="date" name="sd" value="${sd}" class="form-control mr-3" required="required">
 						  <div class="input-group-prepend">
 						    <span class="input-group-text">부터</span>
 						  </div>
