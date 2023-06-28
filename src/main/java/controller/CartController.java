@@ -106,11 +106,16 @@ public class CartController {
 					discounted += pov.getProduct_price()* Integer.parseInt(map.get(i)) * ((double)pov.getProduct_discountRate()/100);
 					povList.put(pov, map.get(i));
 				}
-				List<Delivery> deliveryList = service.getDeliveryList(mem_id);			   
+				List<Delivery> deliveryList = service.getDeliveryList(mem_id);	
+				int delivery_cost = 0;
+				if(total-discounted < 30000) {
+					delivery_cost = 3000;
+				}
 				mav.addObject("deliveryList", deliveryList);
 				mav.addObject("total",total);
 				mav.addObject("discounted",discounted);
 				mav.addObject("discountedTotal", total-discounted);	
+				mav.addObject("delivery_cost",delivery_cost);
 				mav.addObject("mem",mem);
 				mav.addObject("from","detail");
 				mav.addObject("povList", povList);
