@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import admin.dao.mapper.AdminOptMapper;
 import dto.Opt;
 import dto.ProductOptView;
+import dto.Stock;
 
 @Repository
 public class AdminOptDao {

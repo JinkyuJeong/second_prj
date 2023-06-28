@@ -58,8 +58,15 @@
 	      
 	      html += "<label class='mb-1'>환불 신청일</label><span class='text-danger'>*</span>";
 	      html += "<div class='mb-4'>";
+	      
+	      const refundDate = new Date(data.refund.refund_date);
+	      const year = refundDate.getFullYear();
+	      const month = refundDate.getMonth() + 1;
+	      const day = refundDate.getDate();
+	      const formattedDate = year + "년 " + month + "월 " + day + "일";
+	      
 	      // 환불 신청일 정보 추가
-	      html += data.refund.refund_date;
+	      html += formattedDate;
 	      html += "</div>";
 
 	      html += "<label class='mb-1'>환불 사유</label><span class='text-danger'>*</span>";

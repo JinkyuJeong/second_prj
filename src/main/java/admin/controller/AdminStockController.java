@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import admin.service.AdminShopService;
@@ -97,13 +98,13 @@ public class AdminStockController {
 	}
 	
 	@PostMapping("stockChg")
-	public ModelAndView adminStockChg(Stock stock, HttpSession session) {
+	public ModelAndView adminStockChg(Stock stock,@RequestParam("curQuantity") Integer curQuantity, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
-		if(service.updateStock(stock)) {
+		if(service.updateStock(stock, curQuantity)) {
 			mv.setViewName("redirect:stockList");
 			return mv;
 		}else {
-			throw new ShopException("옵션 변경 실패", "stockList");
+			throw new ShopException("재고 변경 실패", "stockList");
 		}
 	}
 }

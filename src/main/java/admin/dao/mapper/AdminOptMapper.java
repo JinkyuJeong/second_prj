@@ -5,11 +5,13 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import dto.Opt;
 import dto.ProductOptView;
+import dto.Stock;
 
 public interface AdminOptMapper {
 
@@ -39,5 +41,6 @@ public interface AdminOptMapper {
 
 	@Update("update opt set opt_quantity = opt_quantity + #{addQuantity} where opt_number = #{opt_number}")
 	boolean addQuantity(Map<String, Object> param);
+
 
 }

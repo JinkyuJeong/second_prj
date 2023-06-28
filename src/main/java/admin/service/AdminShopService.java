@@ -132,8 +132,12 @@ public class AdminShopService {
 		return stockDao.getStock(stock_number);
 	}
 
-	public boolean updateStock(Stock stock) {
-		return stockDao.updateStock(stock);
+	@Transactional
+	public boolean updateStock(Stock stock, Integer curQuantity) {
+		boolean b1 = stockDao.updateStock(stock);
+		stock.setStock_quantity(stock.getStock_quantity()-curQuantity);
+		boolean b2 = optDao.addQuantity(stock.getOpt_number(), stock.getStock_quantity());
+		return b1 && b2;
 	}
 
 	public boolean diffQuantity(int opt_number, int diffQuantity) {

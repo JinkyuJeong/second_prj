@@ -47,6 +47,7 @@
       <p class="mb-3">재고 등록 내역을 수정하는 페이지 입니다.</p>
       <form action="stockChg" method="post" name="f" onsubmit="return inputChk(this)">
       	<input type="hidden" value="${stock.stock_number }" name="stock_number">
+      	<input type="hidden" value="${stock.opt_number }" name="opt_number">
         <table class="table align-middle">
           <tr class="text-center">
             <td class="table-danger text-center">제품명(옵션)</td>
@@ -61,6 +62,7 @@
             <td>
             	<input type="number" name="stock_quantity" id="quantity" class="form-control" onkeyup="validQuantity()" value="${stock.stock_quantity }">
               <span class="mt-1" id="quantityMsg">&nbsp;</span>
+              <input type="hidden" name="curQuantity" value="${stock.stock_quantity }">
               <input type="hidden" value="1" id="isQuantityValid">  
             </td>
           </tr>

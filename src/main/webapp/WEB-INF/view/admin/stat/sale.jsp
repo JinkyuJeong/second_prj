@@ -56,12 +56,12 @@
         <div class="mb-3">
         	<span class="text-danger">*</span>검색 결과 : <span class="text-danger">${statCnt}</span>건 <br>
         	<c:if test="${!empty sd and !empty ed }">
-	        	<span class="text-danger">*</span>매출 합계 : <span class="text-danger"><fmt:formatNumber value="${sumSale }" pattern="#,###"/></span>원 <br>
-	        	<span class="text-danger">*</span>매출 일일 평균 : <span class="text-danger"><fmt:formatNumber value="${avgSale }" pattern="#,###"/></span>원 <br>
-	        	<span class="text-danger">*</span>취소 합계 : <span class="text-danger"><fmt:formatNumber value="${sumCancel }" pattern="#,###"/></span>원 <br>
-	        	<span class="text-danger">*</span>취소 일일 평균 : <span class="text-danger"><fmt:formatNumber value="${avgCancel }" pattern="#,###"/></span>원 <br>
-	        	<span class="text-danger">*</span>환불 합계 : <span class="text-danger"><fmt:formatNumber value="${sumRefund }" pattern="#,###"/></span>원 <br>
-	        	<span class="text-danger">*</span>환불 일일 평균 : <span class="text-danger"><fmt:formatNumber value="${avgRefund }" pattern="#,###"/></span>원 <br>
+	        	<span class="text-danger">*</span>매출 합계 : <span class="text-danger"><fmt:formatNumber value="${sumSale }" pattern="#,###"/></span>원 &nbsp;|&nbsp;
+	        	<span class="text-danger">*</span>매출 일일 평균 : <span class="text-danger"><fmt:formatNumber value="${avgSale }" pattern="#,###"/></span>원 &nbsp;|&nbsp;
+	        	<span class="text-danger">*</span>취소 합계 : <span class="text-danger"><fmt:formatNumber value="${sumCancel }" pattern="#,###"/></span>원 &nbsp;|&nbsp;
+	        	<span class="text-danger">*</span>취소 일일 평균 : <span class="text-danger"><fmt:formatNumber value="${avgCancel }" pattern="#,###"/></span>원 &nbsp;|&nbsp;
+	        	<span class="text-danger">*</span>환불 합계 : <span class="text-danger"><fmt:formatNumber value="${sumRefund }" pattern="#,###"/></span>원 &nbsp;|&nbsp;
+	        	<span class="text-danger">*</span>환불 일일 평균 : <span class="text-danger"><fmt:formatNumber value="${avgRefund }" pattern="#,###"/></span>원 
         	</c:if>
         </div>
       	
