@@ -139,7 +139,8 @@
           <!-- 주문 상세정보 -->
           <tr style="text-align:center;" class="saleLine" id="saleLine${map.key }">
             <td colspan="9">
-            <table id="orderDetail${map.key }" class="table table-borderless">                    
+            <table id="orderDetail${map.key }" class="table table-borderless">     
+                           
             </table>
             </td>
           </tr>

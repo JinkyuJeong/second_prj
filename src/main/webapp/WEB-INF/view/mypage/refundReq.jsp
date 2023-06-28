@@ -21,7 +21,7 @@
 		  return false;
 	  }
 
-	  return true; // 모든 조건을 만족하면 submit을 진행
+	  return true;
 	}
 </script>
 </head>

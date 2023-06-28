@@ -28,8 +28,7 @@ public class IamPortService {
             HttpEntity<JSONObject>entity=new HttpEntity<>(body,headers);
             
             IamPortDto token=restTemplate.postForObject("https://api.iamport.kr/users/getToken",entity,IamPortDto.class);
-            System.out.println(token+" FULLtoken");
-    
+            System.out.println(token);    
             return token;
         } catch (Exception e) {
             e.printStackTrace();
