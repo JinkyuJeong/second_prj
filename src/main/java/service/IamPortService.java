@@ -63,32 +63,31 @@ public class IamPortService {
         return false;
     }
     public CancelBuy cancelBuy(String merchant_uid,int returnPrice) {
-        try {
-        	IamPortDto iamPortDto=getToken();
-            if(iamPortDto==null){
-                throw new Exception();
-            }
+    	if(returnPrice != 0) {
+    		 try {
+    	        	IamPortDto iamPortDto=getToken();
+    	            if(iamPortDto==null){
+    	                throw new Exception();
+    	            }
 
-            headers.add("Authorization",(String) iamPortDto.getResponse().get("access_token"));
-            body.put("merchant_uid", merchant_uid);
-            
-            if(returnPrice!=0){
-                body.put("amount", returnPrice);
-            }
+    	            headers.add("Authorization",(String) iamPortDto.getResponse().get("access_token"));
+    	            body.put("merchant_uid", merchant_uid);
+    	            body.put("amount", returnPrice);
 
-            HttpEntity<JSONObject>entity=new HttpEntity<JSONObject>(body, headers);
-            CancelBuy cancel =restTemplate.postForObject("https://api.iamport.kr/payments/cancel",entity,CancelBuy.class);
-            
-            System.out.println(cancel);
-            System.out.println(cancel.getMessage());
-            return cancel;
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("cancleBuy가 실패 했습니다 직접 환불 바랍니다");
-            throw new RuntimeException("환불에 실패 했습니다 다시시도 바랍니다");
-        }finally{
-            headerAndBodyClear();
-        }
+    	            HttpEntity<JSONObject>entity=new HttpEntity<JSONObject>(body, headers);
+    	            CancelBuy cancel =restTemplate.postForObject("https://api.iamport.kr/payments/cancel",entity,CancelBuy.class);
+    	            
+    	            System.out.println(cancel);
+    	            return cancel;
+    	        } catch (Exception e) {
+    	            e.printStackTrace();
+    	            System.out.println("cancleBuy가 실패 했습니다 직접 환불 바랍니다");
+    	            throw new RuntimeException("환불에 실패 했습니다 다시시도 바랍니다");
+    	        }finally{
+    	            headerAndBodyClear();
+    	        }
+    	}
+    	return null;
     }
     private void headerAndBodyClear(){
         headers.clear();

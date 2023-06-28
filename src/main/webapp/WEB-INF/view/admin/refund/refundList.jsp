@@ -174,23 +174,18 @@
 	      refund_orderId : refundOrderId,
 	      refund_price : refundPrice
 	    },
-	    success: function(result) {
-	    	if(result != "") {
-	    		alert(result);
-		    	return;
-	    	} else {
-	    		getTypeList
-	    	}	    	
-	    } ,
+	    success:  function() {
+	        getTypeList();
+	        location.reload();
+	    },
 	    error: function(error) {
 	      alert(error);
 	    }
-	  });
-	  
-	  
+	  });	  
 	  closeModal(i);
 	  location.reload();
 	}
+	
 	function refundBack(i) {
 
 	  const refundNumber = $("#i"+i).val();

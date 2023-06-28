@@ -18,7 +18,7 @@
 			data : {order_id : order_id}, 
 			success : function(result) {
 				var html = ""
-				html+="<tr style='background-color:pink; color:white;'><th>상품명</th><th>옵션명</th><th>상품가격</th><th>주문수량</th><th>상품총액</th><th>리뷰쓰기</th></tr>"              	
+				html+="<tr style='background-color:pink; color:white;'><th>상품명</th><th>옵션명</th><th>상품가격</th><th>주문수량</th><th>상품총액</th><th>리뷰쓰기</th><th>환불신청</th></tr>"              	
 				$.each(result, function(index, o) {
 					html += "<tr>";
 					html += "<td>" + o.product_name + "</td>";
@@ -31,7 +31,17 @@
 						html += "<button type='button' class='btn btn-outline-danger btn-sm' onclick=\"location.href='reviewReg?mem_id=${sessionScope.loginMem.mem_id}&order_itemId=" + o.order_itemId + "'\">";
 						html += "리뷰쓰기</button>";
 						html += "</td>";
-					}					
+					} else {
+						html += "<td></td>"
+					}
+					if(o.order_state == '배송완료') {
+						html += "<td>";
+						html += "<button type='button' class='btn btn-outline-danger btn-sm' onclick=\"location.href='refundReq?mem_id=${sessionScope.loginMem.mem_id}&order_itemId=" + o.order_itemId + "'\">";
+						html += "환불신청</button>";
+						html += "</td>";
+					} else {
+						html += "<td></td>"
+					}
 					html += "</tr>";
 				})
 				$("#orderDetail"+order_id).html(html);
@@ -77,7 +87,6 @@
 			<div style="flex-basis: 80%;">
       <h1 class="mb-3">주문조회</h1>
       <p class="mb-3 text-secondary">
-      	·<span class="text-danger"> 환불신청</span>은 <span class="text-danger">마이페이지 > 환불신청</span>에서 하실 수 있습니다. <br>
       	·<span class="text-danger"> 리뷰작성</span>은 <span class="text-danger">구매확정</span>이 된 주문 건만 작성 가능합니다. <br>
       	·<span class="text-danger"> 주문취소</span>는 <span class="text-danger">상품 준비 중 이전</span>(결제완료)의 상품만 가능합니다. <br>
       </p>
@@ -118,7 +127,7 @@
             <td>
             	<c:if test="${map.value.get(0).order_state=='결제완료' }">
             		<button type="button" class="btn btn-outline-danger btn-sm" onclick="cancel('${map.key}')">주문취소</button>
-            	</c:if>             	           
+            	</c:if>            	           
             </td>
             <td>
             	<c:if test="${map.value.get(0).order_state=='배송완료' }">

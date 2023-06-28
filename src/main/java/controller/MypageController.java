@@ -117,34 +117,26 @@ public class MypageController {
 	}
 	
 	@GetMapping("refundReq")
-	public ModelAndView idCheckRefundReg(String order_id, String mem_id, HttpSession session) {
+	public ModelAndView idCheckRefundReg(Integer order_itemId, String mem_id, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		List<OrderView> orderItems = service.getOvDelivered(mem_id, "배송완료");
+		List<OrderView> myOvList = service.getOv(mem_id);
 		
+		OrderView ov = service.getOvItemId(order_itemId);
+		if(!ov.getOrder_state().equals("배송완료")) {
+			throw new ShopException("배송이 완료되지 않은 상품은 환불할 수 없습니다.", "orderList?mem_id="+mem_id);
+		}
 		//주문일로부터 2주내의 주문들만 출력
-	    List<OrderView> recentOrders = new ArrayList<>();
 	    Calendar twoWeeksAgo = Calendar.getInstance();
 	    twoWeeksAgo.add(Calendar.DATE, -14);
-	    
-	    for (OrderView order : orderItems) {
-	        if (order.getOrder_date().after(twoWeeksAgo.getTime())) {
-	            recentOrders.add(order);
-	        }
-	    }
-	    
-	    
-		mav.addObject("orderItems", recentOrders);	
+		if(ov.getOrder_date().before(twoWeeksAgo.getTime())) {
+			throw new ShopException("구매한지 2주가 지난 상품은 환불할 수 없습니다.", "orderList?mem_id="+mem_id);
+		}
+		mav.addObject("ov", ov);	   
 		return mav;
 	}
 	
 	@PostMapping("refundReq")
-	public ModelAndView idCheckRefundReqPost (
-			@RequestParam("mem_id") String refund_memId,
-            @RequestParam("order_id") String[] order_id,
-            @RequestParam("opt_number") Integer[] opt_numbers,
-            @RequestParam("opt_count") Integer[] opt_count,
-            @RequestParam("refund_reason") String[] refund_reasons, 
-            String mem_id, HttpSession session) {
+	public ModelAndView idCheckRefundReqPost (String order_id, String order_itemId, Integer opt_number, String refund_reason, Integer refund_optCount, String mem_id, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		Mem sessionMem = (Mem) session.getAttribute("loginMem");
 		//refund table insert
@@ -154,44 +146,28 @@ public class MypageController {
      		   -> 환불 내역 없음 -> 환불 insert
 		 */
 		Map<Integer, Integer> optMap = new HashMap<>();	
-		for(int i=0; i< opt_numbers.length; i++) {
-			List<Refund> rf = service.getRefund(order_id[i], opt_numbers[i]);
-			int refund_optCount = 0;
+		List<Refund> rf = service.getRefund(order_id, opt_number);
+		OrderView ov = service.getOvIdNum(order_id, opt_number);
+		ProductOptView pov = service.getProductOptView(opt_number);		
+		int price = (pov.getProduct_price() * (100 - pov.getProduct_discountRate())/100) * refund_optCount;
+		if(rf==null || rf.size()==0) {					
+			if(!service.refundInsert(order_id, opt_number, refund_optCount, mem_id, refund_reason, price)) {
+				throw new ShopException("죄송합니다. 환불 과정에서 오류가 발생했습니다.", "orderList?mem_id=" + sessionMem.getMem_id());
+			}
+		} else {
+			int ogOptCount = 0;
 			for(Refund r : rf) {
-				refund_optCount += r.getRefund_optCount();
-			}			
-			refund_optCount += opt_count[i];
-			ProductOptView pov = service.getProductOptView(opt_numbers[i]);
-			OrderView ov = service.getOvIdNum(order_id[i], opt_numbers[i]);
-			int price = (pov.getProduct_price() * (100 - pov.getProduct_discountRate())/100) * opt_count[i];
-			String refund_reason = refund_reasons[i];
-			if(rf==null || rf.size()==0) {					
-				if(!service.refundInsert(order_id[i], opt_numbers[i], opt_count[i], refund_memId, refund_reason, price)) {
+				ogOptCount += r.getRefund_optCount();
+			}
+			ogOptCount += refund_optCount;
+			if(ogOptCount > Integer.parseInt(ov.getOpt_count())) {
+				throw new ShopException("환불 내역을 확인해주세요. \\n주문한 수량보다 많이 환불할 수 없습니다.", "refundList?mem_id=" + sessionMem.getMem_id());
+			} else {
+				if(!service.refundInsert(order_id, opt_number, refund_optCount, mem_id, refund_reason, price)) {
 					throw new ShopException("죄송합니다. 환불 과정에서 오류가 발생했습니다.", "orderList?mem_id=" + sessionMem.getMem_id());
 				}
-			} else {
-				if(refund_optCount > Integer.parseInt(ov.getOpt_count())) {
-					throw new ShopException("환불 내역을 확인해주세요. \\n주문한 수량보다 많이 환불할 수 없습니다.", "refundList?mem_id=" + sessionMem.getMem_id());
-				} else {
-					if(!service.refundInsert(order_id[i], opt_numbers[i], opt_count[i], refund_memId, refund_reason, price)) {
-						throw new ShopException("죄송합니다. 환불 과정에서 오류가 발생했습니다.", "orderList?mem_id=" + sessionMem.getMem_id());
-					}
-				}
-			}			
-			optMap.put(opt_numbers[i], opt_count[i]);
-			List<Refund> refundList = service.getRefundListOrderId(order_id[i]);
-			for(Refund r : refundList) {
-				if(!r.getRefund_reason().equals("제품 결함")) {
-					//옵션 수량 체크
-					int count = r.getRefund_optCount();
-					if(!service.updateQ(r.getRefund_optId(), r.getRefund_optCount())) {
-						throw new ShopException("옵션수량 체크 과정에서 문제가 발생했습니다.", "orderList?mem_id=" + sessionMem.getMem_id());
-					}				
-				}
 			}
-		}		
-		//refund_reason이 "제품 결함"이 아닌 경우
-		//opt_quantity 수량 update
+		}			
 		mav.setViewName("redirect:refundList?mem_id=" + sessionMem.getMem_id());
 		return mav;
 	}
@@ -204,8 +180,8 @@ public class MypageController {
 			refundList = service.getRefundListAll(mem_id, "주문취소"); //refund_type이 주문취소인거 빼고 다
 		} else if(refund_type.equals("환불대기")) {
 			refundList = service.getRefundCancelList(mem_id, "환불대기");
-		} else if(refund_type.equals("환불승인")) {
-			refundList = service.getRefundCancelList(mem_id, "환불승인");
+		} else if(refund_type.equals("환불완료")) {
+			refundList = service.getRefundCancelList(mem_id, "환불완료");
 		} else if(refund_type.equals("환불반려")) {
 			refundList = service.getRefundCancelList(mem_id, "환불반려");
 		}

@@ -112,43 +112,33 @@ public class AdminRefundController {
 		return mv;
 	}
 
-	@Transactional
-	@PostMapping(value="refundComp", produces = "text/plain; charset=UTF-8")
+//	@Transactional
+	@PostMapping("refundComp")
 	@ResponseBody
-	public String adminRefundCompChg(@RequestParam("refund_number") String refund_number, @RequestParam("refund_type") String refund_type, 
+	public void adminRefundCompChg(@RequestParam("refund_number") String refund_number, @RequestParam("refund_type") String refund_type, 
 			@RequestParam("refund_orderId") String refund_orderId, @RequestParam("refund_price") Integer refund_price, HttpSession session) {
-		String type = "";
+		String type = "";		
+		//결제 취소 실패 시 메세지 보냄
 		Order order = service.getOrder(refund_orderId);
 		int usedPoint = order.getOrder_point();
 		int totalPay = order.getOrder_totalPay();
 		int refundPoint = 0;
-		if(totalPay<refund_price) {
-			if(refund_price > usedPoint) {
-				refund_price = refund_price - usedPoint;
-				refundPoint = usedPoint;
-			} else {
-				refund_price = 0;
-				refundPoint = refund_price;				
-			}
-		} else {
-			refund_price = totalPay -  refund_price;
-		}
-		String msg = "";
-		System.out.println(refund_orderId + refund_price);
-		CancelBuy cancel = iamService.cancelBuy(refund_orderId, refund_price);
-		//결제 취소 실패 시 메세지 보냄
-		if(cancel.getCode() != "0") {
-			msg = cancel.getMessage();
-			return msg;
-		}
-		if(refund_type.equals("환불대기")) {
-			type = "환불완료";
-			service.refundComp(refund_number, type);
-		}		
-		RefundView refund = service.getRefund(refund_number);
-		service.pointBack(refund.getRefund_memId(), refundPoint);
-		return msg;
-		
+		if(refund_type.equals("환불대기")) {				
+				if(totalPay<refund_price) {
+					if(refund_price > usedPoint) {
+						refund_price = refund_price - usedPoint;
+						refundPoint = usedPoint;
+					} else {
+						refundPoint = refund_price;
+						refund_price = 0;										
+					}
+				}				
+				CancelBuy cancel = iamService.cancelBuy(refund_orderId, refund_price);
+				type = "환불완료";
+				service.refundComp(refund_number, type);
+				RefundView refund = service.getRefund(refund_number);
+				if(refundPoint != 0) service.pointBack(refund.getRefund_memId(), refundPoint);	
+		}						
 	}
 	
 	@PostMapping("refundBack")

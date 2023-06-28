@@ -49,4 +49,7 @@ public interface OrderMapper {
 
 	@Select("select * from h_order where order_id=#{value}")
 	Order getOrder(String order_id);
+
+	@Select("select * from orderView where order_id=#{value}")
+	List<OrderView> getOvOi(String order_id);
 }

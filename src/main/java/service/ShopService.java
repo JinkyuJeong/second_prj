@@ -362,4 +362,8 @@ public class ShopService {
 		pointDao.pointBack(mem_id, order_point);
 	}
 
+	public List<OrderView> getOvOi(String order_id) {
+		return orderDao.getOvOi(order_id);
+	}
+
 }

@@ -305,16 +305,13 @@ public class MemController {
 		if(dbMem.getMem_channel() == null) {
 			if(dbMem.getMem_pw().equals(hashPass)) {
 				session.setAttribute("loginMem", dbMem);
-				mav.addObject("userid",dbMem.getMem_id());
-				mav.setViewName("redirect:/mypage/myInfo?mem_id=" + dbMem.getMem_id());
+				throw new ShopException("반갑습니다. " + dbMem.getMem_name() + "님 :)", "/second_prj/mypage/orderList?mem_id=" + mem.getMem_id());
 			} else {
 				throw new ShopException("아이디 또는 비밀번호를 확인하세요.", "login");
 			}
 		} else {
 			throw new ShopException("소셜로그인을 통해 가입한 회원입니다.", "login");
 		}		
-		
-		return mav;
 	}
 	
 	@RequestMapping("naverLogin")
@@ -390,18 +387,14 @@ public class MemController {
 			System.out.println(e);
 		}
 		json = (JSONObject) parser.parse(sb.toString());
-		System.out.println(json);
 		JSONObject jsondetail = (JSONObject) json.get("response");
-		System.out.println(jsondetail.get("id"));
-		System.out.println(jsondetail.get("name"));
-		System.out.println(jsondetail.get("email"));
 		String mem_name = jsondetail.get("name").toString();
 		String mem_email = jsondetail.get("email").toString();
 		String mem_phoneno = jsondetail.get("mobile").toString().replace("-", "");
 		Mem mem = service.getMemEmail(mem_email);	
 		if(mem != null) {
 			session.setAttribute("loginMem", mem);
-			throw new ShopException("반갑습니다. " + mem.getMem_name() + "님 :)", "/second_prj/mypage/myInfo?mem_id=" + mem.getMem_id());
+			throw new ShopException("반갑습니다. " + mem.getMem_name() + "님 :)", "/second_prj/mypage/orderList?mem_id=" + mem.getMem_id());
 		} else {
 			mem = new Mem();
 			mem.setMem_id(mem_email);
@@ -411,7 +404,7 @@ public class MemController {
 			int maxMemNum = service.maxMemNum();
 			mem.setMem_number(maxMemNum+1);
 			if(service.userInsert(mem)) {
-				throw new ShopException("반갑습니다. " + mem.getMem_name() + "님 :)", "mypage?mem_id=" + mem.getMem_id());
+				throw new ShopException("반갑습니다. " + mem.getMem_name() + "님 :)", "mypage/orderList?mem_id=" + mem.getMem_id());
 			} else {
 				throw new ShopException("죄송합니다. 소셜 로그인 과정 중 오류가 발생했습니다.", "mem/login");
 			}

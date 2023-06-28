@@ -153,13 +153,21 @@
 
     // 이미 선택된 옵션인지 확인
     var selectedOptions = document.getElementsByClassName("selected-option");
-    for (var i = 0; i < selectedOptions.length; i++) {
-      var option = selectedOptions[i];
-      if (option.dataset.value === selectedValue) {
-        alert("이미 선택된 옵션입니다.");
-        return;
-      }
+    if(selectedOptions.length == 0) {
+    	if (selectedOptions[0] === selectedValue) {
+    		alert("이미 선택된 옵션입니다.");
+	        return;
+    	}
+    } else {
+    	for (var i = 0; i < selectedOptions.length; i++) {
+    	      var option = selectedOptions[i];
+    	      if (option.dataset.value === selectedValue) {
+    	        alert("이미 선택된 옵션입니다.");
+    	        return;
+    	      }
+    	}
     }
+    
     // soldOut인지 확인
     if (selectedValue === "soldOut") {
       alert("품절된 상품입니다.");
