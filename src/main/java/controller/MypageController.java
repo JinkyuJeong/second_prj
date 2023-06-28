@@ -120,8 +120,15 @@ public class MypageController {
 	public ModelAndView idCheckRefundReg(Integer order_itemId, String mem_id, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		List<OrderView> myOvList = service.getOv(mem_id);
-		
+		Mem sessionMem = (Mem) session.getAttribute("loginMem");
 		OrderView ov = service.getOvItemId(order_itemId);
+		System.out.println(ov);
+		if(ov == null) {
+			throw new ShopException("존재하지 않는 주문입니다.", "orderList?mem_id=" + mem_id);
+		}
+		if(!ov.getMem_id().equals(mem_id)) {
+			throw new ShopException("주문자가 일치하지 않습니다.", "orderList?mem_id=" + mem_id);
+		} 
 		if(!ov.getOrder_state().equals("배송완료")) {
 			throw new ShopException("배송이 완료되지 않은 상품은 환불할 수 없습니다.", "orderList?mem_id="+mem_id);
 		}
@@ -148,11 +155,12 @@ public class MypageController {
 		Map<Integer, Integer> optMap = new HashMap<>();	
 		List<Refund> rf = service.getRefund(order_id, opt_number);
 		OrderView ov = service.getOvIdNum(order_id, opt_number);
+		
 		ProductOptView pov = service.getProductOptView(opt_number);		
 		int price = (pov.getProduct_price() * (100 - pov.getProduct_discountRate())/100) * refund_optCount;
 		if(rf==null || rf.size()==0) {					
 			if(!service.refundInsert(order_id, opt_number, refund_optCount, mem_id, refund_reason, price)) {
-				throw new ShopException("죄송합니다. 환불 과정에서 오류가 발생했습니다.", "orderList?mem_id=" + sessionMem.getMem_id());
+				throw new ShopException("죄송합니다. 환불 과정에서 오류가 발생했습니다.", "orderList?mem_id=" + mem_id);
 			}
 		} else {
 			int ogOptCount = 0;
