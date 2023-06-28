@@ -170,37 +170,6 @@ public class AdminManageService {
 		return pointDao.getPoint(point_number);
 	}
 
-	@Transactional
-	public boolean pointChg(Point point, Integer cur_point) {
-		Mem mem = memDao.getMemId(point.getMem_id());
-		boolean b1 = false;
-		boolean b2 = false;
-		boolean b3 = false;
-		if(mem.getMem_point() > cur_point) {
-			Point newPoint = new Point();
-			newPoint.setMem_id(point.getMem_id());
-			newPoint.setPoint_value(cur_point*-1);
-			b1 = memDao.pointChg(newPoint);
-			b2 = memDao.pointChg(point);
-			b3 = pointDao.pointChg(point);
-			return b1&&b2&&b3;
-		}else {
-			b1 = memDao.setPointZero(0, point.getMem_id());
-			int diff = mem.getMem_point() - cur_point + point.getPoint_value();
-			if(diff>0) {
-				b2 = memDao.pointChg(point);
-				b3 = pointDao.pointChg(point);
-
-				return b1&&b2&&b3;
-			}else {
-				b3 = pointDao.pointChg(point);
-
-				return b1&&b3;
-			}
-		}
-
-	}
-
 	public boolean pointDel(Integer point_number) {
 		return pointDao.pointDel(point_number);
 	}

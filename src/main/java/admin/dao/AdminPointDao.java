@@ -40,10 +40,6 @@ public class AdminPointDao {
 		return template.getMapper(cls).getPoint(point_number);
 	}
 
-	public boolean pointChg(Point point) {
-		return template.getMapper(cls).pointChg(point);
-	}
-
 	public boolean pointDel(Integer point_number) {
 		return template.getMapper(cls).pointDel(point_number);
 	}
