@@ -14,6 +14,7 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,7 +89,7 @@ public class AdminCsController {
 	}
 
 	@PostMapping("csRe")
-	public ModelAndView adminCsRe(Cs cs, HttpSession session) {
+	public ModelAndView adminCsRe(Cs cs, HttpServletRequest request, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		if(service.csReply(cs)) {
 			mv.setViewName("redirect:csDetail?cs_number="+cs.getCs_number());
@@ -125,8 +126,8 @@ public class AdminCsController {
 				msg.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
 
 				msg.setSubject("호미짐에서 문의하신 내용의 답변이 등록 되었습니다.");
-				
-				String content = "<a href=\"http://localhost:8080/second_prj/cs\">답변 확인하기</a><br><br>처리 담당자: " + cs.getManager_name();
+				String myIp = request.getRemoteAddr();
+				String content = "<a href=\"http://" + myIp +":8080/second_prj/cs\">답변 확인하기</a><br><br>처리 담당자: " + cs.getManager_name();
 				msg.setContent(content, "text/html; charset=UTF-8");
 				Transport.send(msg);
 
