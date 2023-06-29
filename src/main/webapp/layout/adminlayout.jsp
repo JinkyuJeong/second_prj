@@ -91,8 +91,8 @@
         <li class="nav-item dropdown-item <c:if test='${url eq "point"}'>w3-blue</c:if>">
           <h4><a href="${path}/admin/point/pointList"><i class="fa fa-product-hunt" aria-hidden="true"></i> 포인트 관리</a></h4>
         </li>
-        <li class="nav-item dropdown-item">
-          <h4><a href="">💪이벤트 관리</a></h4>
+        <li class="nav-item dropdown-item <c:if test='${url eq "chall"}'>w3-blue</c:if>">
+          <h4><a href="${path}/admin/chall/challList">💪이벤트 관리</a></h4>
         </li>
       </ul>
     </div>

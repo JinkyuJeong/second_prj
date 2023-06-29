@@ -59,9 +59,9 @@
         </form>
         
        <div class="btn-group mb-3">
-				  <button type="button" onclick="location.href='reviewList?pageNum=${pageNum}&sd=${sd}&ed=${ed}&query=${param.query}'" class="btn btn-outline-custom-brown btn-sm ${empty review_state ? 'active-brown' : '' }">전체</button>
-				  <button type="button" onclick="location.href='reviewList?pageNum=${pageNum}&sd=${sd}&ed=${ed}&query=${param.query}&review_state=지급대기'" class="btn btn-outline-custom-brown btn-sm ${review_state eq '지급대기' ? 'active-brown' : '' }">지급대기</button>
-				  <button type="button" onclick="location.href='reviewList?pageNum=${pageNum}&sd=${sd}&ed=${ed}&query=${param.query}&review_state=지급완료'" class="btn btn-outline-custom-brown btn-sm ${review_state eq '지급완료' ? 'active-brown' : '' }">지급완료</button>
+				  <button type="button" onclick="location.href='reviewList?pageNum=${pageNum}&sd=${sd}&ed=${ed}&f=${param.f}&query=${param.query}'" class="btn btn-outline-custom-brown btn-sm ${empty review_state ? 'active-brown' : '' }">전체</button>
+				  <button type="button" onclick="location.href='reviewList?pageNum=${pageNum}&sd=${sd}&ed=${ed}&f=${param.f}&query=${param.query}&review_state=지급대기'" class="btn btn-outline-custom-brown btn-sm ${review_state eq '지급대기' ? 'active-brown' : '' }">지급대기</button>
+				  <button type="button" onclick="location.href='reviewList?pageNum=${pageNum}&sd=${sd}&ed=${ed}&f=${param.f}&query=${param.query}&review_state=지급완료'" class="btn btn-outline-custom-brown btn-sm ${review_state eq '지급완료' ? 'active-brown' : '' }">지급완료</button>
 				</div>
         
         <c:if test="${empty reviewList }">
@@ -102,12 +102,12 @@
 						<a class="w3-bar-item w3-button w3-hover-black" onclick="alert('이전 페이지가 없습니다.');">&laquo;</a>
 					</c:if>
 					<c:if test="${pageNum > 1}">
-						<a class="w3-bar-item w3-button w3-hover-black" href="reviewList?pageNum=${pageNum-1}&sd=${sd}&ed=${ed}&query=${param.query}&review_state=${param.review_state}">&laquo;</a>
+						<a class="w3-bar-item w3-button w3-hover-black" href="reviewList?pageNum=${pageNum-1}&sd=${sd}&ed=${ed}&f=${param.f}&query=${param.query}&review_state=${param.review_state}">&laquo;</a>
 					</c:if>
 					
 					<c:forEach var="a" begin="${startPage}" end="${endPage}">
 						<c:if test="${a <= maxPage}">
-							<a class="w3-bar-item w3-button w3-hover-black ${a == pageNum ? 'w3-black' : '' }" href="reviewList?pageNum=${a}&sd=${sd}&ed=${ed}&query=${param.query}&review_state=${param.review_state}">${a}</a>
+							<a class="w3-bar-item w3-button w3-hover-black ${a == pageNum ? 'w3-black' : '' }" href="reviewList?pageNum=${a}&sd=${sd}&ed=${ed}&f=${param.f}&query=${param.query}&review_state=${param.review_state}">${a}</a>
 						</c:if>
 					</c:forEach>
 						
@@ -115,7 +115,7 @@
 						<a class="w3-bar-item w3-button w3-hover-black" onclick="alert('다음 페이지가 없습니다.');">&raquo;</a>
 					</c:if>
 					<c:if test="${startPage+4 < maxPage}">
-						<a class="w3-bar-item w3-button w3-hover-black" href="reviewList?pageNum=${startPage+5}&sd=${sd}&ed=${ed}&query=${param.query}&review_state=${param.cs_state}">&raquo;</a>
+						<a class="w3-bar-item w3-button w3-hover-black" href="reviewList?pageNum=${startPage+5}&sd=${sd}&ed=${ed}&f=${param.f}&query=${param.query}&review_state=${param.cs_state}">&raquo;</a>
 					</c:if>
 		    </div>
 		  </div>

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import admin.dao.AdminChallDao;
 import admin.dao.AdminCsDao;
 import admin.dao.AdminManagerDao;
 import admin.dao.AdminMemDao;
@@ -20,6 +21,7 @@ import admin.dao.AdminQnaDao;
 import admin.dao.AdminRefundDao;
 import admin.dao.AdminReviewDao;
 import admin.dao.AdminStatDao;
+import dto.Chall;
 import dto.Cs;
 import dto.Delivery;
 import dto.Manager;
@@ -50,6 +52,8 @@ public class AdminManageService {
 	private AdminRefundDao refundDao;
 	@Autowired
 	private AdminStatDao statDao;
+	@Autowired
+	private AdminChallDao challDao;
 
 	public boolean regQna(Qna qna) {
 		return qnaDao.regQna(qna);
@@ -275,6 +279,18 @@ public class AdminManageService {
 
 	public List<StatSale> getStatSaleList(Integer pageNum, String sd, String ed) {
 		return statDao.getStatSaleList(pageNum, sd, ed);
+	}
+
+	public int challCnt(String query, String sd, String ed, String chall_state) {
+		return challDao.challCnt(query, sd, ed, chall_state);
+	}
+
+	public List<Chall> getChallList(Integer pageNum, String query, String sd, String ed, String chall_state) {
+		return challDao.getChallList(pageNum, query, sd, ed, chall_state);
+	}
+
+	public Integer dateCnt(String mem_id) {
+		return challDao.dateCnt(mem_id);
 	}
 
 }

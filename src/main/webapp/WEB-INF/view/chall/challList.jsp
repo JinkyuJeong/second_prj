@@ -18,7 +18,7 @@
   #jumbo img {
     display: block;
     width: 100%;
-    height: 500px;
+    height: 400px;
     filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5)); /* 그림자 효과 */
   }
 
@@ -47,12 +47,12 @@
 <body>
 <div class="container">
 	<div class="container" id="jumbo">
-    <img src="${path}/images/event.jpg" width="100%" height="500px">
+    <img src="${path}/images/event.jpg">
     <h1 style="font-size:4em">💪 오운완 챌린지</h1>
   </div>
   
   <div class="mt-3 mb-3">
-  	<a class="btn btn-danger" href="challReg">참여하기</a>
+  	<a class="btn btn-danger" href="challReg">📷 참여하기</a>
   </div>
 
 	<c:if test="${empty challList }">

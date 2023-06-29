@@ -74,11 +74,8 @@ public class ChallController {
 		
 		List<Chall> challList =service.getChallList(pageNum);
 		
-		System.out.println(challList);
-		
 		List<Integer> userDateList = new ArrayList<>();
 		for(Chall c : challList) {
-			System.out.println(c);
 			Integer cnt = service.dateCnt(c.getMem_id());
 			userDateList.add(cnt);
 		}
