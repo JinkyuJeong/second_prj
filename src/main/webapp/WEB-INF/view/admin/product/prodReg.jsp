@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>호미짐</title>
+<title>호미짐 관리자</title>
 <script>
   $(()=>{
     $('input[name="product_isDiscount"]').change(function() {

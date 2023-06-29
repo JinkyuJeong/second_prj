@@ -1,12 +1,17 @@
 package service;
 
+import java.io.File;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import dao.CartDao;
+import dao.ChallDao;
 import dao.CsDao;
 import dao.DeliveryDao;
 import dao.MemDao;
@@ -19,6 +24,7 @@ import dao.QnaDao;
 import dao.RefundDao;
 import dao.ReviewDao;
 import dto.Cart;
+import dto.Chall;
 import dto.Cs;
 import dto.Delivery;
 import dto.Mem;
@@ -70,6 +76,9 @@ public class ShopService {
 	
 	@Autowired
 	private ReviewDao reviewDao;
+	
+	@Autowired
+	private ChallDao challDao;
 
 	public List<Product> productList(Integer pageNum, int limit, String product_type, String searchContent) {
 		return productDao.list(pageNum, limit, product_type, searchContent);
@@ -364,6 +373,43 @@ public class ShopService {
 
 	public List<OrderView> getOvOi(String order_id) {
 		return orderDao.getOvOi(order_id);
+	}
+
+	public boolean regChall(Chall chall, HttpServletRequest request) {
+		String thumbPath = request.getServletContext().getRealPath("/") + "img/chall/";
+		if(chall.getThumbFile() != null && !chall.getThumbFile().isEmpty()) {
+			uploadFileCreate(chall.getThumbFile(), thumbPath);
+		}
+		int maxNum = challDao.maxNum();
+		chall.setChall_number(maxNum+1);
+		return challDao.regChall(chall);
+	}
+	
+	public void uploadFileCreate(MultipartFile file, String path) {
+		String orgFile = file.getOriginalFilename();
+		File f = new File(path);
+		if(!f.exists()) f.mkdirs();
+		try {
+			file.transferTo(new File(path+orgFile));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public int getChallCnt() {
+		return challDao.getChallCnt();
+	}
+
+	public List<Chall> getChallList(Integer pageNum) {
+		return challDao.getChallList(pageNum);
+	}
+
+	public Integer dateCnt(String mem_id) {
+		return challDao.dateCnt(mem_id);
+	}
+
+	public Chall getChall(String mem_id, String chall_regdate) {
+		return challDao.getChall(mem_id, chall_regdate);
 	}
 
 }

@@ -92,7 +92,7 @@
                   <a href="${path }/product/productList?product_type=3" class="nav-link ${url=='productList' && param.product_type=='3' ? 'active' : ''}">보조용품</a>
                 </li>
                 <li class="nav-item ms-5">
-                  <a class="nav-link" href="#">💪 오운완 챌린지</a>
+                  <a class="nav-link" href="${path }/chall/challList">💪 오운완 챌린지</a>
                 </li>
               </ul>
             </div>
