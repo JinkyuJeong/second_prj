@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import dto.Chall;
+import dto.Mem;
 import exception.ShopException;
 import service.ShopService;
 
@@ -72,7 +73,13 @@ public class ChallController {
 		if(endPage > maxPage) endPage = maxPage;
 		
 		List<Chall> challList =service.getChallList(pageNum);
-		
+		Mem mem = (Mem)session.getAttribute("loginMem");
+		Chall myChall = null;
+		if(mem != null) {
+			myChall = service.getMyChall(mem.getMem_id());
+		}		
+		double chall_cnt = (double)myChall.getChall_cnt()/365;
+		mv.addObject("chall_cnt",chall_cnt);
 		mv.addObject("challList", challList);
 		mv.addObject("pageNum", pageNum);
 		mv.addObject("startPage", startPage);

@@ -599,9 +599,7 @@ public class MemController {
 	    }
 	    parser = new JSONParser();
 	    JSONObject jsonObject = (JSONObject) parser.parse(result);
-	    System.out.println("? : " + jsonObject);
 	    String mem_email = jsonObject.get("email").toString();
-	    System.out.println(mem_email);
 	    String mem_name = jsonObject.get("name").toString();
 	    String mem_phoneno = "";
 		Mem mem = service.getMemEmail(mem_email);	

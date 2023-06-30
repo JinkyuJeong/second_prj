@@ -410,4 +410,8 @@ public class ShopService {
 		return challDao.getChall(mem_id, chall_regdate);
 	}
 
+	public Chall getMyChall(String mem_id) {
+		return challDao.getMyChall(mem_id);
+	}
+
 }

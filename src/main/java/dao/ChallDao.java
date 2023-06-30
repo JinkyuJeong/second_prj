@@ -51,4 +51,8 @@ public class ChallDao {
 		return template.getMapper(cls).challCnt(mem_id);
 	}
 
+	public Chall getMyChall(String mem_id) {
+		return template.getMapper(cls).getMyChall(mem_id);
+	}
+
 }

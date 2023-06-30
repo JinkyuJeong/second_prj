@@ -28,4 +28,7 @@ public interface ChallMapper {
 
 	@Select("select ifnull(max(chall_cnt),0) from chall where mem_id=#{value}")
 	int challCnt(String mem_id);
+
+	@Select("select * from chall where mem_id=#{value}")
+	Chall getMyChall(String mem_id);
 }
