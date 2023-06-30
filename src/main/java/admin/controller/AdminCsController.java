@@ -1,7 +1,7 @@
 package admin.controller;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Properties;
@@ -101,10 +101,7 @@ public class AdminCsController {
 			String recipient = cs.getMem_id();
 			Properties prop = new Properties();
 			try {
-				FileInputStream fis = new FileInputStream("D:\\springworkspace\\second_prj\\src\\main\\resources\\mail.properties"); 
-				// 진규 경로 : D:\java_gdu_workspace\second_prj\src\main\resources\mail.properties
-				// 수빈 경로 : D:\\springstudy\\second_prj\\src\\main\\resources\mail.properties
-				// 진규 구디자리 경로 : D:\springworkspace\second_prj\src\main\resources
+				InputStream fis = request.getServletContext().getResourceAsStream("/WEB-INF/classes/mail.properties");
 				prop.load(fis);
 				prop.put("mail.smtp.user", sender);
 			} catch (IOException e) {
