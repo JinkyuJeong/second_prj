@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.net.HttpURLConnection;
@@ -28,6 +29,8 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -296,7 +299,7 @@ public class MemController {
 		
 		apiURL += "&state=" + state; 
 		kakaoApiURL += "&state=" + state; 
-		googleApiURL += "&scope=profile";
+		googleApiURL += "&scope=email profile";
 		mav.addObject("apiURL",apiURL);
 		mav.addObject("kakaoApiURL",kakaoApiURL);
 		mav.addObject("googleApiURL",googleApiURL);
@@ -542,6 +545,9 @@ public class MemController {
 	        URL url = new URL(googleApiURL);
 	        HttpURLConnection con = (HttpURLConnection) url.openConnection();
 	        con.setRequestMethod("POST");
+	        con.setDoOutput(true);
+	        OutputStream out = con.getOutputStream();
+	        out.close(); // 요청 본문이 비어있으므로 OutputStream을 닫음
 	        int responseCode = con.getResponseCode();
 	        BufferedReader br;
 	        System.out.println("responseCode=" + responseCode);
@@ -569,7 +575,7 @@ public class MemController {
 	    String line = "";
         String result = "";
 	    try {
-	    	googleApiURL = "https://www.googleapis.com/oauth2/v2/userinfo"; // 두번째 요청. 프로필 정보 조회(토큰값을 이용해서)
+	    	googleApiURL = "https://www.googleapis.com/userinfo/v2/me"; // 두번째 요청. 프로필 정보 조회(토큰값을 이용해서)
 	        URL url = new URL(googleApiURL);
 	        HttpURLConnection con = (HttpURLConnection) url.openConnection();
 	        con.setRequestMethod("GET");
@@ -593,15 +599,11 @@ public class MemController {
 	    }
 	    parser = new JSONParser();
 	    JSONObject jsonObject = (JSONObject) parser.parse(result);
-	    System.out.println(jsonObject);
-	    boolean hasEmail = Boolean.parseBoolean(((JSONObject) jsonObject.get("kakao_account")).get("has_email").toString());
-	    String mem_email = "";
-	    if (hasEmail) {
-	    	mem_email = ((JSONObject) jsonObject.get("kakao_account")).get("email").toString();
-	    }
+	    System.out.println("? : " + jsonObject);
+	    String mem_email = jsonObject.get("email").toString();
 	    System.out.println(mem_email);
-	    String mem_name = ((JSONObject) jsonObject.get("kakao_account")).get("name").toString();
-	    String mem_phoneno = ((JSONObject) jsonObject.get("kakao_account")).get("name").toString().replace("-", "");
+	    String mem_name = jsonObject.get("name").toString();
+	    String mem_phoneno = "";
 		Mem mem = service.getMemEmail(mem_email);	
 		if(mem != null) {
 			session.setAttribute("loginMem", mem);
