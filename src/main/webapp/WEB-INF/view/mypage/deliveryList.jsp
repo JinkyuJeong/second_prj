@@ -76,7 +76,7 @@
 								<div class="modal-body">[${d.delivery_nickName }] 배송지 정보를 삭제하시겠습니까?</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-									<button type="button" class="btn btn-primary" onclick="javascript:deleteD('${d.delivery_number}')">삭제</button>
+									<button type="button" class="btn btn-danger" onclick="javascript:deleteD('${d.delivery_number}')">삭제</button>
 								</div>
 							</div>
 						</div>

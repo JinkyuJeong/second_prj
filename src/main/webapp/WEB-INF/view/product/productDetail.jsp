@@ -41,10 +41,11 @@
 		//리뷰 페이징
 		pageNum = 1;
 		listpage(pageNum);
-		
+		//옵션 선택시
 		$("#optionSelect").change(function () {
 			addSelectedOption();			
 		})
+		//x버튼 클릭시
 		$(document).on("click", ".removeBtn", function() {
 		    var containerElement = $(this).closest(".selected-option");
 		    containerElement.remove();
@@ -174,7 +175,6 @@
       return;
     }   
     let param = {opt_number: parseInt($("#opt_number").val())};
-    console.log(selectedValue)
     $.ajax({    	
 		url : "${path}/ajax/optionSelect",
 		type : "POST",

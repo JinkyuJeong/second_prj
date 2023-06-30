@@ -113,7 +113,12 @@
             <div class="text-center mt-3">
               <a href="${apiURL }"><img alt="네이버로 시작하기" src="../images/naverLogin.png" style="width:150px;height:50px;"></a>
             </div>
-            <br><br>
+            <div class="text-center mt-3">
+              <a href="${kakaoApiURL }"><img alt="카카오로 시작하기" src="../images/naverLogin.png" style="width:150px;height:50px;"></a>
+            </div>
+            <div class="text-center mt-3">
+              <a href="${googleApiURL }"><img alt="구글로 시작하기" src="../images/naverLogin.png" style="width:150px;height:50px;"></a>
+            </div>
             <p class="mb-2">비밀번호를 찾으실려면 아래 버튼을 눌러주세요.</p>
             <button type="button" class="btn  px-0 fw-bold" onclick="win_open('emailForm2')">비밀번호 찾기</button>
         <input type="hidden" name="emailchkchk" value="emailunchecked">

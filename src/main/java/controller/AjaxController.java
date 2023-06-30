@@ -304,7 +304,6 @@ public class AjaxController {
 	public List<ReviewView> reviewAjax(@RequestParam("pageNum") int pageNum, int product_number) {
 		int pageSize = 3; // 한 페이지에 표시되는 리뷰 수
     	int startIndex = (pageNum - 1) * pageSize; // 현재 페이지의 시작 인덱스 계산
-    	int endIndex = startIndex + pageSize; // 현재 페이지의 끝 인덱스 계산
 		List<ReviewView> reviewList = service.getReviewList(product_number, startIndex, pageSize);
 		return reviewList;
 	}

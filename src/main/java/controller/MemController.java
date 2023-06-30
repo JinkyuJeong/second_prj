@@ -3,6 +3,7 @@ package controller;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
@@ -21,6 +22,7 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
@@ -77,7 +79,7 @@ public class MemController {
 	}
 	
 	@RequestMapping("emailForm")
-	public ModelAndView emailForm(@RequestParam(value="email", required=false)String email, HttpSession ses) {
+	public ModelAndView emailForm(@RequestParam(value="email", required=false)String email, HttpServletRequest request, HttpSession ses) {
 		ModelAndView mav = new ModelAndView();
 		if(service.getMemEmail(email) != null) {
 			throw new OpenerException("이미 가입되어있는 이메일 입니다.", "login");
@@ -92,9 +94,7 @@ public class MemController {
 			System.out.println("inputedEmail : " + email);
 			Properties prop = new Properties();
 			try {
-				FileInputStream fis = new FileInputStream("D:\\twerkinghamtori\\workspace\\spring\\second_prj\\src\\main\\resources\\mail.properties"); 
-				// 진규 경로 : D:\java_gdu_workspace\second_prj\src\main\resources\mail.properties
-				// 수빈 경로 : D:\\springstudy\\second_prj\\src\\main\\resources\mail.properties
+				InputStream fis = request.getServletContext().getResourceAsStream("/WEB-INF/classes/mail.properties");
 				prop.load(fis);
 				prop.put("mail.smtp.user", sender);
 				System.out.println(prop);
@@ -134,7 +134,7 @@ public class MemController {
 	}
 	
 	@PostMapping("emailPwForm")
-	public ModelAndView emailForm2(@RequestParam(value="email", required=false)String email, HttpSession ses) {
+	public ModelAndView emailForm2(@RequestParam(value="email", required=false)String email, HttpServletRequest request, HttpSession ses) {
 		ModelAndView mav = new ModelAndView();
 		System.out.println(email);
 		if(service.getMemEmail(email) == null) {
@@ -150,9 +150,7 @@ public class MemController {
 			System.out.println("inputedEmail : " + email);
 			Properties prop = new Properties();
 			try {
-				FileInputStream fis = new FileInputStream("D:\\twerkinghamtori\\workspace\\spring\\second_prj\\src\\main\\resources\\mail.properties"); 
-				// 진규 경로 : D:\java_gdu_workspace\second_prj\src\main\resources\mail.properties
-				// 수빈 경로 : D:\\springstudy\\second_prj\\src\\main\\resources\mail.properties
+				InputStream fis = request.getServletContext().getResourceAsStream("/WEB-INF/classes/mail.properties");
 				prop.load(fis);
 				prop.put("mail.smtp.user", sender);
 				System.out.println(prop);
@@ -269,21 +267,39 @@ public class MemController {
 	@GetMapping("login")
 	public ModelAndView loginGet (HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		//apiURL을 생성하여 view로 전달
+		//apiURL을 생성하여 view로 전달 (인가 코드 발급 요청)
 		String clientId = "9wCxroKdKrQrcz_Kpy9q";
+		String kakaoClientId = "eb479ecbc17b394b83d6c34ad979d961";
+		String googleClientId = "522090518805-ld1vb6qcsnboc6hlki8kmqa0plbc5meu.apps.googleusercontent.com";
 		String redirectURI = null;
+		String kakaoRedirectURL = null;
+		String googleRedirectURL = null;
 		try {
 			redirectURI = URLEncoder.encode("http://localhost:8080/second_prj/mem/naverLogin","UTF-8");
+			kakaoRedirectURL = URLEncoder.encode("http://localhost:8080/second_prj/mem/kakaoLogin", "UTF-8");
+			googleRedirectURL = URLEncoder.encode("http://localhost:8080/second_prj/mem/googleLogin", "UTF-8");
 		} catch(UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
 		SecureRandom random = new SecureRandom(); //난수발생기
 		String state = new BigInteger(130,random).toString();
 		String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
+		String kakaoApiURL = "https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=";
+		String googleApiURL = "https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=";
 		apiURL += "&client_id=" + clientId;
+		kakaoApiURL += kakaoClientId;
+		googleApiURL += googleClientId;
+		
 		apiURL += "&redirect_uri=" + redirectURI;
+		kakaoApiURL += "&redirect_uri=" + kakaoRedirectURL;
+		googleApiURL += "&redirect_uri=" + googleRedirectURL;
+		
 		apiURL += "&state=" + state; 
+		kakaoApiURL += "&state=" + state; 
+		googleApiURL += "&scope=profile";
 		mav.addObject("apiURL",apiURL);
+		mav.addObject("kakaoApiURL",kakaoApiURL);
+		mav.addObject("googleApiURL",googleApiURL);
 		mav.addObject(new Mem());
 		session.getServletContext().setAttribute("state", state);
 		return mav;
@@ -388,6 +404,7 @@ public class MemController {
 		}
 		json = (JSONObject) parser.parse(sb.toString());
 		JSONObject jsondetail = (JSONObject) json.get("response");
+		System.out.println(jsondetail);
 		String mem_name = jsondetail.get("name").toString();
 		String mem_email = jsondetail.get("email").toString();
 		String mem_phoneno = jsondetail.get("mobile").toString().replace("-", "");
@@ -401,6 +418,200 @@ public class MemController {
 			mem.setMem_name(mem_name);
 			mem.setMem_phoneno(mem_phoneno);
 			mem.setMem_channel("naver");
+			int maxMemNum = service.maxMemNum();
+			mem.setMem_number(maxMemNum+1);
+			if(service.userInsert(mem)) {
+				throw new ShopException("반갑습니다. " + mem.getMem_name() + "님 :)", "mypage/orderList?mem_id=" + mem.getMem_id());
+			} else {
+				throw new ShopException("죄송합니다. 소셜 로그인 과정 중 오류가 발생했습니다.", "mem/login");
+			}
+		}
+	}
+	
+	@RequestMapping("kakaoLogin")
+	public String kakaoLogin(String code, String state, HttpSession session) throws Exception {
+	    String clientId = "eb479ecbc17b394b83d6c34ad979d961";
+	    String redirectURI = URLEncoder.encode("http://localhost:8080/second_prj/mem/kakaoLogin", "UTF-8");
+	    String kakaoApiURL;
+	    kakaoApiURL = "https://kauth.kakao.com/oauth/token?grant_type=authorization_code";
+	    kakaoApiURL += "&client_id=" + clientId;
+	    kakaoApiURL += "&redirect_uri=" + redirectURI;
+	    kakaoApiURL += "&code=" + code;
+	    kakaoApiURL += "&state=" + state;
+	    StringBuffer sb = new StringBuffer();
+	    try {
+	        URL url = new URL(kakaoApiURL);
+	        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+	        con.setRequestMethod("POST");
+	        con.setDoOutput(true);
+	        int responseCode = con.getResponseCode();
+	        BufferedReader br;
+	        System.out.println("responseCode=" + responseCode);
+	        if (responseCode == 200) {
+	            br = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
+	        } else {
+	            br = new BufferedReader(new InputStreamReader(con.getErrorStream(), "UTF-8"));
+	        }
+	        String inputLine;
+	        while ((inputLine = br.readLine()) != null) {
+	            sb.append(inputLine);
+	        }
+	        br.close();
+	        if (responseCode == 200) {
+	            System.out.println("sb : " + sb.toString());
+	        }
+	    } catch (Exception e) {
+	        System.out.println(e);
+	    }
+	    JSONParser parser = new JSONParser();
+	    JSONObject json = (JSONObject) parser.parse(sb.toString()); // 문자열 -> JSON객체
+	    String token = (String) json.get("access_token"); // 토큰
+	    String header = "Bearer " + token;
+	    String line = "";
+        String result = "";
+	    try {
+	        kakaoApiURL = "https://kapi.kakao.com/v2/user/me"; // 두번째 요청. 프로필 정보 조회(토큰값을 이용해서)
+	        URL url = new URL(kakaoApiURL);
+	        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+	        con.setRequestMethod("GET");
+	        con.setRequestProperty("Authorization", header); // 토큰 전달. 인증정보
+	        con.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8"); // 토큰 전달. 인증정보
+	        int responseCode = con.getResponseCode();
+	        BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));	        
+	        if (responseCode == 200) {
+	            System.out.println("로그인 정보 정상 수신");
+	            br = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
+	        } else {
+	            System.out.println("로그인 정보 수신 오류");
+	            br = new BufferedReader(new InputStreamReader(con.getErrorStream(), "UTF-8"));
+	        }
+	        while ((line = br.readLine()) != null) {
+	            result += line;
+	        }
+	        br.close();
+	    } catch (Exception e) {
+	        System.out.println(e);
+	    }
+	    parser = new JSONParser();
+	    JSONObject jsonObject = (JSONObject) parser.parse(result);
+	    System.out.println(jsonObject);
+	    boolean hasEmail = Boolean.parseBoolean(((JSONObject) jsonObject.get("kakao_account")).get("has_email").toString());
+	    String mem_email = "";
+	    if (hasEmail) {
+	    	mem_email = ((JSONObject) jsonObject.get("kakao_account")).get("email").toString();
+	    }
+	    System.out.println(mem_email);
+	    String mem_name = ((JSONObject) jsonObject.get("kakao_account")).get("name").toString();
+	    String mem_phoneno = ((JSONObject) jsonObject.get("kakao_account")).get("name").toString().replace("-", "");
+		Mem mem = service.getMemEmail(mem_email);	
+		if(mem != null) {
+			session.setAttribute("loginMem", mem);
+			throw new ShopException("반갑습니다. " + mem.getMem_name() + "님 :)", "/second_prj/mypage/orderList?mem_id=" + mem.getMem_id());
+		} else {
+			mem = new Mem();
+			mem.setMem_id(mem_email);
+			mem.setMem_name(mem_name);
+			mem.setMem_phoneno(mem_phoneno);
+			mem.setMem_channel("kakao");
+			int maxMemNum = service.maxMemNum();
+			mem.setMem_number(maxMemNum+1);
+			if(service.userInsert(mem)) {
+				throw new ShopException("반갑습니다. " + mem.getMem_name() + "님 :)", "mypage/orderList?mem_id=" + mem.getMem_id());
+			} else {
+				throw new ShopException("죄송합니다. 소셜 로그인 과정 중 오류가 발생했습니다.", "mem/login");
+			}
+		}
+	}
+	
+	@RequestMapping("googleLogin")
+	public String googleLogin(String code, HttpSession session) throws Exception {
+		System.out.println(code);
+	    String clientId = "522090518805-ld1vb6qcsnboc6hlki8kmqa0plbc5meu.apps.googleusercontent.com";
+	    String clientSecret = "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";
+	    String redirectURI = URLEncoder.encode("http://localhost:8080/second_prj/mem/googleLogin", "UTF-8");
+	    String googleApiURL;
+	    googleApiURL = "https://oauth2.googleapis.com/token?";
+	    googleApiURL += "code=" + code;
+	    googleApiURL += "&client_id=" + clientId;
+	    googleApiURL += "&client_secret=" + clientSecret;
+	    googleApiURL += "&redirect_uri=" + redirectURI;
+	    googleApiURL += "&grant_type=authorization_code";
+	    System.out.println(googleApiURL);
+	    StringBuffer sb = new StringBuffer();
+	    try {
+	        URL url = new URL(googleApiURL);
+	        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+	        con.setRequestMethod("POST");
+	        int responseCode = con.getResponseCode();
+	        BufferedReader br;
+	        System.out.println("responseCode=" + responseCode);
+	        if (responseCode == 200) {
+	            br = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
+	        } else {
+	            br = new BufferedReader(new InputStreamReader(con.getErrorStream(), "UTF-8"));
+	        }
+	        String inputLine;
+	        while ((inputLine = br.readLine()) != null) {
+	            sb.append(inputLine);
+	        }
+	        br.close();
+	        if (responseCode == 200) {
+	            System.out.println("sb : " + sb.toString());
+	        }
+	    } catch (Exception e) {
+	        System.out.println(e);
+	    }
+	    JSONParser parser = new JSONParser();
+	    JSONObject json = (JSONObject) parser.parse(sb.toString()); // 문자열 -> JSON객체
+	    String token = (String) json.get("access_token"); // 토큰
+	    System.out.println(token);
+	    String header = "Bearer " + token;
+	    String line = "";
+        String result = "";
+	    try {
+	    	googleApiURL = "https://www.googleapis.com/oauth2/v2/userinfo"; // 두번째 요청. 프로필 정보 조회(토큰값을 이용해서)
+	        URL url = new URL(googleApiURL);
+	        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+	        con.setRequestMethod("GET");
+	        con.setRequestProperty("Authorization", header); // 토큰 전달. 인증정보
+	        con.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8"); // 토큰 전달. 인증정보
+	        int responseCode = con.getResponseCode();
+	        BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));	        
+	        if (responseCode == 200) {
+	            System.out.println("로그인 정보 정상 수신");
+	            br = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
+	        } else {
+	            System.out.println("로그인 정보 수신 오류");
+	            br = new BufferedReader(new InputStreamReader(con.getErrorStream(), "UTF-8"));
+	        }
+	        while ((line = br.readLine()) != null) {
+	            result += line;
+	        }
+	        br.close();
+	    } catch (Exception e) {
+	        System.out.println(e);
+	    }
+	    parser = new JSONParser();
+	    JSONObject jsonObject = (JSONObject) parser.parse(result);
+	    System.out.println(jsonObject);
+	    boolean hasEmail = Boolean.parseBoolean(((JSONObject) jsonObject.get("kakao_account")).get("has_email").toString());
+	    String mem_email = "";
+	    if (hasEmail) {
+	    	mem_email = ((JSONObject) jsonObject.get("kakao_account")).get("email").toString();
+	    }
+	    System.out.println(mem_email);
+	    String mem_name = ((JSONObject) jsonObject.get("kakao_account")).get("name").toString();
+	    String mem_phoneno = ((JSONObject) jsonObject.get("kakao_account")).get("name").toString().replace("-", "");
+		Mem mem = service.getMemEmail(mem_email);	
+		if(mem != null) {
+			session.setAttribute("loginMem", mem);
+			throw new ShopException("반갑습니다. " + mem.getMem_name() + "님 :)", "/second_prj/mypage/orderList?mem_id=" + mem.getMem_id());
+		} else {
+			mem = new Mem();
+			mem.setMem_id(mem_email);
+			mem.setMem_name(mem_name);
+			mem.setMem_phoneno(mem_phoneno);
+			mem.setMem_channel("google");
 			int maxMemNum = service.maxMemNum();
 			mem.setMem_number(maxMemNum+1);
 			if(service.userInsert(mem)) {
