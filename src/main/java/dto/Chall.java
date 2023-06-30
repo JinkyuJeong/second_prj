@@ -15,6 +15,7 @@ public class Chall {
 	private String chall_pic;
 	private String chall_state;
 	private MultipartFile thumbFile;
+	private int chall_cnt;
 	
 	public void setThumbFile(MultipartFile thumbFile) {
 		if(thumbFile != null & !thumbFile.isEmpty()) {

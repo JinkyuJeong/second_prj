@@ -289,8 +289,24 @@ public class AdminManageService {
 		return challDao.getChallList(pageNum, query, sd, ed, chall_state);
 	}
 
-	public Integer dateCnt(String mem_id) {
-		return challDao.dateCnt(mem_id);
+	@Transactional
+	public boolean payPoint(Integer chall_number, String mem_id, Integer chall_cnt) {
+		Point point = new Point();
+		point.setMem_id(mem_id);
+		if(chall_cnt%100==0 && chall_cnt >=100) {
+			point.setPoint_value(1000);
+			point.setPoint_type("챌린지 이벤트 참여 100n일차 달성!!");
+		}else {
+			point.setPoint_value(100);
+			point.setPoint_type("챌린지 이벤트 참여");
+		}
+		boolean b1 = memDao.pointChg(point);
+		boolean b2 = pointDao.regPoint(point);
+		boolean b3 = challDao.stateChg(chall_number);
+		return b1&&b2&&b3;
 	}
 
+	public boolean challDel(Integer chall_number) {
+		return challDao.challDel(chall_number);
+	}
 }

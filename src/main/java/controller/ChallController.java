@@ -1,7 +1,6 @@
 package controller;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -74,14 +73,7 @@ public class ChallController {
 		
 		List<Chall> challList =service.getChallList(pageNum);
 		
-		List<Integer> userDateList = new ArrayList<>();
-		for(Chall c : challList) {
-			Integer cnt = service.dateCnt(c.getMem_id());
-			userDateList.add(cnt);
-		}
-		
 		mv.addObject("challList", challList);
-		mv.addObject("userDateList", userDateList);
 		mv.addObject("pageNum", pageNum);
 		mv.addObject("startPage", startPage);
 		mv.addObject("endPage", endPage);

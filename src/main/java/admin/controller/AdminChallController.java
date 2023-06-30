@@ -1,17 +1,18 @@
 package admin.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import admin.service.AdminManageService;
 import dto.Chall;
+import exception.ShopException;
 
 @Controller
 @RequestMapping("admin/chall")
@@ -49,15 +50,8 @@ public class AdminChallController {
 		if(endPage > maxPage) endPage = maxPage;
 
 		List<Chall> challList =service.getChallList(pageNum, query, sd, ed, chall_state);
-		
-		List<Integer> userDateList = new ArrayList<>();
-		for(Chall c : challList) {
-			Integer cnt = service.dateCnt(c.getMem_id());
-			userDateList.add(cnt);
-		}
 
 		mv.addObject("challCnt", challCnt);
-		mv.addObject("userDateList", userDateList);
 		mv.addObject("challList", challList);
 		mv.addObject("pageNum", pageNum);
 		mv.addObject("startPage", startPage);
@@ -67,5 +61,29 @@ public class AdminChallController {
 		mv.addObject("ed", ed);
 		mv.addObject("chall_state", chall_state);
 		return mv;
+	}
+	
+	@RequestMapping("payPoint")
+	public ModelAndView adminPayPoint(String mem_id, Integer chall_number, Integer chall_cnt, HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		
+		if(service.payPoint(chall_number, mem_id, chall_cnt)) {
+			mv.setViewName("redirect:challList");
+			return mv;
+		}else {
+			throw new ShopException("지급 실패", "challList");
+		}
+		
+	}
+	
+	@PostMapping("challDel")
+	public ModelAndView managerChallDel(Integer chall_number, HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(service.challDel(chall_number)) {
+			mv.setViewName("redirect:challList");
+			return mv;
+		}else {
+			throw new ShopException("리뷰 삭제 실패", "challList");
+		}
 	}
 }

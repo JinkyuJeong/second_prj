@@ -3,7 +3,9 @@ package admin.dao.mapper;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import dto.Chall;
 
@@ -39,7 +41,10 @@ public interface AdminChallMapper {
 	})	
 	List<Chall> getChallList(Map<String, Object> param);
 
-	@Select("SELECT COUNT(*) from chall WHERE mem_id=#{value}")
-	Integer dateCnt(String mem_id);
+	@Update("update chall set chall_state = '지급완료' where chall_number=#{value}")
+	boolean stateChg(Integer chall_number);
+
+	@Delete("delete from chall where chall_number=#{value}")
+	boolean challDel(Integer chall_number);
 
 }

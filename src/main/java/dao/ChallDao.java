@@ -39,16 +39,16 @@ public class ChallDao {
 		return template.getMapper(cls).getChallList(param);
 	}
 
-	public Integer dateCnt(String mem_id) {
-		return template.getMapper(cls).dateCnt(mem_id);
-	}
-
 	public Chall getChall(String mem_id, String chall_regdate) {
 		param.clear();
 		param.put("mem_id", mem_id);
 		param.put("chall_regdate", chall_regdate);
 		
 		return template.getMapper(cls).getChall(param);
+	}
+
+	public int challCnt(String mem_id) {
+		return template.getMapper(cls).challCnt(mem_id);
 	}
 
 }

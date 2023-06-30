@@ -82,31 +82,35 @@
 		            <td>${chall.mem_id} </td>
 		            <td>${chall.mem_name}</td>
 		            <td><fmt:formatDate value="${chall.chall_regdate }" pattern="yyyy-MM-dd" /></td>
-		            <td>${userDateList[st.index]}</td> 
+		            <td>${chall.chall_cnt}</td> 
 		            <td>
 		            	${chall.chall_state}
 		            	<br>
-		            	<form action="payPoint" method="post" style="display: inline-block;">
-		            		<input type="hidden" name="chall_number" value="${chall.chall_number }">
-		            		 <a type="button" class="btn btn-sm btn-dark" data-bs-toggle="modal" data-bs-target="#staticBackdrop${st.index }${chall.chall_number }">포인트 지급</a>
-																	
-											<%-- Modal --%>
-											<div class="modal fade" id="staticBackdrop${st.index }${chall.chall_number }" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-											  <div class="modal-dialog">
-											    <div class="modal-content">
-											      <div class="modal-header">
-											        <h5 class="modal-title" id="staticBackdropLabel">호미짐 관리자</h5>
-											        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-											      </div> 
-											      <div class="modal-body">해당 회원에게 포인트를 지급 하시겠습니까?</div>
-											      <div class="modal-footer">
-											        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-											        <button type="submit" class="btn btn-dark">지급</button>
-											      </div>
-											    </div>
-											  </div>
-											</div>
-		            	</form>
+		            	<c:if test="${chall.chall_state eq '지급대기'}">
+			            	<form action="payPoint" method="post" style="display: inline-block;">
+			            		<input type="hidden" name="chall_number" value="${chall.chall_number }">
+			            		<input type="hidden" name="mem_id" value="${chall.mem_id }">
+			            		<input type="hidden" name="chall_cnt" value="${chall.chall_cnt }">
+			            		 <a type="button" class="btn btn-sm btn-dark" data-bs-toggle="modal" data-bs-target="#staticBackdrop${st.index }${chall.chall_number }">포인트 지급</a>
+																		
+												<%-- Modal --%>
+												<div class="modal fade" id="staticBackdrop${st.index }${chall.chall_number }" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+												  <div class="modal-dialog">
+												    <div class="modal-content">
+												      <div class="modal-header">
+												        <h5 class="modal-title" id="staticBackdropLabel">호미짐 관리자</h5>
+												        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+												      </div> 
+												      <div class="modal-body">해당 회원에게 포인트를 지급 하시겠습니까?</div>
+												      <div class="modal-footer">
+												        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+												        <button type="submit" class="btn btn-dark">지급</button>
+												      </div>
+												    </div>
+												  </div>
+												</div>
+			            	</form>
+		            	</c:if>
 		            	
 		            	<form action="challDel" method="post" style="display: inline-block;">
 		            		<input type="hidden" name="chall_number" value="${chall.chall_number }">

@@ -39,7 +39,10 @@ public class AdminChallDao {
 		
 		return template.getMapper(cls).getChallList(param);
 	}
-	public Integer dateCnt(String mem_id) {
-		return template.getMapper(cls).dateCnt(mem_id);
+	public boolean stateChg(Integer chall_number) {
+		return template.getMapper(cls).stateChg(chall_number);
+	}
+	public boolean challDel(Integer chall_number) {
+		return template.getMapper(cls).challDel(chall_number);
 	}
 }

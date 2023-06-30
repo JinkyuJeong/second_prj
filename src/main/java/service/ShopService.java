@@ -382,6 +382,8 @@ public class ShopService {
 		}
 		int maxNum = challDao.maxNum();
 		chall.setChall_number(maxNum+1);
+		int cnt = challDao.challCnt(chall.getMem_id());
+		chall.setChall_cnt(cnt+1);
 		return challDao.regChall(chall);
 	}
 	
@@ -402,10 +404,6 @@ public class ShopService {
 
 	public List<Chall> getChallList(Integer pageNum) {
 		return challDao.getChallList(pageNum);
-	}
-
-	public Integer dateCnt(String mem_id) {
-		return challDao.dateCnt(mem_id);
 	}
 
 	public Chall getChall(String mem_id, String chall_regdate) {
