@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,6 +18,14 @@
 	#loginBtn{
 		border-radius: 2em;
 		
+	}
+	
+	.logingLogo{
+		width:50px;
+		height:50px;
+		border-radius: 50%;
+		margin: 8px;
+		box-shadow: 0px 3px 6px 0 rgba(0,0,0,0.3);
 	}
 </style>
 <script type="text/javascript">
@@ -110,14 +120,10 @@
             <p class="mb-2" style="display: inline-block;">회원이 아니신가요?</p>&nbsp;&nbsp;&nbsp;
             <button type="button" class="btn px-0 fw-bold" onclick="location.href='join'">회원가입</button>
             
-            <div class="text-center mt-3">
-              <a href="${apiURL }"><img alt="네이버로 시작하기" src="../images/naverLogin.png" style="width:150px;height:50px;"></a>
-            </div>
-            <div class="text-center mt-3">
-              <a href="${kakaoApiURL }"><img alt="카카오로 시작하기" src="../images/naverLogin.png" style="width:150px;height:50px;"></a>
-            </div>
-            <div class="text-center mt-3">
-              <a href="${googleApiURL }"><img alt="구글로 시작하기" src="../images/naverLogin.png" style="width:150px;height:50px;"></a>
+            <div class="text-center mb-3">
+	            <a href="${apiURL }"><img alt="네이버로 시작하기" src="${path}/images/naver.png" class="logingLogo"></a>
+	            <a href="${kakaoApiURL }"><img alt="카카오로 시작하기" src="${path}/images/kakao.png" class="logingLogo"></a>
+	            <a href="${googleApiURL }"><img alt="구글로 시작하기" src="${path}/images/google.png" class="logingLogo"></a>
             </div>
             <p class="mb-2">비밀번호를 찾으실려면 아래 버튼을 눌러주세요.</p>
             <button type="button" class="btn  px-0 fw-bold" onclick="win_open('emailForm2')">비밀번호 찾기</button>
