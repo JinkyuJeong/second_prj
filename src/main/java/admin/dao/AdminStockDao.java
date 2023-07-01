@@ -50,4 +50,17 @@ public class AdminStockDao {
 	public boolean updateStock(Stock stock) {
 		return template.getMapper(cls).updateStock(stock);
 	}
+
+	public int optStockCnt(Integer opt_number) {
+		return template.getMapper(cls).optStockCnt(opt_number);
+	}
+
+	public List<Stock> getOptStockList(Integer opt_number, Integer pageNum) {
+		param.clear();
+		param.put("opt_number", opt_number);
+		param.put("start", (pageNum -1) * 10);
+		param.put("limit", 10);
+		
+		return template.getMapper(cls).getOptStockList(param);
+	}
 }

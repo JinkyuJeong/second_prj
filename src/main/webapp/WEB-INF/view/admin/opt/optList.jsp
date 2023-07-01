@@ -44,7 +44,11 @@
 			          <tr>
 			            <td>${opt.opt_number }</td>
 			            <td><img src="${path }/img/thumb/${opt.product_thumb }" width="100"></td>
-			            <td>${opt.product_name }(${opt.opt_name })</td>
+			            <td>
+			            	${opt.product_name }(${opt.opt_name })
+			            	<br>
+			            	<a class="btn btn-sm btn-dark" href="optDetail?opt_number=${opt.opt_number }">상세보기</a>
+			            </td>
 			            <td>${opt.opt_quantity}<br><a class="btn btn-sm btn-secondary mt-1" href="${path}/admin/stock/stockReg?opt_number=${opt.opt_number }">재고 등록</a></td>
 			            <td>
 			            	<input type="hidden" name="opt_number" value="${opt.opt_number }">

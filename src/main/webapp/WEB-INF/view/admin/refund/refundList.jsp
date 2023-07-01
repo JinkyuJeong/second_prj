@@ -328,7 +328,7 @@
 						
 						<c:forEach var="a" begin="${startPage}" end="${endPage}">
 							<c:if test="${a <= maxPage}">
-								<a class="w3-bar-item w3-button w3-hover-black ${a == pageNum ? 'w3-black' : '' }" href="refundList?pageNum=${pageNum}&sd=${sd}&ed=${ed}&f=${param.f}&query=${param.query}&order_state=${param.order_state}">${a}</a>
+								<a class="w3-bar-item w3-button w3-hover-black ${a == pageNum ? 'w3-black' : '' }" href="refundList?pageNum=${a}&sd=${sd}&ed=${ed}&f=${param.f}&query=${param.query}&order_state=${param.order_state}">${a}</a>
 							</c:if>
 						</c:forEach>
 							
