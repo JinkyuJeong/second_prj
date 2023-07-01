@@ -77,9 +77,10 @@ public class ChallController {
 		Chall myChall = null;
 		if(mem != null) {
 			myChall = service.getMyChall(mem.getMem_id());
+			double chall_cnt = (double)myChall.getChall_cnt()/365;
+			mv.addObject("chall_cnt",chall_cnt);
+			mv.addObject("myChall", myChall);
 		}		
-		double chall_cnt = (double)myChall.getChall_cnt()/365;
-		mv.addObject("chall_cnt",chall_cnt);
 		mv.addObject("challList", challList);
 		mv.addObject("pageNum", pageNum);
 		mv.addObject("startPage", startPage);
