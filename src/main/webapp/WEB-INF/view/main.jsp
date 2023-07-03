@@ -20,14 +20,13 @@
 	  top: 40%;
 	  left: 30%;
 	  transform: translate(-50%, -50%);
-	  text-align: centel;
+	  text-align: center;
 	  z-index: 1;
 	}
 	.jumbo h3, .jumbo h5 {
 	  color: white;
 	  text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
 	  margin: 0;
-    font-family: 'Do Hyeon', sans-serif;
 	}
   .carousel-control-prev,
   .carousel-control-next {
@@ -47,14 +46,14 @@
   .carousel-control-next:hover {opacity: 1;}
   .w3-quarter h2 {font-weight : bold;}
 	.w3-quarter {
-		height:330px;
+		height:450px;
 		width : 22%;
 		margin : 10px;
 		box-shadow: 0px 4px 8.5px 0 rgba(0,0,0,0.4);
 		display : flex;
 		flex-direction: column;
 		transition: transform 0.2s ease;
-    text-align: left;
+	   text-align: left;
 	}
   .w3-quarter:hover {
     transform: scale(1.1);
@@ -119,7 +118,16 @@
           		<a href="product/productDetail?product_number=${p.product_number }"><img src="${path }/img/thumb/${p.product_thumb}" style="width:100%">
           		<h4 class="ms-3">${p.product_name }</h4></a>
           		<div class="ms-3">
-          			<span><fmt:formatNumber value="${p.product_price * (100-p.product_discountRate)/100 }" pattern=",###" />원</span>
+          			<c:if test="${p.product_discountRate != 0 }">
+          				<span class="text-primary">${p.product_discountRate }%</span>          				
+          				<span class="text-secondary" style="text-decoration:line-through;">
+          				<fmt:formatNumber value="${p.product_price}" pattern=",###" />          				
+          				</span>
+          				<fmt:formatNumber value="${p.product_price * (100-p.product_discountRate)/100 }" pattern=",###" />원
+          			</c:if>
+          			<c:if test="${p.product_discountRate == 0 }">
+          				<span><fmt:formatNumber value="${p.product_price * (100-p.product_discountRate)/100 }" pattern=",###" />원</span>
+          			</c:if>
           		</div>
         	</div>
       	</c:forEach>

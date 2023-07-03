@@ -78,7 +78,7 @@ span.flip {
 			<c:if test="${! empty sessionScope.loginMem }">
 				<div class="progress" style="flex-grow: 0.8; margin-left: 5%;">
 					<div class="progress-bar progress-bar-striped bg-danger"
-						role="progressbar" style="width: ${chall_cnt}%"
+						role="progressbar" style="width: ${chall_cnt*100}%"
 						aria-valuenow="${chall_cnt}" aria-valuemin="0" aria-valuemax="365">
 					</div>
 					<span class="progress-text flip" style="font-size: 25px;">🏃🏻</span>
