@@ -123,8 +123,7 @@ public class AdminCsController {
 				msg.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
 
 				msg.setSubject("호미짐에서 문의하신 내용의 답변이 등록 되었습니다.");
-				String myIp = request.getLocalAddr();
-				String content = "<a href=\"http://" + myIp +":10062/second_prj/cs\">답변 확인하기</a><br><br>처리 담당자: " + cs.getManager_name();
+				String content = "<a href=\"http://14.36.141.71:10062/second_prj/cs\">답변 확인하기</a><br><br>처리 담당자: " + cs.getManager_name();
 				msg.setContent(content, "text/html; charset=UTF-8");
 				Transport.send(msg);
 
