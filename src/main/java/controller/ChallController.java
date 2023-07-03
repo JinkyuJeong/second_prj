@@ -74,12 +74,13 @@ public class ChallController {
 		
 		List<Chall> challList =service.getChallList(pageNum);
 		Mem mem = (Mem)session.getAttribute("loginMem");
-		Chall myChall = null;
 		if(mem != null) {
-			myChall = service.getMyChall(mem.getMem_id());
-			double chall_cnt = (double)myChall.getChall_cnt()/365;
-			mv.addObject("chall_cnt",chall_cnt);
-			mv.addObject("myChall", myChall);
+			Chall myChall = service.getMyChall(mem.getMem_id());
+			if(myChall != null) {
+				double chall_cnt = (double)myChall.getChall_cnt()/365;
+				mv.addObject("chall_cnt",chall_cnt);
+				mv.addObject("myChall", myChall);
+			}			
 		}		
 		mv.addObject("challList", challList);
 		mv.addObject("pageNum", pageNum);

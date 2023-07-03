@@ -36,7 +36,7 @@
     <hr>
     <a href="${path }/mypage/myInfo?mem_id=${sessionScope.loginMem.mem_id}" 
     class="w3-bar-item w3-button w3-padding <c:if test='${url ==  "naver"}'>w3-blue</c:if>">
-    &nbsp; · 회원 정보 조회</a>
+    &nbsp; · 회원정보 조회</a>
     <a href="${path }/mypage/myInfoUpdate?mem_id=${sessionScope.loginMem.mem_id}" 
     class="w3-bar-item w3-button w3-padding <c:if test='${url ==  "naver"}'>w3-blue</c:if>">
     &nbsp; · 회원정보 수정</a>
