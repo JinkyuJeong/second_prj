@@ -441,9 +441,6 @@ public class MemController {
 	            sb.append(inputLine);
 	        }
 	        br.close();
-	        if (responseCode == 200) {
-	            System.out.println("sb : " + sb.toString());
-	        }
 	    } catch (Exception e) {
 	        System.out.println(e);
 	    }
