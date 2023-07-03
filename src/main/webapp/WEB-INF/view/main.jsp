@@ -117,13 +117,13 @@
           		<h2>Best ${st.index+1 }</h2>
           		<a href="product/productDetail?product_number=${p.product_number }"><img src="${path }/img/thumb/${p.product_thumb}" style="width:100%">
           		<h4 class="ms-3">${p.product_name }</h4></a>
-          		<div class="ms-3">
+          		<div class="ms-3" style="display: flex; justify-content: space-between;">
           			<c:if test="${p.product_discountRate != 0 }">
-          				<span class="text-primary">${p.product_discountRate }%</span>          				
-          				<span class="text-secondary" style="text-decoration:line-through;">
-          				<fmt:formatNumber value="${p.product_price}" pattern=",###" />          				
-          				</span>
-          				<fmt:formatNumber value="${p.product_price * (100-p.product_discountRate)/100 }" pattern=",###" />원
+          				<div class="text-primary">${p.product_discountRate }%</div>          				
+          				<div style="margin-right: 20px">
+	          				<span class="text-secondary" style="text-decoration:line-through;"><fmt:formatNumber value="${p.product_price}" pattern=",###" />원</span>          				
+	          				<fmt:formatNumber value="${p.product_price * (100-p.product_discountRate)/100 }" pattern=",###" />원
+          				</div>
           			</c:if>
           			<c:if test="${p.product_discountRate == 0 }">
           				<span><fmt:formatNumber value="${p.product_price * (100-p.product_discountRate)/100 }" pattern=",###" />원</span>
