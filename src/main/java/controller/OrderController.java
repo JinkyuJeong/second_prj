@@ -34,13 +34,19 @@ public class OrderController {
 		if(order_point == null) order_point = 0;
 		if(delivery_cost == null) delivery_cost=0;
 		//배송정보
+		// 주문번호 생성
 		LocalDate today = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMdd");
-        String formattedDate = today.format(formatter);
-        int num= Integer.parseInt(service.getMaxOrderId().substring(6,10));
-        if(num==9999) num = 0;
-        String formattedNumber = String.format("%04d", num+1);
-		String order_id = formattedDate + formattedNumber;
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMdd");
+		String formattedDate = today.format(formatter);
+		String order_id = "";
+		if (service.getMaxOrderId().equals("1"))
+			order_id = formattedDate + "0001";
+		else {
+			int num = Integer.parseInt(service.getMaxOrderId().substring(6));
+			if(num == 9999) num=1;
+			String formattedNumber = String.format("%04d", num + 1);
+			order_id = formattedDate + formattedNumber;
+		}
 		String phoneno = receiver_phoneNo1 + receiver_phoneNo2 + receiver_phoneNo3;
 		String orderMsg = order_msg;
 		order_totalPay = order_totalPay - order_point;

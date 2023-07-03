@@ -57,6 +57,7 @@
 		    data: { order_id: order_id },
 		    success: function(result) {
 		      alert(result);
+		      location.reload();
 		    },
 		    error: function(e) {
 		      alert("[ajax] 주문취소 오류: " + e.status);
@@ -70,6 +71,7 @@
 			data : { order_id: order_id },
 			success : function(result) {
 				alert(result);
+				location.reload();
 			}, 
 			error : function(e) {
 				alert("[ajax] 주문취소 오류 : " + e.status);

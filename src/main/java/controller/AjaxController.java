@@ -241,7 +241,6 @@ public class AjaxController {
 		return "배송지 추가 성공";
 	}
 	
-	@Transactional
 	@RequestMapping(value="cancelOrder", produces = "text/plain; charset=UTF-8")
 	@ResponseBody
 	public String loginCheckCancel(String order_id, HttpSession session) {		
@@ -255,12 +254,6 @@ public class AjaxController {
 			return msg;
 		}
 		service.addCancel(order_id, sessionMem.getMem_id(), order.getOrder_totalPay());
-//		List<OrderView> orderList = service.getOvList(sessionMem.getMem_id(), order_id);
-//		for(OrderView ov : orderList) {
-//			int optId = ov.getOpt_number();
-//			int price = ov.getOrder_totalPay();
-//			service.addRefund(order_id, optId, sessionMem.getMem_id(), price);			
-//		}
 		service.updateOrderState(order_id, "주문취소");        
         service.pointBack(order.getMem_id(), order.getOrder_point());
 		return "주문이 취소되었습니다. 취소내역은 마이페이지 > 주문 취소 내역에서 확인가능합니다.";
@@ -270,7 +263,7 @@ public class AjaxController {
 	@ResponseBody
 	public String loginCheckorderConfig(String order_id, HttpSession session) {
 		List<Refund> refundList = service.getRefundListOrderId(order_id);
-		if(refundList != null) {
+		if(refundList.size()!=0) {
 			return "환불신청 내역이 있는 주문은 구매확정할 수 없습니다.";
 		} else {
 			service.updateOrderState(order_id, "구매확정");
@@ -305,6 +298,9 @@ public class AjaxController {
 		int pageSize = 3; // 한 페이지에 표시되는 리뷰 수
     	int startIndex = (pageNum - 1) * pageSize; // 현재 페이지의 시작 인덱스 계산
 		List<ReviewView> reviewList = service.getReviewList(product_number, startIndex, pageSize);
+		int maxpage = (int)((double)reviewList.size()/pageSize + 0.95);
+		int endpage = startIndex + 2;
+		if (endpage > maxpage) endpage = maxpage;
 		return reviewList;
 	}
 }

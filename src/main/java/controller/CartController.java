@@ -129,17 +129,27 @@ public class CartController {
 	public Map<String, Object> loginCheckpayment(String final_amount, String[] product_name, HttpSession session) {
 		Map<String, Object> map = new HashMap<>();
 		Mem mem = (Mem)session.getAttribute("loginMem");
-		//주문번호 생성
+		// 주문번호 생성
 		LocalDate today = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMdd");
-        String formattedDate = today.format(formatter);
-        int num= Integer.parseInt(service.getMaxOrderId().substring(6));
-        String formattedNumber = String.format("%04d", num+1);
-		String order_id = formattedDate + formattedNumber;
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMdd");
+		String formattedDate = today.format(formatter);
+		String order_id = "";
+		if (service.getMaxOrderId().equals("1"))
+			order_id = formattedDate + "0001";
+		else {
+			int num = Integer.parseInt(service.getMaxOrderId().substring(6));
+			if (num == 9999)
+				num = 1;
+			String formattedNumber = String.format("%04d", num + 1);
+			order_id = formattedDate + formattedNumber;
+		}
 		map.put("merchant_uid", order_id);
-		map.put("name", product_name[0] + " 외 " + (product_name.length-1) + "개");
+		if(product_name.length == 1) {
+			map.put("name", product_name[0]);
+		} else {
+			map.put("name", product_name[0] + " 외 " + (product_name.length-1) + "개");
+		}		
 		map.put("amount", final_amount);
-//		String email = service.emailDecrypt(user);
 		map.put("buyer_email", mem.getMem_id());
 		map.put("buyer_name", mem.getMem_name());
 		map.put("buyer_tel", mem.getMem_phoneno());			

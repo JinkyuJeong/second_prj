@@ -219,12 +219,20 @@
 	
 	//리뷰 페이징
 	var pageNum = ${pageNum};
-	function listpage(newPageNum) {		
+	var reviewSize = ${reviewList.size()};
+	var totalPageNum = Math.ceil(reviewSize / 3);
+	function listpage(newPageNum) {	
 		$.ajax({
 	        type: "POST",
 	        url: "${path}/ajax/reviewAjax",
 	        data: { pageNum: newPageNum, product_number : ${param.product_number}},
 	        success: function (result) {
+	        	var pageSize = 3; 
+	        	var startIndex = (newPageNum - 1) * pageSize; 
+	    		var maxpage = result.length/pageSize + 0.95;
+	    		var endpage = startIndex + 2;
+	    		if (endpage > maxpage) endpage = maxpage;
+	    		if(pageNum >= maxpage) pageNum = newPageNum;
 	            $("#reviewDiv").html("");
 	            var html = "";
 	            if(result == null || result.length == 0) {
@@ -277,7 +285,11 @@
 	// 다음 페이지로 이동하는 함수
 	function goToNextPage() {
 	    var nextPage = pageNum + 1;
+	    if (nextPage > totalPageNum) {
+	        return; // 다음 페이지로 넘어가지 않음
+	    }
 	    listpage(nextPage);
+	    
 	}
 	//리뷰 페이징 끝
 	

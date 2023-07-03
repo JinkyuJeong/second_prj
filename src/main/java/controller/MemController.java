@@ -345,17 +345,13 @@ public class MemController {
 		apiURL += "&redirect_uri=" + redirectURI;
 		apiURL += "&code=" + code;
 		apiURL += "&state=" + state;
-		String access_token = "";
-		String refresh_token = ""; // 아마도 재로그인할 때 쓸듯..
 		StringBuffer sb = new StringBuffer();
-		System.out.println("apiURL=" + apiURL);
 		try {
 			URL url = new URL(apiURL);
 			HttpURLConnection con = (HttpURLConnection) url.openConnection();
 			con.setRequestMethod("GET");
 			int responseCode = con.getResponseCode();
 			BufferedReader br;
-			System.out.println("responseCode=" + responseCode);
 			if (responseCode == 200) {
 				br = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
 			} else {
@@ -366,19 +362,12 @@ public class MemController {
 				sb.append(inputLine);
 			}
 			br.close();
-			if (responseCode == 200) {
-				System.out.println("\n===========첫번째 요청에 대한 응답메세지 (sb 1):");
-				System.out.println("sb : " + sb.toString());
-			}
-			// sb(=response (네이버 응답 메세지) ) : JSON형태의 문자열
-			// {"access_token":"AAAANxVDVPVQ-O....}
 		} catch (Exception e) {
 			System.out.println(e);
 		}
 		JSONParser parser = new JSONParser();
 		JSONObject json = (JSONObject) parser.parse(sb.toString()); // 문자열 -> JSON객체
 		String token = (String) json.get("access_token"); // 토큰
-		System.out.println("\n========token : " + token);
 		String header = "Bearer " + token;
 		try {
 			apiURL = "https://openapi.naver.com/v1/nid/me"; // 두번째 요청. 프로필 정보 조회(토큰값을 이용해서)
@@ -390,10 +379,8 @@ public class MemController {
 			BufferedReader br;
 			sb = new StringBuffer();
 			if (responseCode == 200) {
-				System.out.println("로그인 정보 정상 수신");
 				br = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
 			} else {
-				System.out.println("로그인 정보 수신 오류");
 				br = new BufferedReader(new InputStreamReader(con.getErrorStream(), "UTF-8"));
 			}
 			String inputLine;
@@ -401,13 +388,11 @@ public class MemController {
 				sb.append(inputLine);
 			}
 			br.close();
-			System.out.println("sb.toString()");
 		} catch (Exception e) {
 			System.out.println(e);
 		}
 		json = (JSONObject) parser.parse(sb.toString());
 		JSONObject jsondetail = (JSONObject) json.get("response");
-		System.out.println(jsondetail);
 		String mem_name = jsondetail.get("name").toString();
 		String mem_email = jsondetail.get("email").toString();
 		String mem_phoneno = jsondetail.get("mobile").toString().replace("-", "");
@@ -449,7 +434,6 @@ public class MemController {
 	        con.setDoOutput(true);
 	        int responseCode = con.getResponseCode();
 	        BufferedReader br;
-	        System.out.println("responseCode=" + responseCode);
 	        if (responseCode == 200) {
 	            br = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
 	        } else {
@@ -482,10 +466,8 @@ public class MemController {
 	        int responseCode = con.getResponseCode();
 	        BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));	        
 	        if (responseCode == 200) {
-	            System.out.println("로그인 정보 정상 수신");
 	            br = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
 	        } else {
-	            System.out.println("로그인 정보 수신 오류");
 	            br = new BufferedReader(new InputStreamReader(con.getErrorStream(), "UTF-8"));
 	        }
 	        while ((line = br.readLine()) != null) {
@@ -497,13 +479,11 @@ public class MemController {
 	    }
 	    parser = new JSONParser();
 	    JSONObject jsonObject = (JSONObject) parser.parse(result);
-	    System.out.println(jsonObject);
 	    boolean hasEmail = Boolean.parseBoolean(((JSONObject) jsonObject.get("kakao_account")).get("has_email").toString());
 	    String mem_email = "";
 	    if (hasEmail) {
 	    	mem_email = ((JSONObject) jsonObject.get("kakao_account")).get("email").toString();
 	    }
-	    System.out.println(mem_email);
 	    String mem_name = ((JSONObject) jsonObject.get("kakao_account")).get("name").toString();
 	    String mem_phoneno = ((JSONObject) jsonObject.get("kakao_account")).get("name").toString().replace("-", "");
 		Mem mem = service.getMemEmail(mem_email);	
@@ -539,7 +519,6 @@ public class MemController {
 	    googleApiURL += "&client_secret=" + clientSecret;
 	    googleApiURL += "&redirect_uri=" + redirectURI;
 	    googleApiURL += "&grant_type=authorization_code";
-	    System.out.println(googleApiURL);
 	    StringBuffer sb = new StringBuffer();
 	    try {
 	        URL url = new URL(googleApiURL);
@@ -550,7 +529,6 @@ public class MemController {
 	        out.close(); // 요청 본문이 비어있으므로 OutputStream을 닫음
 	        int responseCode = con.getResponseCode();
 	        BufferedReader br;
-	        System.out.println("responseCode=" + responseCode);
 	        if (responseCode == 200) {
 	            br = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
 	        } else {
@@ -570,7 +548,6 @@ public class MemController {
 	    JSONParser parser = new JSONParser();
 	    JSONObject json = (JSONObject) parser.parse(sb.toString()); // 문자열 -> JSON객체
 	    String token = (String) json.get("access_token"); // 토큰
-	    System.out.println(token);
 	    String header = "Bearer " + token;
 	    String line = "";
         String result = "";
@@ -584,10 +561,8 @@ public class MemController {
 	        int responseCode = con.getResponseCode();
 	        BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));	        
 	        if (responseCode == 200) {
-	            System.out.println("로그인 정보 정상 수신");
 	            br = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
 	        } else {
-	            System.out.println("로그인 정보 수신 오류");
 	            br = new BufferedReader(new InputStreamReader(con.getErrorStream(), "UTF-8"));
 	        }
 	        while ((line = br.readLine()) != null) {
