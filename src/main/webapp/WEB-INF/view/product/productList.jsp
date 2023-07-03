@@ -62,10 +62,7 @@
 	  				<td>	  					
           				<a href="productDetail?product_number=${m.key.product_number }"><img src="${path }/img/thumb/${m.key.product_thumb}" style="width:100%"></a>
           				<div class="row"> 
-            				<div class="col-6">            					
-              					<div class="text-primary" style="font-size: 20px;">${m.key.product_discountRate}%</div>              					
-            				</div>            				
-            				<div class="col-6 text-end" style="display: flex; justify-content: flex-end;">
+	          				<div class="col-6" style="display: flex;">
               					<div class="text-secondary" style="font-size: 20px;text-decoration:line-through;">
               						<fmt:formatNumber value="${m.key.product_price }" pattern=",###" />원
               					</div>
@@ -74,6 +71,9 @@
               						<fmt:formatNumber value="${discounted+(1-(discounted%1))%1}" />원
               					</div>
             				</div>
+            				<div class="col-6 text-end">            					
+              					<div class="text-primary" style="font-size: 20px;">${m.key.product_discountRate}%</div>              					
+            				</div>            				
           				</div>        
           				<div style="font-size:20px;"><a href="productDetail?product_number=${m.key.product_number }" style="text-decoration:none;">${m.key.product_name }</a></div>
           				<c:if test="${! empty m.value }">
