@@ -34,7 +34,7 @@
       reader.readAsDataURL(file);
       
       // 유효성 체크
-      var allowedTypes = ["image/jpeg", "image/png", "image/gif"];
+      const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
       if (allowedTypes.indexOf(file.type) == -1) {
         $("#isPicValid").val("0");
         $("#thumbError").text("이미지 파일만 첨부할 수 있습니다.").show();
@@ -43,6 +43,16 @@
         $("#isPicValid").val("1");
         $("#thumbError").text("").hide();
       }
+    });
+    
+    $('#pics').on('change', function() {
+      const fileList = Array.from(this.files); // 선택된 파일 리스트 가져오기
+      var fileNames = fileList.map(function(file) {
+        return file.name; // 파일명 추출
+      });
+      var joinedNames = fileNames.join(', '); // 파일명 콤마로 구분하여 연결
+
+      $('#picMsg').text('변경 예정 : ' + joinedNames);
     });
   })
   function validPrice() {
@@ -194,8 +204,9 @@
           <tr>
             <td class="table-secondary text-center">제품 사진</td>
             <td colspan="3" >
-              <input class="form-control" type="file" name="picFiles[]" multiple>
+              <input class="form-control" id="pics" type="file" name="picFiles[]" multiple>
               <input type="hidden" name="product_pictures" value="${product.product_pictures}">
+              <span id="picMsg" class="text-primary mt-1">현재 등록되어 있는 사진 : ${product.product_pictures}</span>
             </td>
           </tr>
         </table>

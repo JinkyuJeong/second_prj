@@ -15,7 +15,6 @@ import admin.dao.AdminOrderItemDao;
 import admin.dao.AdminProductDao;
 import admin.dao.AdminStockDao;
 import dto.Opt;
-import dto.OrderItem;
 import dto.OrderView;
 import dto.Product;
 import dto.ProductOptView;

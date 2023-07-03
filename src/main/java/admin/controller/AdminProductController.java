@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -62,8 +63,11 @@ public class AdminProductController {
 	}
 	
 	@PostMapping("prodChg")
-	public ModelAndView adminProdChg(Product product, HttpServletRequest request, HttpSession session) {
+	public ModelAndView adminProdChg(Product product, @RequestParam("product_pictures") String product_pictures,HttpServletRequest request, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
+		if(product.getPicFiles().get(0).getOriginalFilename().equals("")) {
+			product.setProduct_pictures(product_pictures);
+		}
 		if(service.updateProduct(product, request)) {
 			mv.setViewName("redirect:prodList");
 			return mv;
