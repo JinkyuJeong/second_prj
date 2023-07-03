@@ -419,7 +419,7 @@ public class MemController {
 	@RequestMapping("kakaoLogin")
 	public String kakaoLogin(String code, String state, HttpSession session) throws Exception {
 	    String clientId = "eb479ecbc17b394b83d6c34ad979d961";
-	    String redirectURI = URLEncoder.encode("http://localhost:8080/second_prj/mem/kakaoLogin", "UTF-8");
+	    String redirectURI = URLEncoder.encode("http://14.36.141.71:10062/second_prj/mem/kakaoLogin", "UTF-8");
 	    String kakaoApiURL;
 	    kakaoApiURL = "https://kauth.kakao.com/oauth/token?grant_type=authorization_code";
 	    kakaoApiURL += "&client_id=" + clientId;
