@@ -35,6 +35,7 @@
 		let listHtml = "<div id='info' class='mb-1'><h4>총 <span class='text-danger'>" + json.qnaCnt + "</span>개</h4>";
 		listHtml += "<div class='btn-group btn-group-sm' role='group'>";
 		listHtml += "<button type='button' onclick='getQnaList()' class='btn " + (type == '' ? 'btn-dark' : 'btn-outline-dark') + "'>전체</button>";
+		listHtml += "<button type='button' onclick='getQnaList(\"로그인\")' class='btn " + (type == '로그인' ? 'btn-dark' : 'btn-outline-dark') + "'>로그인</button>";
 		listHtml += "<button type='button' onclick='getQnaList(\"제품\")' class='btn " + (type == '제품' ? 'btn-dark' : 'btn-outline-dark') + "'>제품</button>";
 		listHtml += "<button type='button' onclick='getQnaList(\"결제\")' class='btn " + (type == '결제' ? 'btn-dark' : 'btn-outline-dark') + "'>결제</button>";
 		listHtml += "<button type='button' onclick='getQnaList(\"배송\")' class='btn " + (type == '배송' ? 'btn-dark' : 'btn-outline-dark') + "'>배송</button>";
@@ -236,7 +237,7 @@
  		$("#t"+number).html(newInput);				// 2. 제목
  		
 	  const type = $("#type"+number).text();
-	  const selectBox = "<td><select id='newType"+number+"' class='form-select'><option value='제품'"+(type === '제품' ? " selected" : "")+">제품</option><option value='결제'"+(type === '결제' ? " selected" : "")+">결제</option><option value='배송'"+(type === '배송' ? " selected" : "")+">배송</option><option value='이벤트'"+(type === '이벤트' ? " selected" : "")+">이벤트</option></select></td>";
+	  const selectBox = "<td><select id='newType"+number+"' class='form-select'><option value='로그인'"+(type === '로그인' ? " selected" : "")+">로그인</option><option value='제품'"+(type === '제품' ? " selected" : "")+">제품</option><option value='결제'"+(type === '결제' ? " selected" : "")+">결제</option><option value='배송'"+(type === '배송' ? " selected" : "")+">배송</option><option value='이벤트'"+(type === '이벤트' ? " selected" : "")+">이벤트</option></select></td>";
 	  $("#type"+number).html(selectBox);  // 3. 셀렉트 박스
  		
  		const newButton = "<button class='btn btn-sm btn-dark' onclick='qnaChg("+number + ", \"" + curType + "\", " + pageNum + ")'>수정</button>"
@@ -288,7 +289,8 @@
 					<tr>
 						<td width="15%" class="table-dark text-center">질문 카테고리</td>
 						<td><select class="form-select" name="qna_type">
-								<option selected>제품</option>
+								<option selected>로그인</option>
+								<option>제품</option>
 								<option>결제</option>
 								<option>배송</option>
 								<option>이벤트</option>

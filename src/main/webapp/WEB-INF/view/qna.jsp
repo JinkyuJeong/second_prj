@@ -79,6 +79,7 @@
 		
 		let listHtml = "<div class='btn-group btn-group-sm mb-3' role='group'>";
 		listHtml += "<button type='button' onclick='getQnaList()' class='btn " + (type == '' ? 'btn-danger' : 'btn-outline-danger') + "'>전체</button>";
+		listHtml += "<button type='button' onclick='getQnaList(\"로그인\")' class='btn " + (type == '로그인' ? 'btn-danger' : 'btn-outline-danger') + "'>로그인</button>";
 		listHtml += "<button type='button' onclick='getQnaList(\"제품\")' class='btn " + (type == '제품' ? 'btn-danger' : 'btn-outline-danger') + "'>제품</button>";
 		listHtml += "<button type='button' onclick='getQnaList(\"결제\")' class='btn " + (type == '결제' ? 'btn-danger' : 'btn-outline-danger') + "'>결제</button>";
 		listHtml += "<button type='button' onclick='getQnaList(\"배송\")' class='btn " + (type == '배송' ? 'btn-danger' : 'btn-outline-danger') + "'>배송</button>";
