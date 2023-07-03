@@ -10,8 +10,8 @@ import dto.Chall;
 
 public interface ChallMapper {
 
-	@Insert("insert into chall (chall_number, chall_regdate, mem_id, mem_name, chall_pic, chall_state) "
-			+ " values(#{chall_number}, now(), #{mem_id}, #{mem_name}, #{chall_pic}, '지급대기')")
+	@Insert("insert into chall (chall_number, chall_regdate, mem_id, mem_name, chall_pic, chall_state, chall_cnt) "
+			+ " values(#{chall_number}, now(), #{mem_id}, #{mem_name}, #{chall_pic}, '지급대기', #{chall_cnt})")
 	boolean regChall(Chall chall);
 
 	@Select("select ifnull(max(chall_number),0) from chall")
