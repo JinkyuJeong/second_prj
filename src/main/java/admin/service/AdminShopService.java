@@ -11,9 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import admin.dao.AdminOptDao;
+import admin.dao.AdminOrderItemDao;
 import admin.dao.AdminProductDao;
 import admin.dao.AdminStockDao;
 import dto.Opt;
+import dto.OrderItem;
+import dto.OrderView;
 import dto.Product;
 import dto.ProductOptView;
 import dto.Stock;
@@ -27,6 +30,8 @@ public class AdminShopService {
 	private AdminOptDao optDao;
 	@Autowired
 	private AdminStockDao stockDao;
+	@Autowired
+	private AdminOrderItemDao orderItemDao;
 
 	public void uploadFileCreate(MultipartFile file, String path) {
 		String orgFile = file.getOriginalFilename();
@@ -142,6 +147,22 @@ public class AdminShopService {
 
 	public boolean diffQuantity(int opt_number, int diffQuantity) {
 		return optDao.diffQuantity(opt_number, diffQuantity);
+	}
+
+	public int optOrderCnt(Integer opt_number) {
+		return orderItemDao.optOrderCnt(opt_number);
+	}
+
+	public List<OrderView> getOptOrderList(Integer opt_number, Integer pageNum) {
+		return orderItemDao.getOptOrderList(opt_number, pageNum);
+	}
+
+	public int optStockCnt(Integer opt_number) {
+		return stockDao.optStockCnt(opt_number);
+	}
+
+	public List<Stock> getOptStockList(Integer opt_number, Integer pageNum) {
+		return stockDao.getOptStockList(opt_number, pageNum);
 	}
 
 }

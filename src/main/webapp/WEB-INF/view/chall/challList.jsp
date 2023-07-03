@@ -9,26 +9,6 @@
 <head>
 <meta charset="UTF-8">
 <title>호미짐</title>
-<script>
-  // 프로그래스 바의 캐릭터를 업데이트하는 함수
-  function updateProgressCharacter() {
-    const progressBar = $('.progress-bar');
-    const progressText = $('.progress-text');
-    
-    const progress = parseInt(progressBar.getAttribute('aria-valuenow'));
-    const progressBarWidth = progressBar.offsetWidth;
-    const progressTextWidth = progressText.offsetWidth;
-    
-    const characterPosition = Math.min((progress / 100) * progressBarWidth, progressBarWidth - progressTextWidth);
-    progressText.style.left = characterPosition + 'px';
-  }
-  
-  // 프로그래스 바 초기화
-  updateProgressCharacter();
-  
-  // 창 크기 조정 등 프로그래스 바가 변경될 때마다 캐릭터 위치 업데이트
-  window.addEventListener('resize', updateProgressCharacter);
-</script>
 <style type="text/css">
 #jumbo {
 	position: relative;
@@ -73,6 +53,13 @@
 	justify-content: space-around;
 	transition: transform 0.2s ease;
 }
+span.flip {
+  display: inline-block;
+  transform: scaleX(-1);
+}
+.progress {
+  height: 30px; /* 원하는 높이로 조정 */
+}
 </style>
 
 </head>
@@ -83,19 +70,30 @@
     <h1 style="font-size:4em">💪 오운완 챌린지</h1>
     <h3>매일매일 📷인증샷을 남겨 포인트를 받아가세요! </h3>
   </div>
-  
-  <div class="mt-3 mb-3" style="display: flex;align-items: center;">
-  	<div>
-    <a class="btn btn-danger ms-3" href="challReg">📷 참여하기</a>
-    </div>
-    <div class="progress" style="flex-grow: 0.7; margin-left: 5%;">
-  		<div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: ${chall_cnt}%" aria-valuenow="${chall_cnt}" aria-valuemin="0" aria-valuemax="365">
-    		<span class="progress-text">${chall_cnt}%</span>
-  		</div>
-	</div>
-  </div>
 
-	<c:if test="${empty challList }">
+		<div class="mt-3 mb-3" style="display: flex; align-items: center;">
+			<div>
+				<a class="btn btn-danger ms-3" href="challReg">📷 참여하기</a>
+			</div>
+			<c:if test="${! empty sessionScope.loginMem }">
+				<div class="progress" style="flex-grow: 0.8; margin-left: 5%;">
+					<div class="progress-bar progress-bar-striped bg-danger"
+						role="progressbar" style="width: ${chall_cnt}%"
+						aria-valuenow="${chall_cnt}" aria-valuemin="0" aria-valuemax="365">
+					</div>
+					<span class="progress-text flip" style="font-size: 25px;">🏃🏻</span>
+				</div>
+				<p>
+					<span class="ms-3">(<fmt:formatNumber
+							value="${chall_cnt*100}" pattern="#,##0.##" /> % )
+					</span> <span class="ms-3" style="color: Red;">${myChall.chall_cnt }
+					</span> 일 째 / 365일
+				</p>		
+			</c:if>
+		</div>
+
+
+		<c:if test="${empty challList }">
 		<h2 class="text-center">등록된 챌린지가 없습니다.</h2>
 	</c:if>
 	

@@ -44,4 +44,10 @@ public interface AdminStockMapper {
 	@Update("update stock set stock_quantity = #{stock_quantity} where stock_number = #{stock_number}")
 	boolean updateStock(Stock stock);
 
+	@Select("select count(*) from stock where opt_number=#{value}")
+	int optStockCnt(Integer opt_number);
+
+	@Select("select * from stock where opt_number=#{opt_number} ORDER BY stock_number DESC LIMIT #{start}, 10")
+	List<Stock> getOptStockList(Map<String, Object> param);
+
 }

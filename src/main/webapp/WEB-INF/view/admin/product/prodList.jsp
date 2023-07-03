@@ -45,7 +45,10 @@
 		          <tr>
 		            <td>${prod.product_number }</td>
 		            <td><img src="${path }/img/thumb/${prod.product_thumb }" width="100"></td>
-		            <td><a style="text-decoration: none" href="prodDetail?product_number=${prod.product_number }">${prod.product_name }</a></td>
+		            <td>
+		            	${prod.product_name }
+		            	<br>
+		            	<a class="btn btn-sm btn-dark" href="prodDetail?product_number=${prod.product_number }">상세보기</a></td>
 		            <td>${prod.product_type }</td>
 		            <td>
 		            	<c:if test="${prod.product_discountRate > 0}">

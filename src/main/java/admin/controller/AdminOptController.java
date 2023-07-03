@@ -1,6 +1,8 @@
 package admin.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -9,12 +11,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import admin.service.AdminShopService;
 import dto.Opt;
+import dto.OrderView;
 import dto.Product;
 import dto.ProductOptView;
+import dto.Stock;
 import exception.ShopException;
 
 @Controller
@@ -74,6 +79,75 @@ public class AdminOptController {
 		mv.addObject("endPage", endPage);
 		mv.addObject("maxPage", maxPage);
 		return mv;
+	}
+	
+	@GetMapping("optDetail")
+	public ModelAndView adminOptDetail(Integer opt_number, HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		ProductOptView opt = service.getProdOpt(opt_number);
+		
+		if(opt == null) {
+			throw new ShopException("해당 제품은 존재하지 않습니다.", "optList");
+		}
+		
+		mv.addObject("opt",opt);
+		return mv;
+	}
+	
+	@GetMapping("optOrder")
+	@ResponseBody
+	public Map<String,Object> adminOptOrder(Integer opt_number, Integer pageNum, HttpSession session) {
+		if(pageNum == null || pageNum.toString().equals("")) {
+			pageNum = 1;
+		}
+		
+		int optOrderCnt = service.optOrderCnt(opt_number);
+		
+		int limit = 10;
+		int maxPage = (int)((double)optOrderCnt/limit +0.95);
+		int startPage = pageNum-(pageNum-1)%5;
+		int endPage = startPage + 4;
+		if(endPage > maxPage) endPage = maxPage;
+		
+		List<OrderView> optOrerList =service.getOptOrderList(opt_number, pageNum);
+		
+		Map<String,Object> map = new HashMap<>();
+		map.put("optOrerList", optOrerList);
+		map.put("maxPage", maxPage);
+		map.put("startPage", startPage);
+		map.put("endPage", endPage);
+		map.put("opt_number", opt_number);
+		map.put("pageNum", pageNum);
+		
+		return map;
+	}
+	
+	@GetMapping("optStock")
+	@ResponseBody
+	public Map<String,Object> adminOptStock(Integer opt_number, Integer pageNum, HttpSession session) {
+		if(pageNum == null || pageNum.toString().equals("")) {
+			pageNum = 1;
+		}
+		
+		int optStockCnt = service.optStockCnt(opt_number);
+		
+		int limit = 10;
+		int maxPage = (int)((double)optStockCnt/limit +0.95);
+		int startPage = pageNum-(pageNum-1)%5;
+		int endPage = startPage + 4;
+		if(endPage > maxPage) endPage = maxPage;
+		
+		List<Stock> optStockList =service.getOptStockList(opt_number, pageNum);
+		
+		Map<String,Object> map = new HashMap<>();
+		map.put("optStockList", optStockList);
+		map.put("maxPage", maxPage);
+		map.put("startPage", startPage);
+		map.put("endPage", endPage);
+		map.put("opt_number", opt_number);
+		map.put("pageNum", pageNum);
+		
+		return map;
 	}
 	
 	@GetMapping("optChg")
