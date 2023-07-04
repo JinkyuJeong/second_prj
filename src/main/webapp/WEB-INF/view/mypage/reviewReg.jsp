@@ -10,12 +10,12 @@
 <title>호미짐</title>
 <script>
 	function input_chk(f) {
-		if(f.review_value.value().trim() === "") {
+		if(f.review_value.value.trim() === "") {
 			alert("별점을 선택하세요.")
 			f.review_value.focus();
 			return false;
 		}
-		if(f.review_content.value().trim() === "") {
+		if(f.review_content.value.trim() === "") {
 			alert("리뷰 내용을 입력하세요.");
 			f.review_content.focus();
 			return false;

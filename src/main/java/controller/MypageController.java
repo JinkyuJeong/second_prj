@@ -241,6 +241,7 @@ public class MypageController {
 		ModelAndView mav = new ModelAndView();
 		Review review = service.getReviewNum(review_number);
 		OrderView ov = service.getOvItemId(review.getOrder_itemId());
+		mav.addObject("review",review);
 		mav.addObject("ov", ov);
 		return mav;
 	}

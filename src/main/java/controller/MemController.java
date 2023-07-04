@@ -36,6 +36,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import dto.Mem;
+import exception.CloseException;
 import exception.OpenerException;
 import exception.ShopException;
 import service.ShopService;
@@ -82,7 +83,7 @@ public class MemController {
 	public ModelAndView emailForm(@RequestParam(value="email", required=false)String email, HttpServletRequest request, HttpSession ses) {
 		ModelAndView mav = new ModelAndView();
 		if(service.getMemEmail(email) != null) {
-			throw new OpenerException("이미 가입되어있는 이메일 입니다.", "login");
+			throw new CloseException("이미 가입되어있는 이메일 입니다.");
 		}  else if(email != null) {
 			//인증번호 랜덤 생성
 		    String randomkey = authCodeMaker();
@@ -138,7 +139,7 @@ public class MemController {
 		ModelAndView mav = new ModelAndView();
 		System.out.println(email);
 		if(service.getMemEmail(email) == null) {
-			throw new OpenerException("가입되지 않은 이메일입니다.", "login");
+			throw new CloseException("가입되지 않은 이메일입니다.");
 		}  else if(email != null) {
 			//인증번호 랜덤 생성
 		    String randomkey = authCodeMaker();

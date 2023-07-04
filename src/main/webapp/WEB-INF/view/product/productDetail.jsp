@@ -86,7 +86,7 @@
 	    $("#cartBtn").click(function(e) {
 	        e.preventDefault();
 	        var selectedOption = $("#optionSelect").val();
-	        if (selectedOption === "optionNotSelected") {
+	        if (!selectedOption) {
 	            $("#staticBackdrop .modal-body").text("옵션이 선택되지 않았습니다. 장바구니로 이동하시겠습니까?");
 	        } else {
 	        	// FormData 객체 생성
