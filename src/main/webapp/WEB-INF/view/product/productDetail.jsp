@@ -9,32 +9,6 @@
 <head>
 <meta charset="UTF-8">
 <title>호미짐</title>
-<!-- 상품 사진 슬라이드 -->
-<script>
-  let slideIndex = 0;
-
-  window.onload = function() {
-    showSlides(slideIndex);
-  };
-
-  function plusSlides(n) {
-    showSlides(slideIndex += n);
-  }
-
-  function showSlides(n) {
-    const slides = document.getElementsByClassName("slide");
-    if (n >= slides.length) {
-      slideIndex = 0;
-    }
-    if (n < 0) {
-      slideIndex = slides.length - 1;
-    }
-    for (let i = 0; i < slides.length; i++) {
-      slides[i].style.display = "none";
-    }
-    slides[slideIndex].style.display = "block";
-  }
-</script>
 <script type="text/javascript">	
 	var pageNum;
 	$(function() {
@@ -145,6 +119,7 @@
 	    	$("#cart").submit();
 	    });
 	})
+	
 	//옵션 선택 시 동작하는 함수
   function addSelectedOption() {
     var selectBox = document.getElementById("optionSelect");
@@ -300,17 +275,30 @@
 	<div class="container">
       <!-- 상품 소개 -->
       <div class="row border">
-        <div class="col-6 d-flex flex-column align-items-center">
-          <div class="slideshow">
-          	  <c:forEach items="${product_pircturesList }" var="p">
-          	  	<img class="slide zoomImage" src="${path }/img/product/${p}" style="width:100%">
-              </c:forEach>          
-          </div>
-          <div class="d-flex justify-content-center mt-3">
-            <button class="btn" onclick="plusSlides(-1)">이전 <i class="fa fa-arrow-circle-left"></i></button>
-            <button class="btn" onclick="plusSlides(1)"><i class="fa fa-arrow-circle-right"></i> 다음</button>  
-          </div>
+        
+<div class="col-6 d-flex flex-column align-items-center">
+  <!-- Slideshow Header -->
+  <div class="w3-container text-center" id="apartment">
+    <c:forEach var="p" items="${product_pircturesList }" varStatus="st">
+      <div class="w3-display-container mySlides">
+        <img class="slide zoomImage" src="${path }/img/product/${p}" style="width:100%">
+        <div class="w3-display-bottomleft w3-container w3-black">
         </div>
+      </div>
+    </c:forEach>
+    <button class="w3-button mt-3" onclick="plusSlides(-1)">이전 <i class="fa fa-arrow-circle-left w3-hover-text-teal"></i></button>
+    <button class="w3-button mt-3" onclick="plusSlides(1)"><i class="fa fa-arrow-circle-right w3-hover-text-teal"></i> 다음</button>
+  </div>
+  
+  <!-- 밑에 사진들 -->
+  <div style="width:80%; display: flex; margin-bottom: 10px;">
+    <c:forEach var="p" items="${product_pircturesList }" varStatus="st">
+      <div class="w3-col s4">
+        <img class="demo w3-opacity w3-hover-opacity-off" src="${path }/img/product/${p}" style="width:80%;height: 60px;cursor:pointer" onclick="currentSlide(${st.index+1})">
+      </div>
+    </c:forEach>
+  </div>
+</div>
         <div class="col-6">
           <div class="row">
               <div>
@@ -429,6 +417,35 @@
         </div>
       </div>
       
-    </div>
+    </div></div></div>
+    <!-- 상품 사진 슬라이드 -->
+<script>
+let slideIndex = 1;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+function currentDiv(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  let i;
+  let slides = $(".mySlides");
+  let dots = $(".demo");
+  if (n > slides.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length}
+  slides.hide();
+  dots.removeClass("w3-opacity-off");
+  slides.eq(slideIndex-1).show();
+  dots.eq(slideIndex-1).addClass("w3-opacity-off");
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+</script>
 </body>
 </html>
