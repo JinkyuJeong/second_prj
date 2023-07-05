@@ -24,9 +24,16 @@
     text-decoration: none;
   }
 </style>
+<script type="text/javascript">
+function topFunction() {
+  document.body.scrollTop = 0; 
+  document.documentElement.scrollTop = 0;
+}
+</script>
 <sitemesh:write property="head"/>
 </head>
-<body class="w3-light-grey">
+<body class="w3-light-grey" style="position : relative">
+<button class="w3-btn w3-black" onclick="topFunction()" id="myBtn123"><i class="fa fa-chevron-up"></i></button>
   
   <!-- 상단 Nav -->
   <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top" id="topNav">
