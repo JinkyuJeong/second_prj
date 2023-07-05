@@ -303,19 +303,31 @@
           <div class="row">
               <div>
                 <h1>${product.product_name }</h1> 
-                <div class="row mt-1">
-                  <c:if test='${product.product_isDiscount==0 }'>
-                  	<div class="col-9"></div>
-                  	<div class="col-3" style="font-size:30px;" id="price"><fmt:formatNumber value="${product.product_price}" />원</div>
-                  </c:if>
-                  <c:if test='${product.product_isDiscount==1 }'>
-                  	<div class="col-7 text-primary" style="font-size:30px;">${product.product_discountRate }%</div>
-                  	<div class="col-2 text-secondary" style="font-size:30px; text-decoration:line-through"><fmt:formatNumber value="${product.product_price }" pattern=",###" /></div>
-                  	<c:set var="discounted" value="${product.product_price*(100-product.product_discountRate)/100 }" />
-                  	<c:set var="dc" value="${discounted+(1-(discounted%1))%1}"/>
-                  	<div class="col-3" style="font-size:30px;" id="price"><fmt:formatNumber value="${dc}" />원</div>
-                  </c:if>                  
-                </div>
+                <c:if test='${product.product_isDiscount!=0 }'>
+	                <div class="row"> 
+		          				<div class="col-6" style="display: flex;">
+	              					<div class="text-secondary" style="font-size: 20px;text-decoration:line-through;">
+	              						<fmt:formatNumber value="${product.product_price }" pattern=",###" />원
+	              					</div>
+	            					<c:set var="discounted" value="${product.product_price*(100-product.product_discountRate)/100 }" />
+	              					<div style="font-size: 20px; margin-left: 10px;">
+	              						<fmt:formatNumber value="${discounted+(1-(discounted%1))%1}" />원
+	              					</div>
+	            				</div>
+	            				<div class="col-6 text-end">            					
+	              					<div class="text-primary" style="font-size: 20px;">${product.product_discountRate}%</div>              					
+	            				</div>            				
+	          				</div>
+          			</c:if>
+          			<c:if test='${product.product_isDiscount==0 }'>
+          				<div class="row"> 
+		          				<div class="col-12">
+	              					<div class="text-secondary" style="font-size: 20px;">
+	              						<fmt:formatNumber value="${product.product_price }" pattern=",###" />원
+	              					</div>
+	            				</div>
+	          				</div>
+          			</c:if>
                 <hr>  
                 <div class="row mb-2">
                   <div class="col-2 text-secondary"><i class="fa fa-bus" aria-hidden="true"></i> &nbsp; 택배배송</div>

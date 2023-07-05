@@ -17,10 +17,24 @@
 	function noPage() {
 		alert("페이지가 존재하지 않습니다.");
 	}
+	function associ(){
+		
+	}
 </script>
 <style>
 	.noline {text-decoration:none;}
 	a.active {color : red;}
+	
+  .divider {
+    display: inline-block;
+    width: 1px;
+    height: 10px;
+    background-color: #000;
+    margin: 0 5px;
+  }
+  a:hover{
+  	color:red;
+  }
 </style>
 </head>
 <body>
@@ -44,9 +58,13 @@
       <div class="row">
         <div class="col" style="margin-bottom:20px; font-size:20px;">
   			<a href="productList?product_type=${param.product_type}&sort=1&searchContent=${param.searchContent != null ? param.searchContent : ''}" class="noline ${param.sort == 1 ? 'active' : ''}">주문많은순</a>
+  			<span class="divider"></span>
   			<a href="productList?product_type=${param.product_type}&sort=2&searchContent=${param.searchContent != null ? param.searchContent : ''}" class="noline ${param.sort == 2 ? 'active' : ''}">낮은가격순</a>
+  			<span class="divider"></span>
   			<a href="productList?product_type=${param.product_type}&sort=3&searchContent=${param.searchContent != null ? param.searchContent : ''}" class="noline ${param.sort == 3 ? 'active' : ''}">높은가격순</a>
+  			<span class="divider"></span>
   			<a href="productList?product_type=${param.product_type}&sort=4&searchContent=${param.searchContent != null ? param.searchContent : ''}" class="noline ${param.sort == 4 ? 'active' : ''}">최신등록순</a>
+  			<span class="divider"></span>
   			<a href="productList?product_type=${param.product_type}&sort=5&searchContent=${param.searchContent != null ? param.searchContent : ''}" class="noline ${param.sort == 5 ? 'active' : ''}">리뷰많은순</a>
 		</div>     
       </div>
