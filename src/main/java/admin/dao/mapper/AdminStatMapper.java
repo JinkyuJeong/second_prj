@@ -10,7 +10,7 @@ import dto.StatSale;
 public interface AdminStatMapper {
 
 	@Select({"<script> ",
-    " SELECT COUNT(*) FROM orderStatView ",
+    " SELECT COUNT(date) FROM orderStatView ",
     " <if test='sd != null and sd != \"\"'>",
     "   WHERE date &gt;= #{sd} ",
     " </if>",

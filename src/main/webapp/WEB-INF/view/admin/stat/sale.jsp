@@ -78,24 +78,26 @@
 	            <th width="25%">취소</th>
 	          </tr>
 	          <c:forEach var="sale" items="${statSaleList}" varStatus="st">
-		          <tr>
-		            <td class="text-center"><fmt:formatDate value="${sale.date }" pattern="yyyy-MM-dd"/></td>
-		            <td class="text-end">
-		            	<fmt:formatNumber value="${sale.order_pay}" pattern="#,###"/>원
-		            	<br>
-		            	(${sale.order_cnt })건
-		            </td>
-		            <td class="text-end">
-		            	<fmt:formatNumber value="${sale.orderCancel_pay}" pattern="#,###"/>원
-		            	<br>
-		            	(${sale.orderCancel_cnt })건
-		            </td>
-		            <td class="text-end">
-		            	<fmt:formatNumber value="${sale.refund_pay}" pattern="#,###"/>원
-		            	<br>
-		            	(${sale.refund_cnt })건
-		            </td>
-		          </tr>
+	          	<c:if test="${!empty sale.date }">
+			          <tr>
+			            <td class="text-center"><fmt:formatDate value="${sale.date }" pattern="yyyy-MM-dd"/></td>
+			            <td class="text-end">
+			            	<fmt:formatNumber value="${sale.order_pay}" pattern="#,###"/>원
+			            	<br>
+			            	(${sale.order_cnt })건
+			            </td>
+			            <td class="text-end">
+			            	<fmt:formatNumber value="${sale.refund_pay}" pattern="#,###"/>원
+			            	<br>
+			            	(${sale.refund_cnt })건
+			            </td>
+			            <td class="text-end">
+			            	<fmt:formatNumber value="${sale.orderCancel_pay}" pattern="#,###"/>원
+			            	<br>
+			            	(${sale.orderCancel_cnt })건
+			            </td>
+			          </tr>
+			         </c:if>
 	          </c:forEach>
 	        </table>
         </c:if>
