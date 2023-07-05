@@ -309,4 +309,8 @@ public class AdminManageService {
 	public boolean challDel(Integer chall_number) {
 		return challDao.challDel(chall_number);
 	}
+
+	public boolean memChg(Mem mem) {
+		return memDao.memChg(mem);
+	}
 }

@@ -28,6 +28,7 @@
       <p class="mb-3">회원의 상세정보 및 변경을 하는 페이지 입니다.</p>
 
       <form action="memChg" method="post" name="f">
+      <input type="hidden" name="mem_number" value="${mem.mem_number }">
 
         <div class="form-group">
           <label class="mb-1" for="mem_id">아이디</label>

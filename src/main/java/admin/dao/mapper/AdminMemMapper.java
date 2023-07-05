@@ -40,5 +40,8 @@ public interface AdminMemMapper {
 	@Update("update mem set mem_point = mem_point + #{refundPoint} where mem_id=#{refund_memId}")
 	void pointBack(Map<String, Object> param);
 
+	@Update("update mem set mem_name=#{mem_name}, mem_phoneno=#{mem_phoneno} where mem_number=#{mem_number}")
+	boolean memChg(Mem mem);
+
 	
 }

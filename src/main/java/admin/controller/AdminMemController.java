@@ -72,6 +72,17 @@ public class AdminMemController {
 		return mv;
 	}
 	
+	@PostMapping("memChg")
+	public ModelAndView adminMemChg(Mem mem,  HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(service.memChg(mem)) {
+			mv.setViewName("redirect:memChg?mem_number="+mem.getMem_number());
+			return mv;
+		}else {
+			throw new ShopException("회원 정보 변경 실패", "memChg?mem_number="+mem.getMem_number());
+		}
+	}
+	
 	@PostMapping("memDel")
 	public ModelAndView managerMemDel(Integer mem_number, HttpSession session) {
 		ModelAndView mv = new ModelAndView();

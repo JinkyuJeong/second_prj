@@ -64,4 +64,7 @@ public class AdminMemDao {
 		template.getMapper(cls).pointBack(param);
 		
 	}
+	public boolean memChg(Mem mem) {
+		return template.getMapper(cls).memChg(mem);
+	}
 }
