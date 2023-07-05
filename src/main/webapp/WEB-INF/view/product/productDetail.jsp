@@ -9,6 +9,9 @@
 <head>
 <meta charset="UTF-8">
 <title>호미짐</title>
+<style type="text/css">
+	 #prodimg>img{box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);}
+</style>
 <script type="text/javascript">	
 	var pageNum;
 	$(function() {
@@ -280,7 +283,7 @@
   <!-- Slideshow Header -->
   <div class="w3-container text-center" id="apartment">
     <c:forEach var="p" items="${product_pircturesList }" varStatus="st">
-      <div class="w3-display-container mySlides">
+      <div class="w3-display-container mySlides" id="prodimg">
         <img class="slide zoomImage" src="${path }/img/product/${p}" style="width:100%">
         <div class="w3-display-bottomleft w3-container w3-black">
         </div>

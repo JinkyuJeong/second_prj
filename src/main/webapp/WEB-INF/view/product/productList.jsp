@@ -17,9 +17,6 @@
 	function noPage() {
 		alert("페이지가 존재하지 않습니다.");
 	}
-	function associ(){
-		
-	}
 </script>
 <style>
 	.noline {text-decoration:none;}
