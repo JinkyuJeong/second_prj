@@ -25,7 +25,7 @@
       <div>
         <div class="container mt-5" align="center">
           <button type="submit" class="btn btn-danger btn-lg" id="join" onclick="location.href='/second_prj/'">홈으로</button>
-          <button type="reset" class="btn btn-danger btn-lg ms-2" onclick="location.href='/second_prj/mem/mypage?mem_id=${sessionScope.loginUser.mem_id}'">마이페이지</button>
+          <button type="reset" class="btn btn-danger btn-lg ms-2" onclick="location.href='/second_prj/mypage/orderList?mem_id=${sessionScope.loginUser.mem_id}'">마이페이지</button>
         </div>  
       </div>
     </div>

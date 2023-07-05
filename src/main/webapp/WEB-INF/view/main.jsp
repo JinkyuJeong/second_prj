@@ -69,6 +69,7 @@
       <div class="carousel-indicators">
         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
       </div>
       <div class="carousel-inner">
       
@@ -92,10 +93,23 @@
               매일매일 📷인증샷을 남겨 포인트를 받아가세요! 
               <br>
               <br> 
-              <a class="btn btn-danger btn-lg" href="" role="button">바로가기</a>
+              <a class="btn btn-danger btn-lg" href="${path }/chall/challList" role="button">바로가기</a>
             </h5>
           </div>
           <img src="images/event.jpg" class="d-block w-100" alt="...">
+        </div>
+        
+        <div class="carousel-item">
+          <div class="jumbo">
+            <h3 class="display-4 fw-bold mb-4">회원가입 이벤트</h3>
+            <h5 class="mb-4">
+              🎁신규 회원가입 시 2000포인트 증정! 
+              <br>
+              <br> 
+              <a class="btn btn-danger btn-lg" href="${path }/mem/join" role="button">바로가기</a>
+            </h5>
+          </div>
+          <img src="images/joinPoint4.jpg" class="d-block w-100" alt="...">
         </div>
         
       </div>

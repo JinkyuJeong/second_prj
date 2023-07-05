@@ -181,10 +181,7 @@
 	      refund_orderId : refundOrderId,
 	      refund_price : refundPrice
 	    },
-	    success:  function() {
-	        getTypeList();
-	        location.reload();
-	    },
+	    success: getTypeList,
 	    error: function(error) {
 	      alert(error);
 	    }
