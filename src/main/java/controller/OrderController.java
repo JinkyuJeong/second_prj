@@ -26,10 +26,10 @@ public class OrderController {
 	private ShopService service;
 	
 	@RequestMapping("orderConfiguration")
-	public ModelAndView idCheckorderConfiguration(String mem_id, Mem mem, String deliver_receiver, String delivery_postcode, 
+	public ModelAndView idCheckorderConfiguration(Mem mem, String deliver_receiver, String delivery_postcode, 
 			String delivery_address, String delivery_detailAddress, String receiver_phoneNo1, 
 			String receiver_phoneNo2, String receiver_phoneNo3, String order_msg, String order_msgSelf, Integer order_totalPay, Integer order_point, Integer delivery_cost,
-			Integer[] opt_number, Integer[] product_number, String[] opt_count, ProductOptView pov, HttpSession session) {
+			Integer[] opt_number, Integer[] product_number, String[] opt_count, ProductOptView pov, String mem_id, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		if(order_point == null) order_point = 0;
 		if(delivery_cost == null) delivery_cost=0;
@@ -55,8 +55,9 @@ public class OrderController {
 				delivery_cost, order_point, phoneno, orderMsg, order_totalPay)) {
 			if(order_point != 0) {
 				service.usePoint(order_point, mem.getMem_id());
-			}			
-			service.pointUsedStore(order_point, mem.getMem_id());
+				service.pointUsedStore(order_point, mem.getMem_id());
+			}		
+			
 		} else {
 			throw new ShopException("죄송합니다. 주문 시 오류가 발생했습니다.", "/second_prj/cart/cartAdd");
 		}
@@ -69,6 +70,8 @@ public class OrderController {
 			}
 		}
 		mav.addObject("order_id", order_id);
+		Mem newMem = service.getMemEmail(mem_id);
+		session.setAttribute("loginMem", newMem);
 		return mav;
 	}
 	

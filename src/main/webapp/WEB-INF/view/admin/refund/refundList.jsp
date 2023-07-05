@@ -168,9 +168,6 @@
 	  const refundType = $("#t"+i).val();
 	  const refundOrderId = $("#oi"+i).val();
 	  const refundPrice = $("#p"+i).val();
-
-	  console.log(refundNumber);
-	  console.log(refundType);
 	  
 	  $.ajax({
 	    url: 'refundComp',
@@ -181,13 +178,16 @@
 	      refund_orderId : refundOrderId,
 	      refund_price : refundPrice
 	    },
-	    success: getTypeList,
+	    success: function () {
+	        getTypeList();
+	        location.reload();
+	    },
 	    error: function(error) {
 	      alert(error);
 	    }
 	  });	  
+	  
 	  closeModal(i);
-	  location.reload();
 	}
 	
 	function refundBack(i) {

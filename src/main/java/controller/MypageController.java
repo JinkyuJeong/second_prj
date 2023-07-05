@@ -197,7 +197,7 @@ public class MypageController {
 		ModelAndView mav = new ModelAndView();
 		List<Refund> refundList = new ArrayList<>();
 		if(refund_type == null) {
-			refundList = service.getRefundListAll(mem_id, "주문취소"); //refund_type이 주문취소인거 빼고 다
+			refundList = service.getRefundListAll(mem_id, "결제 및 주문 취소"); //refund_type이 주문취소인거 빼고 다
 		} else if(refund_type.equals("환불대기")) {
 			refundList = service.getRefundCancelList(mem_id, "환불대기");
 		} else if(refund_type.equals("환불완료")) {
