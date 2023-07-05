@@ -89,8 +89,10 @@
 			<div style="flex-basis: 80%;">
       <h1 class="mb-3">주문조회</h1>
       <p class="mb-3 text-secondary">
-      	·<span class="text-danger"> 리뷰작성</span>은 <span class="text-danger">구매확정</span>이 된 주문 건만 작성 가능합니다. <br>
-      	·<span class="text-danger"> 주문취소</span>는 <span class="text-danger">상품 준비 중 이전</span>(결제완료)의 상품만 가능합니다. <br>
+      	·<span class="text-danger"> 주문 번호</span>를 누르시면 <span class="text-danger">주문 상세보기</span>가 가능합니다. <br>
+      	·<span class="text-danger"> 리뷰 작성</span>은 <span class="text-danger">구매확정</span>이 된 주문 건만 작성 가능합니다. <br>
+      	·<span class="text-danger"> 환불 내역</span>이 있는 주문은 <span class="text-danger">구매확정</span>할 수 없습니다. <br>
+      	·<span class="text-danger"> 주문 취소</span>는 <span class="text-danger">상품 준비 중 이전</span>(결제완료)의 상품만 가능합니다. <br>
       </p>
       <div class="row">
         <div class="col-2">
