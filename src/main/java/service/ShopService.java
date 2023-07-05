@@ -193,12 +193,16 @@ public class ShopService {
 		return orderItemDao.getOrderItemList(order_id);
 	}
 
-	public List<OrderView> getOv(String mem_id) {
-		return orderDao.getOv(mem_id);
+	public List<OrderView> getOv(Integer pageNum, String mem_id) {
+		return orderDao.getOv(pageNum, mem_id);
 	}
 
 	public List<OrderView> getOvList(String mem_id, String order_id) {
 		return orderDao.getOvList(mem_id, order_id);
+	}
+	
+	public int orderCnt(String mem_id) {
+		return orderDao.orderCnt(mem_id);
 	}
 
 	public boolean csReg(Cs cs) {
@@ -329,18 +333,6 @@ public class ShopService {
 		return reviewDao.deleteReview(review_number);
 	}
 
-	public List<Point> getMyPoint(String mem_id) {
-		return pointDao.getMyPoint(mem_id);
-	}
-
-	public List<Point> getMyPointReceived(String mem_id, String point_type) {
-		return pointDao.getMyPointReceived(mem_id, point_type);
-	}
-
-	public List<Point> getMyPointUsed(String mem_id, String point_type) {
-		return pointDao.getMyPointUsed(mem_id, point_type);
-	}
-
 	public List<ReviewView> getReviewList(int product_number, int startIndex, int pageSize) {
 		return reviewDao.getReviewList(product_number, startIndex, pageSize);
 	}
@@ -412,6 +404,14 @@ public class ShopService {
 
 	public Chall getMyChall(String mem_id) {
 		return challDao.getMyChall(mem_id);
+	}
+
+	public int pointCnt(String point_type, String mem_id) {
+		return pointDao.pointCnt(point_type, mem_id);
+	}
+
+	public List<Point> getPointList(Integer pageNum, String mem_id, String point_type) {
+		return pointDao.getPointList(pageNum, mem_id, point_type);
 	}
 
 }

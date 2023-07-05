@@ -75,7 +75,7 @@
             <td>${entry.value.get(0).refund_type }</td>
           </tr>          
           <!-- 주문 상세정보 -->
-          <tr style="text-align:center;" class="saleLine" id="saleLine${entry.key }">
+          <tr style="text-align:center; display:none;" class="saleLine" id="saleLine${entry.key }">
             <td colspan="7">
             <table id="orderDetail${entry.key }" class="table table-borderless">       
                    

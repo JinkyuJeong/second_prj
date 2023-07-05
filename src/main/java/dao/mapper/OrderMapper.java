@@ -23,10 +23,10 @@ public interface OrderMapper {
 	@Select("select * from h_order where mem_id=#{value}")
 	List<Order> getOrderList(String mem_id);
 
-	@Select("select * from orderView where mem_id=#{value} order by order_date desc")
-	List<OrderView> getOv(String mem_id);
+	@Select("select * from orderView where mem_id=#{mem_id} order by order_id desc LIMIT #{start}, 10")
+	List<OrderView> getOv(Map<String, Object> param);
 
-	@Select("select * from orderView where mem_id=#{mem_id} and order_id=#{order_id} order by order_date desc")
+	@Select("select * from orderView where mem_id=#{mem_id} and order_id=#{order_id} order by order_id desc")
 	List<OrderView> getOvList(Map<String, Object> param);
 
 	@Update("update h_order set order_state = #{order_state} where order_id = #{order_id}")
@@ -52,4 +52,7 @@ public interface OrderMapper {
 
 	@Select("select * from orderView where order_id=#{value}")
 	List<OrderView> getOvOi(String order_id);
+
+	@Select("select count(*) from orderView where mem_id=#{value}")
+	int orderCnt(String mem_id);
 }

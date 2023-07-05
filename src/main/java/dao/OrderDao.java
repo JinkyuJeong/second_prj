@@ -44,8 +44,12 @@ public class OrderDao {
 		return template.getMapper(cls).getOrderList(mem_id);
 	}
 
-	public List<OrderView> getOv(String mem_id) {
-		return template.getMapper(cls).getOv(mem_id);
+	public List<OrderView> getOv(Integer pageNum, String mem_id) {
+		param.clear();
+		param.put("start", (pageNum -1) * 10);
+		param.put("limit", 10);
+		param.put("mem_id", mem_id);
+		return template.getMapper(cls).getOv(param);
 	}
 
 	public List<OrderView> getOvList(String mem_id, String order_id) {
@@ -94,5 +98,9 @@ public class OrderDao {
 
 	public List<OrderView> getOvOi(String order_id) {
 		return template.getMapper(cls).getOvOi(order_id);
+	}
+
+	public int orderCnt(String mem_id) {
+		return template.getMapper(cls).orderCnt(mem_id);
 	}
 }

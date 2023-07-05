@@ -21,7 +21,7 @@
       <h1 class="mb-3">포인트 내역</h1>
       <div class="row">
         <div class="col-7">
-          <h5>총 <span style="color: red;">${pointList.size() }</span>건</h5>
+          <h5>총 <span style="color: red;">${pointCnt}</span>건</h5>
         </div>
         <div class="col-5 text-end">
         	<div class="btn-group mb-3">
@@ -32,24 +32,54 @@
         </div>
       </div>
       
-      <div class="row" id="oinfo" class="info">
+      <c:if test="${empty pointList }">
+      	<h4 class="text-center">등록된 포인트 내역이 없습니다.</h4>
+      </c:if>
       
+      <c:if test="${!empty pointList }">
+	      <div class="row" id="oinfo" class="info">
+	      
+	      
+	        <table class="table table-hover">
+	          <tr style="text-align:center; background-color:#D1180B; color: white;">
+	            <th>일자</th>
+	            <th>포인트 내용</th>
+	            <th>포인트</th>
+	          </tr>
+	        <c:forEach items="${pointList }" var="p" varStatus="st">
+	          <tr style="text-align:center;">
+	            <td><fmt:formatDate value="${p.point_regdate}" pattern="yyyy-MM-dd" /></td>
+	            <td>${p.point_type }</td>
+	            <td><fmt:formatNumber value="${p.point_value}" pattern="###,###"/>P</td> 
+	          </tr>          
+	          </c:forEach>
+	        </table>
+	      </div>
+      </c:if>
       
-        <table class="table table-hover">
-          <tr style="text-align:center; background-color:#D1180B; color: white;">
-            <th>일자</th>
-            <th>포인트명</th>
-            <th>포인트</th>
-          </tr>
-        <c:forEach items="${pointList }" var="p" varStatus="st">
-          <tr style="text-align:center;">
-            <td><fmt:formatDate value="${p.point_regdate}" pattern="yyyy-MM-dd" /></td>
-            <td>${p.point_type }</td>
-            <td><fmt:formatNumber value="${p.point_value}" pattern="###,###"/>P</td> 
-          </tr>          
-          </c:forEach>
-        </table>
-      </div>
+      <div class="w3-center w3-padding-32">
+		    <div class="w3-bar">
+			    <c:if test="${pageNum<= 1}">
+						<a class="w3-bar-item w3-button w3-hover-black" onclick="alert('이전 페이지가 없습니다.');">&laquo;</a>
+					</c:if>
+					<c:if test="${pageNum > 1}">
+						<a class="w3-bar-item w3-button w3-hover-black" href="pointList?pageNum=${pageNum-1}&mem_id=${sessionScope.loginMem.mem_id}&point_type=${param.point_type }'">&laquo;</a>
+					</c:if>
+					
+					<c:forEach var="a" begin="${startPage}" end="${endPage}">
+						<c:if test="${a <= maxPage}">
+							<a class="w3-bar-item w3-button w3-hover-black ${a == pageNum ? 'w3-black' : '' }" href="pointList?pageNum=${a}&mem_id=${sessionScope.loginMem.mem_id}&point_type=${param.point_type }'">${a}</a>
+						</c:if>
+					</c:forEach>
+						
+					<c:if test="${startPage+4 >= maxPage}">
+						<a class="w3-bar-item w3-button w3-hover-black" onclick="alert('다음 페이지가 없습니다.');">&raquo;</a>
+					</c:if>
+					<c:if test="${startPage+4 < maxPage}">
+						<a class="w3-bar-item w3-button w3-hover-black" href="pointList?pageNum=${startPage+5}&mem_id=${sessionScope.loginMem.mem_id}&point_type=${param.point_type }'">&raquo;</a>
+					</c:if>
+		    </div>
+		  </div>
       
     </div>
 			</div>

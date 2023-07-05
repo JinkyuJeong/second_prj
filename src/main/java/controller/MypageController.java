@@ -24,6 +24,7 @@ import dto.Point;
 import dto.ProductOptView;
 import dto.Refund;
 import dto.Review;
+import dto.ReviewView;
 import exception.CloseException;
 import exception.ShopException;
 import service.ShopService;
@@ -56,18 +57,33 @@ public class MypageController {
 	}
 	
 	@GetMapping("orderList")
-	public ModelAndView idCheckorderList(String mem_id, HttpSession session) {
+	public ModelAndView idCheckorderList(Integer pageNum, String mem_id, HttpSession session) {
 		ModelAndView mav = new ModelAndView();		
 		Mem mem = (Mem) session.getAttribute("loginMem");
-		List<OrderView> ov = service.getOv(mem.getMem_id());
+		if(pageNum == null || pageNum.toString().equals("")) {
+			pageNum = 1;
+		}
+		
+		int orderCnt = service.orderCnt(mem.getMem_id());
+
+		int limit = 10;
+		int maxPage = (int)((double)orderCnt/limit +0.95);
+		int startPage = pageNum-(pageNum-1)%5;
+		int endPage = startPage + 4;
+		if(endPage > maxPage) endPage = maxPage;
+		
+		List<OrderView> ov = service.getOv(pageNum, mem.getMem_id());
 		Map<String, List<OrderView>> map = new LinkedHashMap<>();
 		for(OrderView o : ov) {
 			List<OrderView> ovList = service.getOvList(mem.getMem_id(), o.getOrder_id());
 			map.put(o.getOrder_id(), ovList);
 		}
 		mav.addObject("ov", ov);
-		mav.addObject("orderCnt", ov.size());
 		mav.addObject("map",map);
+		mav.addObject("pageNum", pageNum);
+		mav.addObject("startPage", startPage);
+		mav.addObject("endPage", endPage);
+		mav.addObject("maxPage", maxPage);
 		return mav;
 	}
 	
@@ -117,8 +133,6 @@ public class MypageController {
 	@GetMapping("refundReq")
 	public ModelAndView idCheckRefundReg(Integer order_itemId, String mem_id, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		List<OrderView> myOvList = service.getOv(mem_id);
-		Mem sessionMem = (Mem) session.getAttribute("loginMem");
 		OrderView ov = service.getOvItemId(order_itemId);
 		System.out.println(ov);
 		if(ov == null) {
@@ -269,17 +283,34 @@ public class MypageController {
 	}
 	
 	@GetMapping("pointList")
-	public ModelAndView idCheckPointList(String point_type, String mem_id, HttpSession session) {
+	public ModelAndView idCheckPointList(Integer pageNum, String point_type, String mem_id, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		List<Point> pointList = new ArrayList<>();
-		if(point_type == null || point_type.equals("")) {
-			pointList = service.getMyPoint(mem_id);
-		} else if (point_type.equals("else")) {
-			pointList = service.getMyPointReceived(mem_id, "포인트 사용");
-		} else if (point_type.equals("used")) {
-			pointList = service.getMyPointUsed(mem_id, "포인트 사용");
+		if(pageNum == null || pageNum.toString().equals("")) {
+			pageNum = 1;
 		}
+		if (point_type == null || point_type.equals("")) {
+			point_type="";
+		}else if(point_type.equals("used")) {
+			point_type = "포인트 사용";
+		}else {
+			point_type = "포인트 지급";
+		}
+		int pointCnt = service.pointCnt(point_type, mem_id);
+
+		int limit = 10;
+		int maxPage = (int)((double)pointCnt/limit +0.95);
+		int startPage = pageNum-(pageNum-1)%5;
+		int endPage = startPage + 4;
+		if(endPage > maxPage) endPage = maxPage;
+		
+		List<Point> pointList =service.getPointList(pageNum, mem_id, point_type);
+		
 		mav.addObject("pointList",pointList);
+		mav.addObject("pointCnt",pointCnt);
+		mav.addObject("pageNum", pageNum);
+		mav.addObject("startPage", startPage);
+		mav.addObject("endPage", endPage);
+		mav.addObject("maxPage", maxPage);
 		return mav;
 	}
 	

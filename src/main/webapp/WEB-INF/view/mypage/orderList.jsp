@@ -11,7 +11,7 @@
 <script>
 	function list_disp(order_id) {
 		$("#saleLine"+order_id).toggle();
-		console.log(order_id)
+		console.log(order_id);
 		$.ajax({
 			url : "${path}/ajax/orderDetail",
 			method : "POST",
@@ -139,8 +139,8 @@
           </tr>
                     
           <!-- 주문 상세정보 -->
-          <tr style="text-align:center;" class="saleLine" id="saleLine${map.key }">
-            <td colspan="9">
+          <tr style="text-align:center;display:none;" class="saleLine" id="saleLine${map.key }">
+            <td colspan="9" >
             <table id="orderDetail${map.key }" class="table table-borderless">     
                            
             </table>
@@ -149,6 +149,30 @@
           </c:forEach>
         </table>
       </div>
+      
+       <div class="w3-center w3-padding-32">
+		    <div class="w3-bar">
+			    <c:if test="${pageNum<= 1}">
+						<a class="w3-bar-item w3-button w3-hover-black" onclick="alert('이전 페이지가 없습니다.');">&laquo;</a>
+					</c:if>
+					<c:if test="${pageNum > 1}">
+						<a class="w3-bar-item w3-button w3-hover-black" href="orderList?pageNum=${pageNum-1}">&laquo;</a>
+					</c:if>
+					
+					<c:forEach var="a" begin="${startPage}" end="${endPage}">
+						<c:if test="${a <= maxPage}">
+							<a class="w3-bar-item w3-button w3-hover-black ${a == pageNum ? 'w3-black' : '' }" href="orderList?pageNum=${a}">${a}</a>
+						</c:if>
+					</c:forEach>
+						
+					<c:if test="${startPage+4 >= maxPage}">
+						<a class="w3-bar-item w3-button w3-hover-black" onclick="alert('다음 페이지가 없습니다.');">&raquo;</a>
+					</c:if>
+					<c:if test="${startPage+4 < maxPage}">
+						<a class="w3-bar-item w3-button w3-hover-black" href="orderList?pageNum=${startPage+5}">&raquo;</a>
+					</c:if>
+		    </div>
+		  </div>
       
     </div>
 			</div>

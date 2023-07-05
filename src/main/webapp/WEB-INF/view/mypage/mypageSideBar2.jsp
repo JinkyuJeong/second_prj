@@ -33,10 +33,7 @@
     <hr>
     <a href="${path }/mypage/myInfo?mem_id=${sessionScope.loginMem.mem_id}" 
     class="w3-bar-item w3-button w3-padding <c:if test='${url ==  "myInfo"}'>w3-red</c:if>">
-    &nbsp; · 회원정보 조회</a>
-    <a href="${path }/mypage/myInfoUpdate?mem_id=${sessionScope.loginMem.mem_id}" 
-    class="w3-bar-item w3-button w3-padding <c:if test='${url ==  "myInfoUpdate"}'>w3-red</c:if>">
-    &nbsp; · 회원정보 수정</a>
+    &nbsp; · 회원정보</a>
     <a href="${path }/mypage/deliveryList?mem_id=${sessionScope.loginMem.mem_id}" 
     class="w3-bar-item w3-button w3-padding <c:if test='${url ==  "deliveryList"}'>w3-red</c:if>">
     &nbsp; · 배송지 관리</a>
