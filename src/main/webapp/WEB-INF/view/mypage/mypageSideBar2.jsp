@@ -12,39 +12,36 @@
   <div class="w3-bar-block">
     <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>&nbsp; Close Menu</a>
     <a href="${path}/mypage/orderList?mem_id=${sessionScope.loginMem.mem_id}" 
-    class="w3-bar-item w3-button w3-padding <c:if test='${url=="user" }'>w3-blue</c:if>">
+    class="w3-bar-item w3-button w3-padding <c:if test='${url=="orderList" }'>w3-red</c:if>">
     &nbsp; · 주문목록</a>
     <a href="${path}/mypage/refundList?mem_id=${sessionScope.loginMem.mem_id}" 
-    class="w3-bar-item w3-button w3-padding <c:if test='${url=="item" }'>w3-blue </c:if>">
+    class="w3-bar-item w3-button w3-padding <c:if test='${url=="refundList" }'>w3-red </c:if>">
     &nbsp; · 환불 내역</a>
     <a href="${path}/mypage/cancelList?mem_id=${sessionScope.loginMem.mem_id}" 
-    class="w3-bar-item w3-button w3-padding <c:if test='${url=="item" }'>w3-blue </c:if>">
+    class="w3-bar-item w3-button w3-padding <c:if test='${url=="cancelList" }'>w3-red </c:if>">
     &nbsp; · 주문 취소 내역</a>    
-    <a href="${path}/cart/cartAdd?mem_id=${sessionScope.loginMem.mem_id}" 
-    class="w3-bar-item w3-button w3-padding <c:if test='${url=="chat" }'>w3-blue </c:if>">
-    &nbsp; · 장바구니</a>
     <a href="${path}/mypage/reviewList?mem_id=${sessionScope.loginMem.mem_id}" 
-    class="w3-bar-item w3-button w3-padding <c:if test='${url=="user" }'>w3-blue</c:if>">
+    class="w3-bar-item w3-button w3-padding <c:if test='${url=="reviewList" }'>w3-red</c:if>">
     &nbsp; · 리뷰관리</a>
     <a href="${path}/mypage/pointList?mem_id=${sessionScope.loginMem.mem_id}" 
-    class="w3-bar-item w3-button w3-padding <c:if test='${url=="user" }'>w3-blue</c:if>">
+    class="w3-bar-item w3-button w3-padding <c:if test='${url=="pointList" }'>w3-red</c:if>">
     &nbsp; · 포인트 내역</a>
     <hr>
     <a href="${path}/mypage/cs?mem_id=${sessionScope.loginMem.mem_id}" 
-    class="w3-bar-item w3-button w3-padding <c:if test='${url=="board" && boardid=="1" }'>w3-blue </c:if>">
+    class="w3-bar-item w3-button w3-padding <c:if test='${url=="cs"}'>w3-red </c:if>">
     &nbsp; · 1:1문의</a>
     <hr>
     <a href="${path }/mypage/myInfo?mem_id=${sessionScope.loginMem.mem_id}" 
-    class="w3-bar-item w3-button w3-padding <c:if test='${url ==  "naver"}'>w3-blue</c:if>">
+    class="w3-bar-item w3-button w3-padding <c:if test='${url ==  "myInfo"}'>w3-red</c:if>">
     &nbsp; · 회원정보 조회</a>
     <a href="${path }/mypage/myInfoUpdate?mem_id=${sessionScope.loginMem.mem_id}" 
-    class="w3-bar-item w3-button w3-padding <c:if test='${url ==  "naver"}'>w3-blue</c:if>">
+    class="w3-bar-item w3-button w3-padding <c:if test='${url ==  "myInfoUpdate"}'>w3-red</c:if>">
     &nbsp; · 회원정보 수정</a>
     <a href="${path }/mypage/deliveryList?mem_id=${sessionScope.loginMem.mem_id}" 
-    class="w3-bar-item w3-button w3-padding <c:if test='${url ==  "naver"}'>w3-blue</c:if>">
+    class="w3-bar-item w3-button w3-padding <c:if test='${url ==  "deliveryList"}'>w3-red</c:if>">
     &nbsp; · 배송지 관리</a>
     <a href="${path }/mypage/memDelete?mem_id=${sessionScope.loginMem.mem_id}" 
-    class="w3-bar-item w3-button w3-padding <c:if test='${url ==  "naver"}'>w3-blue</c:if>">
+    class="w3-bar-item w3-button w3-padding <c:if test='${url ==  "memDelete"}'>w3-red</c:if>">
     &nbsp; · 회원 탈퇴</a>
   </div>
   <br>    
