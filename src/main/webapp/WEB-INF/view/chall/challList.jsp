@@ -114,7 +114,7 @@ span.flip {
 	  <div class="w3-row-padding w3-padding-16 w3-center">
 	  	<c:forEach var="chall" items="${challList }" begin="${pageNum*8-4}" end="${pageNum*8-1}" varStatus="st">
 		    <div class="w3-quarter">
-		      <h2>💪 ${userDateList[st.index+4]}일차 챌린지 중</h2>
+		      <h2>💪 ${chall.chall_cnt}일차 챌린지 중</h2>
 		      <img src="${path }/img/chall/${chall.chall_pic }" style="width:100%; height: 300px;">
 		      <h3>${chall.mem_name } 님</h3>
 		      

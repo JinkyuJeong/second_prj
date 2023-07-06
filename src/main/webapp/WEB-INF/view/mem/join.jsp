@@ -137,7 +137,7 @@
             <div style="margin-left:400px; margin-right:400px;">
               <!-- 이메일 -->
               <div class="form-group mb-3" style="position:relative">
-                <label class="mb-1" for="email1">이메일</label>
+                <label class="mb-1" for="email1">이메일</label><span class="text-danger">*</span>
                 <div class="input-group mb-3" style="width:100%;"> 
                   <input type="text" class="form-control" name="email1" id="email1" placeholder="아이디" aria-label="Username">
                   <span class="input-group-text">@</span>
@@ -156,7 +156,7 @@
               </div>
               <!-- 비밀번호-->
               <div id="cor1" class="form-group mb-4">
-                <label class="mb-1" for="pwd">비밀번호</label>
+                <label class="mb-1" for="pwd">비밀번호</label><span class="text-danger">*</span>
                   <input type="password" class="form-control" id="mem_pw" name="mem_pw" 
                     placeholder="8~16자 영대소문자/숫자 조합 특수문자 불가">
                   <div class="invalid-feedback" id="corPwMsg">
@@ -164,19 +164,19 @@
               </div>
               <!-- 비밀번호 재입력 -->
               <div id="cor2" class="form-group mb-4">
-                <label class="mb-1" for="pwd2">비밀번호 재입력</label>
+                <label class="mb-1" for="pwd2">비밀번호 재입력</label><span class="text-danger">*</span>
                   <input type="password" class="form-control " id="mem_pw2" name="mem_pw2">
                   <div class="invalid-feedback" id="pwChkMsg">
                   </div>
               </div>
               <!-- 이름 -->
               <div id="cor3" class="form-group mt-1">
-                <label class="mb-1" for="pwd2">이름</label>
+                <label class="mb-1" for="pwd2">이름</label><span class="text-danger">*</span>
                   <input type="text" class="form-control mb-4" id="mem_name" name="mem_name">
               </div>
               <!-- 전화번호 -->
               <div id="cor3" class="form-group">
-                <label class="mb-1" for="pwd2">전화번호</label>
+                <label class="mb-1" for="pwd2">전화번호</label><span class="text-danger">*</span>
                   <input type="text" class="form-control mb-4" id="mem_phoneno" name="mem_phoneno">
               </div>
             </div>      
