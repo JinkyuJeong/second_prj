@@ -11,6 +11,7 @@
 <title>호미짐</title>
 <style type="text/css">
 	 #prodimg>img{box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);}
+	 #apartment { padding: 10px;}
 </style>
 <script type="text/javascript">	
 	var pageNum;
@@ -371,7 +372,7 @@
                 <div class="row mt-3">
                   <div class="col-4" style="font-size:30px;">총 상품 금액</div>
                   <div class="col-4 text-secondary" style="font-size:30px;" id="totalQuantity"></div>
-                  <div class="col-4 text-primary" style="font-size:30px;" id="totalAmount"></div>
+                  <div class="col-4 text-primary" style="font-size:30px;" id="totalAmount">0원</div>
                 </div>
                 <div class="row mt-5 mb-5">
                   <div class="col-6">
