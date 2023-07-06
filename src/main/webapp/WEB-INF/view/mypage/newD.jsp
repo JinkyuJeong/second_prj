@@ -7,8 +7,12 @@
 <title>호미짐</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@600&display=swap" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <style>
+	body,h1,h2,h3,h4,h5,p,a {
+    font-family: 'IBM Plex Sans KR', sans-serif !important;
+ }
     .container{margin: 30px auto; padding: 0 50px;}
     h2{margin-bottom: 30px;}
   </style>
@@ -125,23 +129,23 @@
 		<div class="form-group" id="existingAddressContainer"
 			style="display: none;"></div>
 		<div id="nickName">
-			<label for="name" class="form-label mb-0">배송지 별명</label>
+			<label for="name" class="form-label mb-0">배송지 별명</label><span class="text-danger">*</span>
 			<input type="text" class="form-control" id="delivery_nickName" name="delivery_nickName">
 		</div>
 		<div class="mb-3 row">
 			<label for="name" class="col-sm-2 col-form-label"></label>
 			<div class="col-sm-10">
 				<div class="mb-1">
-					<label for="name" class="form-label mb-0">받으실 분</label>
+					<label for="name" class="form-label mb-0">받으실 분</label><span class="text-danger">*</span>
 					<input type="text" class="form-control" id="delivery_receiver" name="delivery_receiver">
 				</div>
 			</div>
 		</div>
-		<div class="mb-3 row">
+		<div class="mb-1 row">
 			<label for="name" class="col-sm-2 col-form-label"></label>
 			<div class="col-sm-3">
 				<div class="mb-1">
-					<label for="name" class="form-label">주소 &nbsp;&nbsp;</label>
+					<label for="name" class="form-label">주소</label><span class="text-danger">*</span>
 					<div class="input-group">
 						<input type="text" class="form-control" name="delivery_postcode" id="sample6_postcode" placeholder="우편번호" readonly> 
 						<input type="button" class="btn btn-light " id="searchPostcode" value="우편번호 찾기"><br>
@@ -149,17 +153,16 @@
 				</div>
 			</div>
 		</div>
-		<div class="mb-1 row">
+		<div class=" row">
 			<label for="name" class="col-sm-2 col-form-label"></label>
 			<div class="col-sm-10">
-				<div class="mb-1">
+				<div>
 					<input type="text" class="form-control" name="delivery_address"
 						id="sample6_address" placeholder="주소" readonly><br>
 				</div>
 			</div>
 		</div>
 		<div class="mb-3 row">
-			<label for="name" class="col-sm-2 col-form-label"></label>
 			<div class="col-sm-10">
 				<div class="mb-1">
 					<input type="text" class="form-control"
@@ -172,8 +175,8 @@
 			<label for="name" class="col-sm-2 col-form-label"></label>
 			<div class="col-sm-10">
 				<div class="mb-1">
-					<label for="name" class="form-label mb-0">연락처</label>
-					<input type="text" class="form-control" id="delivery_phoneNo" name="delivery_phoneNo" placeholder="숫자만입력해주세요.">
+					<label for="name" class="form-label mb-0">연락처</label><span class="text-danger">*</span>
+					<input type="text" class="form-control" id="delivery_phoneNo" name="delivery_phoneNo" placeholder="숫자만 입력해주세요.">
 				</div>
 			</div>
 		</div>
