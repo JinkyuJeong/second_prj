@@ -76,16 +76,22 @@
 		          <c:forEach var="cs" items="${csList }">
 			          <tr>
 			            <td>${cs.cs_number }</td>
-			            <td>${cs.mem_id }</td>
+			            <td>
+			            	<c:if test="${empty cs.mem_id }">탈퇴한 회원</c:if>
+			            	<c:if test="${!empty cs.mem_id }">${cs.mem_id}</c:if>
+			            </td>
 			            <td>${fn:length(cs.cs_qContent) > 30 ? fn:substring(cs.cs_qContent, 0, 30) + '...' : cs.cs_qContent}</td>
 			            <td>${empty cs.manager_name? '미정' : cs.manager_name}</td>
 			            <td>
-			            	${cs.cs_state} <br>
-			            	<c:if test="${cs.cs_state eq '답변대기' }">
-			            		<a class="btn btn-sm btn-secondary" href="csRe?cs_number=${cs.cs_number}">답변하기</a>
-			            	</c:if>
-			            	<c:if test="${cs.cs_state eq '답변완료' }">
-			            		<a class="btn btn-sm purple" href="csDetail?cs_number=${cs.cs_number}">처리내역</a>
+			            	<c:if test="${empty cs.mem_id }">답변 불가</c:if>
+			            	<c:if test="${!empty cs.mem_id }">
+				            	${cs.cs_state} <br>
+				            	<c:if test="${cs.cs_state eq '답변대기' }">
+				            		<a class="btn btn-sm btn-secondary" href="csRe?cs_number=${cs.cs_number}">답변하기</a>
+				            	</c:if>
+				            	<c:if test="${cs.cs_state eq '답변완료' }">
+				            		<a class="btn btn-sm purple" href="csDetail?cs_number=${cs.cs_number}">처리내역</a>
+				            	</c:if>
 			            	</c:if>
 			            </td>
 			          </tr>

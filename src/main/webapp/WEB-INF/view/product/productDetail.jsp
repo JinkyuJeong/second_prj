@@ -371,7 +371,7 @@
                 <hr>
                 <div class="row mt-3">
                   <div class="col-4" style="font-size:30px;">총 상품 금액</div>
-                  <div class="col-4 text-secondary" style="font-size:30px;" id="totalQuantity"></div>
+                  <div class="col-4 text-secondary" style="font-size:30px;" id="totalQuantity">0개</div>
                   <div class="col-4 text-primary" style="font-size:30px;" id="totalAmount">0원</div>
                 </div>
                 <div class="row mt-5 mb-5">
