@@ -47,7 +47,7 @@
 	          
           	<label class="mb-1" >답변 내용</label>
 	          <div class="mb-4">
-	            <textarea  class="form-control" required="required" readonly>${cs.cs_aContent }</textarea>
+	            <textarea  class="form-control" required="required" readonly rows="7">${cs.cs_aContent }</textarea>
 	          </div>
         	</div>
         	

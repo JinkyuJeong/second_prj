@@ -20,7 +20,7 @@
 		    f.opt_quantity.focus();
 		    return false;
 		  }
-	  
+
 	  const isQuantityValid = $("#isQuantityValid").val();
 	  if(!(isQuantityValid == '1')){
 		  alert("수량이 유효하지 않습니다.");
@@ -30,7 +30,7 @@
 	}
   
   function validQuantity() {
-	    var input = $("#quantity").val();
+	    let input = $("#quantity").val();
 	    var pattern = /^[0-9]+$/; // 숫자만 허용하는 정규식 패턴
 	    var codeMsg = $("#quantityMsg");
 	    
@@ -69,7 +69,7 @@
           <tr>
           	<td class="table-primary text-center">수량</td>
             <td>
-            	<input type="number" name="opt_quantity" id="quantity" class="form-control" onkeyup="validQuantity()" value="${opt.opt_quantity }">
+            	<input type="text" name="opt_quantity" id="quantity" class="form-control" onkeyup="validQuantity()" value="${opt.opt_quantity }">
               <span class="mt-1" id="quantityMsg">&nbsp;</span>
               <input type="hidden" value="1" id="isQuantityValid">  
             </td>

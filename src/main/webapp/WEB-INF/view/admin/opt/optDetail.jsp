@@ -67,7 +67,7 @@
  		  html += '<a class="w3-bar-item w3-button w3-hover-black" href="javascript:optOrder(\'' + json.opt_number + "','" + (json.pageNum - 1) + '\')">&laquo;</a>'
  		}
 
- 		for (var a = json.startPage; a <= json.endPage; a++) {
+ 		for (var a = parseInt(json.startPage); a <= parseInt(json.endPage); a++) {
  		  if (a <= json.maxPage) {
  		   html += '<a class="w3-bar-item w3-button w3-hover-black '+ (a==json.pageNum? 'w3-black' : '') +' " href="javascript:optOrder(\'' + json.opt_number + "','" +a + '\')">'+a+'</a>';
  		  }
@@ -124,7 +124,7 @@
  		  html += '<a class="w3-bar-item w3-button w3-hover-black" href="javascript:optStock(\'' + json.opt_number + "','" + (json.pageNum - 1) + '\')">&laquo;</a>'
  		}
 
- 		for (var a = json.startPage; a <= json.endPage; a++) {
+ 		for (var a = parseInt(json.startPage); a <= parseInt(json.endPage); a++) {
  		  if (a <= json.maxPage) {
  		   html += '<a class="w3-bar-item w3-button w3-hover-black '+ (a==json.pageNum? 'w3-black' : '') +' " href="javascript:optOrder(\'' + json.opt_number + "','" +a + '\')">'+a+'</a>';
  		  }

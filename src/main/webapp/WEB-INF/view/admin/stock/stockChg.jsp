@@ -11,7 +11,7 @@
   function inputChk(f) {
 	  if($.trim(f.stock_quantity.value) == "") {
 		    alert("입고 수량을 입력하세요.");
-		    f.opt_quantity.focus();
+		    f.stock_quantity.focus();
 		    return false;
 		  }
 	  
@@ -24,7 +24,7 @@
 	}
   
   function validQuantity() {
-	    var input = $("#quantity").val();
+	    let input = $("#quantity").val();
 	    var pattern = /^[0-9]+$/; // 숫자만 허용하는 정규식 패턴
 	    var codeMsg = $("#quantityMsg");
 	    
@@ -60,7 +60,7 @@
           <tr>
             <td class="table-danger text-center">수량</td>
             <td>
-            	<input type="number" name="stock_quantity" id="quantity" class="form-control" onkeyup="validQuantity()" value="${stock.stock_quantity }">
+            	<input type="text" name="stock_quantity" id="quantity" class="form-control" onkeyup="validQuantity()" value="${stock.stock_quantity }">
               <span class="mt-1" id="quantityMsg">&nbsp;</span>
               <input type="hidden" name="curQuantity" value="${stock.stock_quantity }">
               <input type="hidden" value="1" id="isQuantityValid">  

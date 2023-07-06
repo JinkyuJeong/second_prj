@@ -25,7 +25,7 @@
 	}
 
   function validQuantity() {
-    var input = $("#quantity").val();
+    let input = parseInt($("#quantity").val());
     var pattern = /^[0-9]+$/; // 숫자만 허용하는 정규식 패턴
     var codeMsg = $("#quantityMsg");
     
@@ -67,7 +67,7 @@
           <tr>
           	<td class="table-danger text-center">입고 수량<span class="text-danger">*</span></td>
             <td>
-              <input type="number" name="stock_quantity" id="quantity" class="form-control" onkeyup="validQuantity()" placeholder="입고 수량을 입력하세요.">
+              <input type="text" name="stock_quantity" id="quantity" class="form-control" onkeyup="validQuantity()" placeholder="입고 수량을 입력하세요.">
               <span class="mt-1" id="quantityMsg">&nbsp;</span>
               <input type="hidden" value="0" id="isQuantityValid">
             </td>

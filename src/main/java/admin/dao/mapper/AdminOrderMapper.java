@@ -52,12 +52,12 @@ public interface AdminOrderMapper {
 	void orderStateChg(Map<String, Object> param);
 
 	@Select("SELECT COUNT(*) AS '주문 건 수', SUM(order_totalPay) AS '주문 금액' "
-			+ " FROM orderView "
+			+ " FROM h_order "
 			+ " WHERE order_state != '주문취소' and order_date = #{date}")
 	Map<String, Object> orderPay(LocalDate date);
 
 	@Select("SELECT COUNT(*) AS '취소 건 수', SUM(order_totalPay) AS '취소 금액' "
-			+ " FROM orderView "
+			+ " FROM h_order "
 			+ " WHERE order_state = '주문취소' and order_date = #{date}")
 	Map<String, Object> cancelPay(LocalDate date);
 

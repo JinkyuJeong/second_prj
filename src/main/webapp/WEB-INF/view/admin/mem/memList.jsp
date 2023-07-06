@@ -68,7 +68,7 @@
 											        <h5 class="modal-title" id="staticBackdropLabel">호미짐 관리자</h5>
 											        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 											      </div> 
-											      <div class="modal-body">해당 매니저를 탈퇴 처리 하시겠습니까?</div>
+											      <div class="modal-body">해당 회원을 탈퇴 처리 하시겠습니까?</div>
 											      <div class="modal-footer">
 											        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
 											        <button type="submit" class="btn btn-dark">탈퇴</button>
