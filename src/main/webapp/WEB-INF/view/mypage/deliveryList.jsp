@@ -35,6 +35,10 @@
 			</div>
 			<div style="flex-basis: 80%;">
       			<h1 class="mb-3">배송지 관리</h1>
+				<c:if test="${empty deliveryList }">
+      				<h2 class="text-secondary text-center">저장된 배송지 내역이 없습니다.</h2>
+      			</c:if>
+      			<c:if test="${!empty deliveryList }">      			
       			<div class="row">
         			<div class="col-9">
           				<h5>총 <span style="color: red;">${deliveryList.size() }</span>건</h5>
@@ -85,8 +89,9 @@
         </table>
 					
 				</div>
-				
+				</c:if>
     </div>
+    
 			</div>
 		</div>
 </body>

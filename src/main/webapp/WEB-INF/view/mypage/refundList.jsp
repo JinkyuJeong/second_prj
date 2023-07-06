@@ -47,6 +47,10 @@
       <p class="mb-3 text-secondary">
       	· <span class="text-danger"> 환불반려</span> 에 대한 문의사항은 <span class="text-danger">고객센터</span>로 문의주세요. <br>
       </p>
+      <c:if test="${empty map }">
+      		<h2 class="text-secondary text-center" style="margin-top:50px;">환불 내역이 없습니다.</h2>
+      </c:if>
+      <c:if test="${!empty map }">
       <div class="row">
         <div class="col-7">
           <h5>총 <span style="color: red;">${map.size() }</span>건</h5>
@@ -87,7 +91,7 @@
           </c:forEach>
         </table>
       </div>
-      
+      </c:if>
     </div>
 			</div>
 		</div>

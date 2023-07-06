@@ -96,7 +96,7 @@
       </p>
       <c:if test="${empty map }">
       		<h2 class="text-secondary text-center" style="margin-top:50px;">주문 내역이 없습니다.</h2>
-      	</c:if>
+      </c:if>
       <c:if test="${!empty map }">
       <div class="row">      	
         <div class="col-2">

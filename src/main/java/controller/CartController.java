@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import dto.Cart;
 import dto.Delivery;
 import dto.Mem;
+import dto.Opt;
 import dto.ProductOptView;
 import exception.ShopException;
 import service.ShopService;
@@ -55,9 +56,16 @@ public class CartController {
 		ModelAndView mav = new ModelAndView();	
 		Mem loginMem = (Mem)session.getAttribute("loginMem"); //이거 mem_id로 db에서 조회하는 걸로 바꾸기
 		if(product_number == null) { //장바구니에서 구매로
+			
 			if(opt_numberChecked == null) {
 				throw new ShopException("주문할 상품이 없습니다.", "cartAdd?mem_id=" + loginMem.getMem_id());
 			} else {
+				for(int i=0; i<quantity.length; i++) {
+					Opt opt = service.getOptionByNum(opt_number[i]);
+					if(opt.getOpt_quantity() < Integer.parseInt(quantity[i])) {
+						throw new ShopException("재고보다 많이 주문할 수 없습니다. 주문 수량을 확인해주세요.", "cartAdd?mem_id=" + loginMem.getMem_id());
+					}
+				}
 				Mem mem = (Mem)session.getAttribute("loginMem");
 			    String mem_id = mem.getMem_id();
 			    List<Cart> cartList = new ArrayList<>();

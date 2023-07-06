@@ -23,6 +23,10 @@
       	· 이미 <span class="text-danger"> 포인트가 지급된 건</span> 에 대해서는 <span class="text-danger">리뷰 삭제가 불가</span>합니다. <br>
       	· 포인트 지급내역은 <span class="text-danger">마이페이지 > 포인트 내역</span> 에서 확인 가능합니다.<br>
       </p>
+      <c:if test="${empty map }">
+      		<h2 class="text-secondary text-center" style="margin-top:50px;">리뷰 내역이 없습니다.</h2>
+      </c:if>
+      <c:if test="${!empty map }">
       <div class="row">
         <div class="col-7">
           <h5>총 <span style="color: red;">${map.size() }</span>건</h5>
@@ -91,7 +95,7 @@
         </table>
         
       </div>
-      
+      </c:if>
     </div>
 			</div>
 		</div>

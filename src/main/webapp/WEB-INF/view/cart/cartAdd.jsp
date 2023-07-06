@@ -111,8 +111,7 @@
 				success : function(result) {
 					if (quantityInput.val() >= parseInt(result)) {
 		        	   alert("상품 재고보다 많이 주문할 수 없습니다.");
-		        	   quantityInput.val(result);
-		        	   
+		        	   quantityInput.val(result);		        	   
 		        	   return;
 		        	} else {
 		        		location.reload();
@@ -161,7 +160,7 @@
               <td>
                 <div class="btn-group">
                   <button type="button" class="btn btn-secondary minusBtn" id="minusBtn_${st.index }">-</button>
-                  <input type="number" name="quantity" class="quantity" id="quantity" style="width:50px;" value="${map.key.opt_count }">
+                  <input type="number" name="quantity" class="quantity" id="quantity" style="width:50px;" value="${map.key.opt_count }" readonly>
                   <button type="button" class="btn btn-secondary plusBtn" id="plusBtn_${st.index }">+</button>
                 </div>
               </td>

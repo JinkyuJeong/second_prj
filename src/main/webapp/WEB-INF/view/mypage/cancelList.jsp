@@ -45,6 +45,10 @@
 			</div>
 			<div style="flex-basis: 80%;">
       <h1 class="mb-3">주문 취소 내역</h1>
+      <c:if test="${empty map }">
+      		<h2 class="text-secondary text-center" style="margin-top:50px;">주문 취소 내역이 없습니다.</h2>
+      </c:if>
+      <c:if test="${!empty map }">      
       <div class="row">
         <div class="col-7">
           <h5>총 <span style="color: red;">${map.size() }</span>건</h5>
@@ -85,6 +89,7 @@
           </c:forEach>
         </table>
       </div>
+      </c:if>
       
     </div>
 			</div>
