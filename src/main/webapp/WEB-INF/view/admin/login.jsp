@@ -40,6 +40,7 @@ function inputChk(form) {
     <form action="login" name="f" method="post" onsubmit="return inputChk(this)">
 
       <div class="container p-5 w3-white mt-5" style="width: 30%; border-radius: 2em;">
+      	<div class="text-center"><img src="${path }/images/logo.png" style="width : 60%"></div>
         <h1 class="text-center mb-5">관리자 로그인</h1>
         
         <div class="form-group">
