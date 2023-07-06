@@ -20,7 +20,8 @@ public class IamPortService {
     private HttpHeaders headers=new HttpHeaders();
     private JSONObject body=new JSONObject();
 
-    private IamPortDto getToken() {
+    @SuppressWarnings("unchecked")
+		private IamPortDto getToken() {
         headers.setContentType(MediaType.APPLICATION_JSON);
         body.put("imp_key", imp_key);
         body.put("imp_secret", imp_secret);
@@ -61,7 +62,8 @@ public class IamPortService {
         }
         return false;
     }
-    public CancelBuy cancelBuy(String merchant_uid,int returnPrice) {
+    @SuppressWarnings("unchecked")
+		public CancelBuy cancelBuy(String merchant_uid,int returnPrice) {
     	if(returnPrice != 0) {
     		 try {
     	        	IamPortDto iamPortDto=getToken();

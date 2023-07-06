@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import admin.dao.mapper.AdminOrderItemMapper;
-import dto.OrderItem;
 import dto.OrderView;
 
 @Repository

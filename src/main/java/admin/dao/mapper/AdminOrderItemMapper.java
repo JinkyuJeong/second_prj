@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Select;
 
-import dto.OrderItem;
 import dto.OrderView;
 
 public interface AdminOrderItemMapper {

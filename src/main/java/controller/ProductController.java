@@ -1,14 +1,12 @@
 package controller;
 
-import java.util.Comparator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -20,9 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import dto.Opt;
-import dto.OrderView;
 import dto.Product;
-import dto.Review;
 import dto.ReviewView;
 import exception.ShopException;
 import service.ShopService;
