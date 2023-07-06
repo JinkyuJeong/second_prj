@@ -78,7 +78,7 @@
   			<div class="col-4">
 	  		<table class="table">
 	  			<tr>
-	  				<td>	  					
+	  				<td>				
           				<a href="productDetail?product_number=${m.key.product_number }"><img src="${path }/img/thumb/${m.key.product_thumb}" style="width:100%"></a>
           				<div class="row"> 
 	          				<div class="col-6" style="display: flex;">
