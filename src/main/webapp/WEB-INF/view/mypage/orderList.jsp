@@ -94,7 +94,11 @@
       	·<span class="text-danger"> 환불 내역</span>이 있는 주문은 <span class="text-danger">구매확정</span>할 수 없습니다. <br>
       	·<span class="text-danger"> 주문 취소</span>는 <span class="text-danger">상품 준비 중 이전</span>(결제완료)의 상품만 가능합니다. <br>
       </p>
-      <div class="row">
+      <c:if test="${empty map }">
+      		<h2 class="text-secondary text-center" style="margin-top:50px;">주문 내역이 없습니다.</h2>
+      	</c:if>
+      <c:if test="${!empty map }">
+      <div class="row">      	
         <div class="col-2">
           <h5>총 <span style="color: red;">${map.size() }</span>건</h5>
         </div>
@@ -175,7 +179,7 @@
 					</c:if>
 		    </div>
 		  </div>
-      
+      </c:if>
     </div>
 			</div>
 		</div>

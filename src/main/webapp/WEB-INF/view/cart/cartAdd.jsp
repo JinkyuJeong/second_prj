@@ -112,6 +112,7 @@
 					if (quantityInput.val() >= parseInt(result)) {
 		        	   alert("상품 재고보다 많이 주문할 수 없습니다.");
 		        	   quantityInput.val(result);
+		        	   
 		        	   return;
 		        	} else {
 		        		location.reload();

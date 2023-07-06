@@ -95,17 +95,27 @@
 	  //포인트 사용
 	  $("#order_point").keyup(function() {
 		  $("#pointMsg").text("")
+		  var regex = /^\d+$/;
+		  var msg = "";		  
 		  var point = parseInt($("#order_point").val());
 		  if($("#order_point").val() == "") point = 0;		  
 		  var mem_point = parseInt($("#mem_point").val());
 		  var final_amount = parseInt($("#final_amount").val());
-		  if(point > mem_point) {
+		  if($("#order_point").val().includes(" ")) {
+			  msg = "유효하지 않은 포인트 값입니다.";
+			  $("#pointMsg").text(msg)
+		  } else if($("#order_point").val() != 0 && !regex.test($("#order_point").val())) {
+			  msg = "유효하지 않은 포인트 값입니다.";
+			  $("#pointMsg").text(msg)
+		  } else if(point > mem_point) {
 			  msg = "보유포인트 보다 많은 포인트를 사용할 수 없습니다.";
 			  $("#pointMsg").text(msg)
 		  } else if (point > final_amount) {
 			  msg = "결제하려는 금액보다 사용하려는 포인트가 많습니다."
 			  $("#pointMsg").text(msg)
-		  } else {
+		  } else if(point <0 ) {
+			  msg = "유효하지 않은 포인트값입니다."
+		  }	else {
 			  $("#pointMsg").text("")
 			  $("#total").text(final_amount - point)
 			  $("#Total").text(final_amount - point)
@@ -323,7 +333,7 @@
                 <div class="mb-1">
                   <label for="name" class="form-label">주소 &nbsp;&nbsp;</label>
                   <div class="input-group">
-                    <input type="text" class="form-control" name="delivery_postcode" id="sample6_postcode" placeholder="우편번호">
+                    <input type="text" class="form-control" name="delivery_postcode" id="sample6_postcode" placeholder="우편번호" readonly>
                     <input type="button" class="btn btn-light " id="searchPostcode" value="우편번호 찾기"><br>                  
                   </div>
                 </div>                
@@ -333,7 +343,7 @@
               <label for="name" class="col-sm-2 col-form-label"></label>
               <div class="col-sm-10">
                 <div class="mb-1">
-                  <input type="text" class="form-control" name="delivery_address" id="sample6_address" placeholder="주소"><br>
+                  <input type="text" class="form-control" name="delivery_address" id="sample6_address" placeholder="주소" readonly><br>
                 </div>
               </div>
             </div>
@@ -431,9 +441,7 @@
 		      return false;
     	  }
     	  var newDelivery = document.getElementById("flexRadioDefault1");
-    	  console.log(newDelivery.value)
     	  var og = document.getElementById("flexRadioDefault2");
-    	  console.log(og.value)
     	  if(newDelivery.checked && f.delivery_nickName.value.trim() == "") {
     		  alert("배송지 별명을 입력하세요.")
 		      f.delivery_nickName.focus();
@@ -474,11 +482,32 @@
     		    f.receiver_phoneNo3.focus();
     		    return false;
     	  }
+    	  var regex = /^\d+$/;
+    	  if(!regex.test(f.receiver_phoneNo1.value.trim()) || f.receiver_phoneNo1.value.length <3){
+  		    alert("유효하지 않은 전화번호 입니다.")
+  		    f.receiver_phoneNo1.focus();
+  		    return false;
+  	  	  }
+    	  if(!regex.test(f.receiver_phoneNo2.value.trim()) || f.receiver_phoneNo2.value.length <4){
+    		  alert("유효하지 않은 전화번호 입니다.")
+  		    f.receiver_phoneNo2.focus();
+  		    return false;
+  	      }
+    	  if(!regex.test(f.receiver_phoneNo3.value.trim()) || f.receiver_phoneNo3.value.length <4){
+    		  alert("유효하지 않은 전화번호 입니다.")
+  		    f.receiver_phoneNo3.focus();
+  		    return false;
+  	  	  }
     	  if(f.order_msg.value.trim() == "optionNotSelected") {
     		  alert("배송 메세지를 선택 혹은 입력하세요.")
   		    	f.order_msg.focus();
   		    	return false;
-    	  }  
+    	  }
+    	  if(f.order_msg.value.trim() == "직접입력" && f.order_msgSelf.value.trim() == "") {
+    		  alert("배송 메세지를 입력하세요.")
+  		    	f.order_msgSelf.focus();
+  		    	return false;
+    	  } 
     	  var og = document.getElementById("pointMsg");
     	  if(og.innerText !== "") {
     		  alert("포인트 메세지를 확인하세요.")

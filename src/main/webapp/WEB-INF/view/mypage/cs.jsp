@@ -93,7 +93,7 @@
           </tr> 
           
           <!-- 문의 상세정보 -->
-          <tr style="text-align:center;" class="saleLine" id="cs_aContent${c.cs_number }">
+          <tr style="text-align:center;display:none;" class="saleLine" id="cs_aContent${c.cs_number }">
             <td colspan="7">
             <table id="csDetail${c.cs_number }" class="table table-borderless">                    
             </table>

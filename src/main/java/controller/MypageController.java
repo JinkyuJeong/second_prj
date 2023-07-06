@@ -254,6 +254,9 @@ public class MypageController {
 	public ModelAndView idCheckReviewUpdate(Integer review_number, String mem_id, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		Review review = service.getReviewNum(review_number);
+		if(review == null) {
+			throw new ShopException("존재하지 않는 리뷰입니다.", "reviewList?mem_id="+mem_id);
+		}
 		OrderView ov = service.getOvItemId(review.getOrder_itemId());
 		mav.addObject("review",review);
 		mav.addObject("ov", ov);
@@ -331,6 +334,12 @@ public class MypageController {
 			session.setAttribute("loginMem", newMem);
 			throw new ShopException("회원 정보 수정이 완료되었습니다.", "myInfo?mem_id="+mem_id);
 		}		
+	}
+	
+	@GetMapping("memDelete")
+	public ModelAndView idCheckmemDeleteGet(String mem_id, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		return mav;
 	}
 	
 	@PostMapping("memDelete")

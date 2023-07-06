@@ -65,6 +65,10 @@
   			<a href="productList?product_type=${param.product_type}&sort=5&searchContent=${param.searchContent != null ? param.searchContent : ''}" class="noline ${param.sort == 5 ? 'active' : ''}">리뷰많은순</a>
 		</div>     
       </div>
+      
+      <c:if test="${empty map}">
+      	<h2 class="text-secondary text-center" >상품이 없습니다.</h2>
+      </c:if>
 	
 	  <c:forEach items="${map }" var="m" varStatus="st">
 	  		<c:if test="${st.index % 3 == 0}">
