@@ -434,7 +434,11 @@
         </div>
       </div>
       
-    </div></div></div>
+    </div></div>
+    <div class="mt-3 text-center">
+    	<button type="button" class="btn btn-danger btn-lg" id="join"><a href="${path }/product/productList" style="text-decoration:none;">목록</a></button>
+    </div>
+    </div>
     <!-- 상품 사진 슬라이드 -->
 <script>
 let slideIndex = 1;

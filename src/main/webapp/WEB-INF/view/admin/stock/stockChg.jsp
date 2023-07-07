@@ -50,7 +50,7 @@
       	<input type="hidden" value="${stock.opt_number }" name="opt_number">
         <table class="table align-middle">
           <tr class="text-center">
-            <td class="table-danger text-center">제품명(옵션)</td>
+            <td width="25%" class="table-danger text-center">제품명(옵션)</td>
             <td>${stock.stock_prodName }</td>
           </tr>
           <tr>

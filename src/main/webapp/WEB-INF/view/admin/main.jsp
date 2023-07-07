@@ -84,7 +84,7 @@
 	      html += '<th rowspan="2">구매확정</th>';
 	      html += '<th rowspan="2">취소</th>';
 	      html += '<th>환불</th>';
-	      html += '<th>상품문의</th>';
+	      html += '<th>1:1 문의</th>';
 	      html += '</tr>';
 	      html += '<tr class="table-secondary">';
 	      html += '<th>신청/처리완료</th>';
