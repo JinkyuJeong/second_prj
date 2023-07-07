@@ -31,6 +31,7 @@
 	}
 	$(()=>{
 		var reviewScore = ${review.review_value };
+		var maxLength = 100; // 최대 글자 수
 
 	  $(".star").each(function() {
 	    var value = $(this).data("value");
@@ -44,6 +45,18 @@
 	    $("#review_value").val(value);
 	    $(".star").removeClass("filled");
 	    $(this).prevAll(".star").addBack().addClass("filled");
+	  });
+		
+		$("#review_content").keyup(function() {
+	    const length = $(this).val().length;
+	    const remaining = maxLength - length;
+
+	    $("#char_count").text(remaining + " / 100");
+
+	    if (remaining < 0) {
+	      $(this).val($(this).val().substring(0, maxLength));
+	      $("#char_count").text("0 / 100");
+	    }
 	  });
 	})
 </script>
@@ -84,10 +97,10 @@
 
 						<div class="form-group">
 							<label class="mb-1" for="review_content">리뷰내용<span class="text-danger">*</span></label>
-							<div class="input-group mb-3">
-								<input type="text" class="form-control" name="review_content"
-									id="review_content" value="${review.review_content }">
+							<div class="input-group ">
+							  <textarea rows="7" class="form-control" name="review_content" id="review_content">${review.review_content }</textarea>
 							</div>
+							<div  class="mb-3" style="color:grey" id="char_count"></div>
 						</div>
 						<button class="btn btn-danger" type="submit">리뷰수정</button>
 					</div>

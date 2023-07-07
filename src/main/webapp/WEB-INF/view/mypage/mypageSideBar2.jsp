@@ -10,7 +10,6 @@
   </div>
   <hr>
   <div class="w3-bar-block">
-    <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>&nbsp; Close Menu</a>
     <a href="${path}/mypage/orderList?mem_id=${sessionScope.loginMem.mem_id}" 
     class="w3-bar-item w3-button w3-padding <c:if test='${url=="orderList" }'>w3-red</c:if>">
     &nbsp; · 주문목록</a>
