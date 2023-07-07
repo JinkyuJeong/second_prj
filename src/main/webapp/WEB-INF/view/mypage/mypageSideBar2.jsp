@@ -27,6 +27,10 @@
     class="w3-bar-item w3-button w3-padding <c:if test='${url=="pointList" }'>w3-red</c:if>">
     &nbsp; · 포인트 내역</a>
     <hr>
+    <a href="${path}/mypage/challList?mem_id=${sessionScope.loginMem.mem_id}" 
+    class="w3-bar-item w3-button w3-padding <c:if test='${url=="chall"}'>w3-red </c:if>">
+    &nbsp; · 이벤트 관리</a>
+    <hr>
     <a href="${path}/mypage/cs?mem_id=${sessionScope.loginMem.mem_id}" 
     class="w3-bar-item w3-button w3-padding <c:if test='${url=="cs"}'>w3-red </c:if>">
     &nbsp; · 1:1문의</a>

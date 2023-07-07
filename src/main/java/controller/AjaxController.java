@@ -217,8 +217,7 @@ public class AjaxController {
 			return "배송지 정보 삭제 성공";
 		} else {
 			return "배송지 정보 삭제 실패";
-		}
-		
+		}		
 	}
 	
 	@RequestMapping("newD")
@@ -292,5 +291,15 @@ public class AjaxController {
 		int endpage = startIndex + 2;
 		if (endpage > maxpage) endpage = maxpage;
 		return reviewList;
+	}
+	
+	@RequestMapping("deleteChall")
+	@ResponseBody
+	public String deleteChall(Integer chall_number) {
+		if(service.deleteChall(chall_number)) {
+			return "배송지 정보 삭제 성공";
+		} else {
+			return "배송지 정보 삭제 실패";
+		}		
 	}
 }

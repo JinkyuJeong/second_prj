@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import dto.Chall;
 import dto.Cs;
 import dto.Delivery;
 import dto.Mem;
@@ -361,4 +362,37 @@ public class MypageController {
 		}
 	}
 	
+	@GetMapping("challList")
+	public ModelAndView idCheckChallList(Integer pageNum, String chall_state, String mem_id, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		List<Chall> myChallList = new ArrayList<>();
+		if(pageNum == null || pageNum.toString().equals("")) {
+			pageNum = 1;
+		}		
+		if (chall_state == null || chall_state.equals("")) {
+			chall_state="";
+		}
+			
+		int challCnt = service.myChallCnt(chall_state, mem_id);
+		int limit = 10;
+		int maxPage = (int)((double)challCnt/limit +0.95);
+		int startPage = pageNum-(pageNum-1)%5;
+		int endPage = startPage + 4;
+		if(endPage > maxPage) endPage = maxPage;
+		
+		if(chall_state == null || chall_state.equals("")) {
+			myChallList = service.getMyChallList(pageNum, mem_id);
+		} else if(chall_state.equals("지급대기")) {
+			myChallList = service.getMyChallListState(pageNum, mem_id, chall_state);
+		} else if(chall_state.equals("지급완료")) {
+			myChallList = service.getMyChallListState(pageNum, mem_id, chall_state);
+		}
+		mav.addObject("myChallList", myChallList);
+		mav.addObject("challCnt", challCnt);
+		mav.addObject("pageNum", pageNum);
+		mav.addObject("startPage", startPage);
+		mav.addObject("endPage", endPage);
+		mav.addObject("maxPage", maxPage);
+		return mav;
+	}
 }

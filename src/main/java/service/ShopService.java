@@ -414,4 +414,20 @@ public class ShopService {
 		return pointDao.getPointList(pageNum, mem_id, point_type);
 	}
 
+	public List<Chall> getMyChallList(Integer pageNum, String mem_id) {
+		return challDao.getMyChallList(pageNum, mem_id);
+	}
+
+	public List<Chall> getMyChallListState(Integer pageNum, String mem_id, String chall_state) {
+		return challDao.getMyChallListState(pageNum, mem_id, chall_state);
+	}
+
+	public boolean deleteChall(Integer chall_number) {
+		return challDao.deleteChall(chall_number);
+	}
+
+	public int myChallCnt(String chall_state, String mem_id) {
+		return challDao.myChallCnt(chall_state, mem_id);
+	}
+
 }

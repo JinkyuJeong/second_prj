@@ -3,6 +3,7 @@ package dao.mapper;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
@@ -31,4 +32,22 @@ public interface ChallMapper {
 
 	@Select("select * from chall where mem_id=#{value} order by chall_cnt desc limit 1")
 	Chall getMyChall(String mem_id);
+
+	@Select("select * from chall where mem_id=#{mem_id} order by chall_regdate desc LIMIT #{start}, 10")
+	List<Chall> getMyChallList(Map<String, Object> param);
+
+	@Select("select * from chall where mem_id=#{mem_id} and chall_state=#{chall_state} order by chall_regdate desc LIMIT #{start}, 10")
+	List<Chall> getMyChallListState(Map<String, Object> param);
+
+	@Delete("delete from chall where chall_number=#{value}")
+	boolean deleteChall(Integer chall_number);
+
+	@Select({"<script>",
+		"select count(*) from chall ",
+		"<if test='chall_state!=null'>",
+		" where chall_state like #{chall_state}",
+		"</if>",	
+		"</script>"		
+	})
+	int myChallCnt(Map<String, Object> param);
 }

@@ -63,12 +63,12 @@
 						<a class="w3-bar-item w3-button w3-hover-black" onclick="alert('이전 페이지가 없습니다.');">&laquo;</a>
 					</c:if>
 					<c:if test="${pageNum > 1}">
-						<a class="w3-bar-item w3-button w3-hover-black" href="pointList?pageNum=${pageNum-1}&mem_id=${sessionScope.loginMem.mem_id}&point_type=${param.point_type }'">&laquo;</a>
+						<a class="w3-bar-item w3-button w3-hover-black" href="pointList?pageNum=${pageNum-1}&mem_id=${sessionScope.loginMem.mem_id}&point_type=${param.point_type }">&laquo;</a>
 					</c:if>
 					
 					<c:forEach var="a" begin="${startPage}" end="${endPage}">
 						<c:if test="${a <= maxPage}">
-							<a class="w3-bar-item w3-button w3-hover-black ${a == pageNum ? 'w3-black' : '' }" href="pointList?pageNum=${a}&mem_id=${sessionScope.loginMem.mem_id}&point_type=${param.point_type }'">${a}</a>
+							<a class="w3-bar-item w3-button w3-hover-black ${a == pageNum ? 'w3-black' : '' }" href="pointList?pageNum=${a}&mem_id=${sessionScope.loginMem.mem_id}&point_type=${param.point_type }">${a}</a>
 						</c:if>
 					</c:forEach>
 						
@@ -76,7 +76,7 @@
 						<a class="w3-bar-item w3-button w3-hover-black" onclick="alert('다음 페이지가 없습니다.');">&raquo;</a>
 					</c:if>
 					<c:if test="${startPage+4 < maxPage}">
-						<a class="w3-bar-item w3-button w3-hover-black" href="pointList?pageNum=${startPage+5}&mem_id=${sessionScope.loginMem.mem_id}&point_type=${param.point_type }'">&raquo;</a>
+						<a class="w3-bar-item w3-button w3-hover-black" href="pointList?pageNum=${startPage+5}&mem_id=${sessionScope.loginMem.mem_id}&point_type=${param.point_type }">&raquo;</a>
 					</c:if>
 		    </div>
 		  </div>
