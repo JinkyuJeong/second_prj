@@ -8,13 +8,20 @@
 <head>
 <meta charset="UTF-8">
 <title>호미짐</title>
+<style type="text/css">
+.star {
+  display: inline-block;
+  cursor: pointer;
+  font-size : 20px;
+  margin : 0 10px 10px 0;
+}
+
+.star.filled {
+  color: red;
+}
+</style>
 <script>
 	function input_chk(f) {
-		if (f.review_value.value.trim() === "") {
-			alert("별점을 선택하세요.")
-			f.review_value.focus();
-			return false;
-		}
 		if (f.review_content.value.trim() === "") {
 			alert("리뷰 내용을 입력하세요.");
 			f.review_content.focus();
@@ -22,6 +29,23 @@
 		}
 		return true;
 	}
+	$(()=>{
+		var reviewScore = ${review.review_value };
+
+	  $(".star").each(function() {
+	    var value = $(this).data("value");
+	    if (value <= reviewScore) {
+	      $(this).addClass("filled");
+	    }
+	  });
+		
+		$(".star").click(function() {
+	    var value = $(this).data("value");
+	    $("#review_value").val(value);
+	    $(".star").removeClass("filled");
+	    $(this).prevAll(".star").addBack().addClass("filled");
+	  });
+	})
 </script>
 </head>
 <body>
@@ -46,31 +70,20 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="mb-1" for="review_value">별점</label>
+							<label class="mb-1" for="review_value">별점<span class="text-danger">*</span></label>
+							
 							<div class="input-group mb-3">
-								<select class="form-select" id="review_value"
-									name="review_value">
-									<option value="${review.review_value }" selected>
-										<c:choose>
-											<c:when test="${review.review_value == 1 }">★☆☆☆☆</c:when>
-											<c:when test="${review.review_value == 2 }">★★☆☆☆</c:when>
-											<c:when test="${review.review_value == 3 }">★★★☆☆</c:when>
-											<c:when test="${review.review_value == 4 }">★★★★☆</c:when>
-											<c:when test="${review.review_value == 5 }">★★★★★</c:when>
-											<c:otherwise>별점을 선택하세요.</c:otherwise>
-										</c:choose>
-									</option>
-									<option value="5">★★★★★</option>
-									<option value="4">★★★★☆</option>
-									<option value="3">★★★☆☆</option>
-									<option value="2">★★☆☆☆</option>
-									<option value="1">★☆☆☆☆</option>
-								</select>
+							  <input type="hidden" id="review_value" name="review_value" value="${review.review_value }">
+							  <div class="star" data-value="1"><i class="fa fa-star" aria-hidden="true"></i></div>
+							  <div class="star" data-value="2"><i class="fa fa-star" aria-hidden="true"></i></div> 
+							  <div class="star" data-value="3"><i class="fa fa-star" aria-hidden="true"></i></div> 
+							  <div class="star" data-value="4"><i class="fa fa-star" aria-hidden="true"></i></div> 
+							  <div class="star" data-value="5"><i class="fa fa-star" aria-hidden="true"></i></div> 
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label class="mb-1" for="review_content">리뷰내용</label>
+							<label class="mb-1" for="review_content">리뷰내용<span class="text-danger">*</span></label>
 							<div class="input-group mb-3">
 								<input type="text" class="form-control" name="review_content"
 									id="review_content" value="${review.review_content }">

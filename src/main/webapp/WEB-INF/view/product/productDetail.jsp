@@ -221,15 +221,15 @@
 	            	result.forEach(function (r) {
 		                var reviewValue = "";
 		                if (r.review_value == '1') {
-		                    reviewValue = "★☆☆☆☆";
+		                    reviewValue = "<i class='fa fa-star text-danger'></i></i><i class='fa fa-star-o'></i></i><i class='fa fa-star-o'></i></i><i class='fa fa-star-o'></i></i><i class='fa fa-star-o'></i>";
 		                } else if (r.review_value == '2') {
-		                    reviewValue = "★★☆☆☆";
+		                    reviewValue = "<i class='fa fa-star text-danger'></i><i class='fa fa-star text-danger'></i></i><i class='fa fa-star-o'></i></i><i class='fa fa-star-o'></i></i><i class='fa fa-star-o'></i>";
 		                } else if (r.review_value == '3') {
-		                    reviewValue = "★★★☆☆";
+		                    reviewValue = "<i class='fa fa-star text-danger'></i><i class='fa fa-star text-danger'></i><i class='fa fa-star text-danger'></i></i><i class='fa fa-star-o'></i></i><i class='fa fa-star-o'></i>";
 		                } else if (r.review_value == '4') {
-		                    reviewValue = "★★★★☆";
+		                    reviewValue = "<i class='fa fa-star text-danger'></i><i class='fa fa-star text-danger'></i><i class='fa fa-star text-danger'></i><i class='fa fa-star text-danger'></i></i><i class='fa fa-star-o'></i>";
 		                } else if (r.review_value == '5') {
-		                    reviewValue = "★★★★★";
+		                    reviewValue = "<i class='fa fa-star text-danger'></i><i class='fa fa-star text-danger'></i><i class='fa fa-star text-danger'></i><i class='fa fa-star text-danger'></i><i class='fa fa-star text-danger'></i>";
 		                }	                
 		                html += '<div class="row mx-5 mt-1 mb-1">';
 		                html += '	<div class="col">' + reviewValue + '</div>' 

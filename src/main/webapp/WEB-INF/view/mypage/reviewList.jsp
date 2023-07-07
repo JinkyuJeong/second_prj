@@ -53,19 +53,19 @@
             <td><fmt:formatDate value="${m.key.review_date}" pattern="yyyy-MM-dd" /></td>
             <td>
             	<c:if test="${m.key.review_value== '1' }">
-            		★☆☆☆☆
+            		<i class="fa fa-star text-danger" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i>
             	</c:if>
             	<c:if test="${m.key.review_value== '2' }">
-            		★★☆☆☆
+            		<i class="fa fa-star text-danger" aria-hidden="true"></i><i class="fa fa-star text-danger" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i>
             	</c:if>
             	<c:if test="${m.key.review_value== '3' }">
-            		★★★☆☆
+            		<i class="fa fa-star text-danger" aria-hidden="true"></i><i class="fa fa-star text-danger" aria-hidden="true"></i><i class="fa fa-star text-danger" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i>
             	</c:if>
             	<c:if test="${m.key.review_value== '4' }">
-            		★★★★☆
+            		<i class="fa fa-star text-danger" aria-hidden="true"></i><i class="fa fa-star text-danger" aria-hidden="true"></i><i class="fa fa-star text-danger" aria-hidden="true"></i><i class="fa fa-star text-danger" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i>
             	</c:if>
             	<c:if test="${m.key.review_value== '5' }">
-            		★★★★★
+            		<i class="fa fa-star text-danger" aria-hidden="true"></i><i class="fa fa-star text-danger" aria-hidden="true"></i><i class="fa fa-star text-danger" aria-hidden="true"></i><i class="fa fa-star text-danger" aria-hidden="true"></i><i class="fa fa-star text-danger" aria-hidden="true"></i>
             	</c:if>
             </td>
             <td>${m.key.review_content }</td>           
