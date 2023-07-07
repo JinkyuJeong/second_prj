@@ -33,8 +33,8 @@ public class ChallDao {
 
 	public List<Chall> getChallList(Integer pageNum) {
 		param.clear();
-		param.put("start", (pageNum -1) * 10);
-		param.put("limit", 10);
+		param.put("start", (pageNum -1) * 8);
+		param.put("limit", 8);
 		
 		return template.getMapper(cls).getChallList(param);
 	}
