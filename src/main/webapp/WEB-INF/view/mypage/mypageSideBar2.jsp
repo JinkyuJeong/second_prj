@@ -28,7 +28,7 @@
     <hr>
     <a href="${path}/mypage/challList?mem_id=${sessionScope.loginMem.mem_id}" 
     class="w3-bar-item w3-button w3-padding <c:if test='${url=="chall"}'>w3-red </c:if>">
-    &nbsp; · 이벤트 관리</a>
+    &nbsp; · 챌린지 참여 내역</a>
     <hr>
     <a href="${path}/mypage/cs?mem_id=${sessionScope.loginMem.mem_id}" 
     class="w3-bar-item w3-button w3-padding <c:if test='${url=="cs"}'>w3-red </c:if>">

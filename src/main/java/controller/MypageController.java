@@ -374,11 +374,15 @@ public class MypageController {
 		}
 			
 		int challCnt = service.myChallCnt(chall_state, mem_id);
+		System.out.println(challCnt);
 		int limit = 10;
 		int maxPage = (int)((double)challCnt/limit +0.95);
 		int startPage = pageNum-(pageNum-1)%5;
 		int endPage = startPage + 4;
 		if(endPage > maxPage) endPage = maxPage;
+		
+		System.out.println("maxPage"+maxPage);
+		System.out.println("startPage"+startPage);
 		
 		if(chall_state == null || chall_state.equals("")) {
 			myChallList = service.getMyChallList(pageNum, mem_id);

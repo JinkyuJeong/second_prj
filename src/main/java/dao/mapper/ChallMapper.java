@@ -43,9 +43,9 @@ public interface ChallMapper {
 	boolean deleteChall(Integer chall_number);
 
 	@Select({"<script>",
-		"select count(*) from chall ",
+		"select count(*) from chall where mem_id=#{mem_id}",
 		"<if test='chall_state!=null'>",
-		" where chall_state like #{chall_state}",
+		" and chall_state like #{chall_state}",
 		"</if>",	
 		"</script>"		
 	})

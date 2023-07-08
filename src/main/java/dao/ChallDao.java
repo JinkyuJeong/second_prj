@@ -59,7 +59,6 @@ public class ChallDao {
 		param.clear();
 		param.put("mem_id", mem_id);
 		param.put("start", (pageNum -1) * 10);
-		param.put("limit", 10);
 		return template.getMapper(cls).getMyChallList(param);
 	}
 
@@ -68,7 +67,6 @@ public class ChallDao {
 		param.put("mem_id", mem_id);
 		param.put("chall_state", chall_state);
 		param.put("start", (pageNum -1) * 10);
-		param.put("limit", 10);
 		return template.getMapper(cls).getMyChallListState(param);
 	}
 

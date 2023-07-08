@@ -48,8 +48,8 @@
 							총 <span style="color: red;">${myChallList.size() }</span>건
 						</h5>
 					</div>
-					<div class="col-5 text-end">
-						<div class="btn-group mb-3">
+					<div class="col-5 text-end" >
+						<div class="btn-group">
 							<button type="button"
 								onclick="location.href='challList?mem_id=${sessionScope.loginMem.mem_id}'"
 								class="btn btn-outline-danger ${empty param.chall_state ? 'active' : '' }">전체</button>
@@ -62,47 +62,45 @@
 						</div>
 					</div>
 				</div>
-			<div class="row" id="oinfo" class="info">
-						<table class="table table-hover">
-							<tr	style="text-align: center; background-color: #D1180B; color: white;">
-								<th>등록일자</th>
-								<th>이미지</th>
-								<th>포인트 지급유무</th>
-								<th>횟수</th>	
-							</tr>
-							<c:forEach items="${myChallList }" var="m" varStatus="st">
-								<tr style="text-align: center;">
-									<td><fmt:formatDate value="${m.chall_regdate}" pattern="yyyy-MM-dd" /></td>
-									<td><img src="${path }/img/chall/${m.chall_pic }" style="width:100px; height:100px;"></td>
-									<td>
-										${m.chall_state }<br>
-										<c:if test="${m.chall_state == '지급대기' }">
-											<button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal${m.chall_number }">삭제</button>
-										</c:if>										
-									</td>
-									<td>${m.chall_cnt }일차</td>
-								</tr>
-								          <!-- Modal -->
-					<div class="modal fade" id="exampleModal${m.chall_number }" tabindex="-1"
-						aria-labelledby="exampleModalLabel" aria-hidden="true">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title" id="exampleModalLabel">챌린지 삭제</h5>
-									<button type="button" class="btn-close" data-bs-dismiss="modal"
-										aria-label="Close"></button>
-								</div>
-								<div class="modal-body">챌린지를 삭제하시겠습니까?</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-									<button type="button" class="btn btn-danger" onclick="javascript:deleteChall('${m.chall_number }')">삭제</button>
-								</div>
-							</div>
-						</div>
-					</div>
-							</c:forEach>
-						</table>
-					</div>
+				
+				<hr>
+				
+				<div class="row text-center mb-3">
+				  <c:forEach items="${myChallList}" var="m" varStatus="st">
+				    <div class="col-2 ms-3 mr-3">
+				      <h5>💪 ${m.chall_cnt}일차</h5>
+				      <div class="mb-3"><img src="${path}/img/chall/${m.chall_pic}" style="width:100%;height:150px;"></div>
+				      <p><i class="fa fa-calendar"></i> <fmt:formatDate value="${m.chall_regdate}" pattern="yyyy-MM-dd" /></p>
+				      ${m.chall_state}<br>
+				      <c:if test="${m.chall_state == '지급대기'}">
+				        <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal${m.chall_number}">삭제</button>
+				      </c:if>
+				    </div>
+				
+				    <!-- Modal -->
+				    <div class="modal fade" id="exampleModal${m.chall_number}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				      <div class="modal-dialog">
+				        <div class="modal-content">
+				          <div class="modal-header">
+				            <h5 class="modal-title" id="exampleModalLabel">챌린지 삭제</h5>
+				            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				          </div>
+				          <div class="modal-body">챌린지를 삭제하시겠습니까?</div>
+				          <div class="modal-footer">
+				            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+				            <button type="button" class="btn btn-danger" onclick="javascript:deleteChall('${m.chall_number}')">삭제</button>
+				          </div>
+				        </div>
+				      </div>
+				    </div>
+				
+				    <c:if test="${st.count % 5 eq 0}">
+				      </div>
+				      <div class="row text-center mb-3">
+				    </c:if>
+				  </c:forEach>
+				</div>
+						
 					       <div class="w3-center w3-padding-32">
 		    <div class="w3-bar">
 			    <c:if test="${pageNum<= 1}">
@@ -126,6 +124,7 @@
 					</c:if>
 		    </div>
 		  </div>
+		  
 				</c:if>
 
 			</div>
