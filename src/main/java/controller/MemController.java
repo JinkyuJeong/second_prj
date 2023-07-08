@@ -321,7 +321,7 @@ public class MemController {
 		if(dbMem.getMem_channel() == null) {
 			if(dbMem.getMem_pw().equals(hashPass)) {
 				session.setAttribute("loginMem", dbMem);
-				throw new ShopException("반갑습니다. " + dbMem.getMem_name() + "님 :)", "/second_prj/mypage/orderList?mem_id=" + mem.getMem_id());
+				throw new ShopException("반갑습니다. " + dbMem.getMem_name() + "님 :)", "/second_prj");
 			} else {
 				throw new ShopException("아이디 또는 비밀번호를 확인하세요.", "login");
 			}
