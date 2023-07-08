@@ -275,6 +275,7 @@ public class MemController {
 		String kakaoRedirectURL = null;
 		String googleRedirectURL = null;
 		try {
+			// redirectURI = URLEncoder.encode("http://14.36.141.71:10062/second_prj/mem/naverLogin","UTF-8");
 			redirectURI = URLEncoder.encode("http://localhost:8080/second_prj/mem/naverLogin","UTF-8");
 			kakaoRedirectURL = URLEncoder.encode("http://14.36.141.71:10062/second_prj/mem/kakaoLogin", "UTF-8");
 			googleRedirectURL = URLEncoder.encode("http://localhost:8080/second_prj/mem/googleLogin", "UTF-8");
@@ -396,7 +397,7 @@ public class MemController {
 		Mem mem = service.getMemEmail(mem_email);	
 		if(mem != null) {
 			session.setAttribute("loginMem", mem);
-			throw new ShopException("반갑습니다. " + mem.getMem_name() + "님 :)", "/second_prj/mypage/orderList?mem_id=" + mem.getMem_id());
+			throw new ShopException("반갑습니다. " + mem.getMem_name() + "님 :)", "/second_prj");
 		} else {
 			mem = new Mem();
 			mem.setMem_id(mem_email);
@@ -406,7 +407,7 @@ public class MemController {
 			int maxMemNum = service.maxMemNum();
 			mem.setMem_number(maxMemNum+1);
 			if(service.userInsert(mem)) {
-				throw new ShopException("반갑습니다. " + mem.getMem_name() + "님 :)", "mypage/orderList?mem_id=" + mem.getMem_id());
+				throw new ShopException("반갑습니다. " + mem.getMem_name() + "님 :)", "/second_prj");
 			} else {
 				throw new ShopException("죄송합니다. 소셜 로그인 과정 중 오류가 발생했습니다.", "mem/login");
 			}
@@ -483,7 +484,7 @@ public class MemController {
 		Mem mem = service.getMemEmail(mem_email);	
 		if(mem != null) {
 			session.setAttribute("loginMem", mem);
-			throw new ShopException("반갑습니다. " + mem.getMem_name() + "님 :)", "/second_prj/mypage/orderList?mem_id=" + mem.getMem_id());
+			throw new ShopException("반갑습니다. " + mem.getMem_name() + "님 :)", "/second_prj");
 		} else {
 			mem = new Mem();
 			mem.setMem_id(mem_email);
@@ -493,7 +494,7 @@ public class MemController {
 			int maxMemNum = service.maxMemNum();
 			mem.setMem_number(maxMemNum+1);
 			if(service.userInsert(mem)) {
-				throw new ShopException("반갑습니다. " + mem.getMem_name() + "님 :)", "mypage/orderList?mem_id=" + mem.getMem_id());
+				throw new ShopException("반갑습니다. " + mem.getMem_name() + "님 :)", "/second_prj");
 			} else {
 				throw new ShopException("죄송합니다. 소셜 로그인 과정 중 오류가 발생했습니다.", "mem/login");
 			}
@@ -574,7 +575,7 @@ public class MemController {
 		Mem mem = service.getMemEmail(mem_email);	
 		if(mem != null) {
 			session.setAttribute("loginMem", mem);
-			throw new ShopException("반갑습니다. " + mem.getMem_name() + "님 :)", "/second_prj/mypage/orderList?mem_id=" + mem.getMem_id());
+			throw new ShopException("반갑습니다. " + mem.getMem_name() + "님 :)", "/second_prj");
 		} else {
 			mem = new Mem();
 			mem.setMem_id(mem_email);
@@ -584,7 +585,7 @@ public class MemController {
 			int maxMemNum = service.maxMemNum();
 			mem.setMem_number(maxMemNum+1);
 			if(service.userInsert(mem)) {
-				throw new ShopException("반갑습니다. " + mem.getMem_name() + "님 :)", "mypage/orderList?mem_id=" + mem.getMem_id());
+				throw new ShopException("반갑습니다. " + mem.getMem_name() + "님 :)", "/second_prj");
 			} else {
 				throw new ShopException("죄송합니다. 소셜 로그인 과정 중 오류가 발생했습니다.", "mem/login");
 			}
