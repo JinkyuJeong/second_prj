@@ -33,7 +33,7 @@
 				<%@ include file="mypageSideBar2.jsp"%>
 			</div>
 			<div style="flex-basis: 80%;">
-				<h1 class="mb-3">이벤트 관리</h1>
+				<h1 class="mb-3">챌린지 참여 내역</h1>
 				<p class="mb-3 text-secondary">
       				· 포인트가<span class="text-danger"> 지급완료</span> 된 챌린지는 <span class="text-danger">삭제가 불가</span>합니다. <br>
       			</p>
