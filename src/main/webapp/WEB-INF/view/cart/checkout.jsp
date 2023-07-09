@@ -521,16 +521,23 @@
       			let IMP = window.IMP
       		  	IMP.init("imp03400706");
       			
-      			function payment() { 
-      				if(input_check(f)) {
-      					$.ajax({
-            				  url: "payment",
-            				  data: {product_name : $(".product_name").val() , final_amount : $("#final_amount").val() - $("#order_point").val()},
-            				  success: function(json) {
-            				    iamPay(json);
-            				  }
-            				});
-      				};      				
+      			function payment() {
+      			  if (input_check(f)) {
+      			    var productNames = $("input[name='product_name']").map(function() {
+      			      return $(this).val();
+      			    }).get();
+					console.log(productNames)
+      			    $.ajax({
+      			      url: "payment",
+      			      data: {
+      			        'product_name[]': productNames,
+      			        final_amount: $("#final_amount").val() - $("#order_point").val()
+      			      },
+      			      success: function(json) {
+      			        iamPay(json);
+      			      }
+      			    });
+      			  }
       			}
       			
       			function iamPay(json) {

@@ -134,7 +134,7 @@ public class CartController {
 	
 	@RequestMapping("payment")
 	@ResponseBody
-	public Map<String, Object> loginCheckpayment(String final_amount, String[] product_name, HttpSession session) {
+	public Map<String, Object> loginCheckpayment(String final_amount, @RequestParam("product_name[]")String[] product_name, HttpSession session) {
 		Map<String, Object> map = new HashMap<>();
 		Mem mem = (Mem)session.getAttribute("loginMem");
 		// 주문번호 생성
