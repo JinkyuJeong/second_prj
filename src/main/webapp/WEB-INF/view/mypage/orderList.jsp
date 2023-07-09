@@ -139,7 +139,7 @@
             </td>
             <td>
             	<c:if test="${map.value.get(0).order_state=='배송완료' }">
-            		<button type="button" class="btn btn-outline-danger btn-sm" onclick="orderConfig('${map.key}')">주문확정</button>
+            		<button type="button" class="btn btn-outline-danger btn-sm" onclick="orderConfig('${map.key}')">구매확정</button>
             	</c:if>             	           
             </td>
           </tr>

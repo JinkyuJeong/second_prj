@@ -69,7 +69,7 @@
             	</c:if>
             </td>
             <td>${m.key.review_content }</td>           
-            <td>${m.value.product_name }</td>
+            <td><a href="../product/productDetail?product_number=${m.value.product_number}">${m.value.product_name }</a></td>
             <td><button type="button" class="btn btn-outline-danger btn-sm" onclick="location.href='reviewUpdate?mem_id=${sessionScope.loginMem.mem_id}&review_number=${m.key.review_number }'">리뷰수정</button></td>
             <td><button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteReview">리뷰삭제</button></td>
           </tr> 
@@ -78,7 +78,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">리뷰 삭제</h5>
+        <h5 class="modal-title" id="exampleModalLabel">호미짐</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
