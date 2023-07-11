@@ -275,8 +275,8 @@ public class MemController {
 		String kakaoRedirectURL = null;
 		String googleRedirectURL = null;
 		try {
-			// redirectURI = URLEncoder.encode("http://14.36.141.71:10062/second_prj/mem/naverLogin","UTF-8");
-			redirectURI = URLEncoder.encode("http://localhost:8080/second_prj/mem/naverLogin","UTF-8");
+			redirectURI = URLEncoder.encode("http://14.36.141.71:10062/second_prj/mem/naverLogin","UTF-8");
+//			redirectURI = URLEncoder.encode("http://localhost:8080/second_prj/mem/naverLogin","UTF-8");
 			kakaoRedirectURL = URLEncoder.encode("http://14.36.141.71:10062/second_prj/mem/kakaoLogin", "UTF-8");
 			googleRedirectURL = URLEncoder.encode("http://localhost:8080/second_prj/mem/googleLogin", "UTF-8");
 		} catch(UnsupportedEncodingException e) {
