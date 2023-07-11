@@ -52,7 +52,7 @@ function topFunction() {
           <li class="nav-item dropdown" style="margin-right: 100px;">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><i class="fa fa-question-circle" aria-hidden="true"></i> 고객센터</a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="${path }/admin/qna">자주하는 질문</a></li>
+              <li><a class="dropdown-item" href="${path }/admin/qna">자주 묻는 질문</a></li>
               <li><a class="dropdown-item" href="${path }/admin/cs/csList">1:1 문의</a></li>
             </ul>
           </li>
