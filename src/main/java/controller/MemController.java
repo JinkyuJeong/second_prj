@@ -226,10 +226,10 @@ public class MemController {
 		return mav;
 	}
 	@PostMapping("password1")
-	public String password1(String email, String mem_pw, String mem_pw2) {
+	public String password1(String email, String mem_pw, String mem_pw2) throws Exception {
 		System.out.println(email);
 		System.out.println(mem_pw);
-		if(!service.updatePw(email, mem_pw)) {
+		if(!service.updatePw(email, passwordHash(mem_pw))) {
 			throw new OpenerException("죄송합니다. 비밀번호 변경 중 오류가 발생했습니다.", "login");
 		} else {
 			throw new OpenerException("비밀번호가 변경되었습니다. 새로운 비밀번호로 로그인하세요.", "login");
