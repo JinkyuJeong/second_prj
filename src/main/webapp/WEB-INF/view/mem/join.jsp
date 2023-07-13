@@ -177,7 +177,7 @@
               <!-- 전화번호 -->
               <div id="cor3" class="form-group">
                 <label class="mb-1" for="pwd2">전화번호</label><span class="text-danger">*</span>
-                  <input type="text" class="form-control mb-4" id="mem_phoneno" name="mem_phoneno">
+                  <input type="number" class="form-control mb-4" id="mem_phoneno" name="mem_phoneno">
               </div>
             </div>      
           </div>
