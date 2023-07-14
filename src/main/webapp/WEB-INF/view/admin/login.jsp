@@ -48,6 +48,8 @@ function inputChk(form) {
           <label class="mb-1">비밀번호</label><input placeholder="비밀번호" type="password" name="manager_pass" class="form-control mb-3" required="required">
         </div>
         
+        <div class="mb-5">아이디 : <span class="text-primary">hamtori</span> | 비밀번호 : <span class="text-primary">1234</span></div>
+        
         <div class="mt-3">
           <button id="loginBtn" type="submit" class="btn btn-dark w-100 mb-3">로그인</button>
         </div>
