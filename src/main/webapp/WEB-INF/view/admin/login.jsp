@@ -44,8 +44,8 @@ function inputChk(form) {
         <h1 class="text-center mb-5">관리자 로그인</h1>
         
         <div class="form-group">
-          <label class="mb-1">아이디</label><input placeholder="아이디" type="text" name="manager_id" class="form-control mb-4" required="required">
-          <label class="mb-1">비밀번호</label><input placeholder="비밀번호" type="password" name="manager_pass" class="form-control mb-3" required="required">
+          <label class="mb-1">아이디</label><input placeholder="아이디" type="text" name="manager_id" class="form-control mb-4" required="required" value="hamtori">
+          <label class="mb-1">비밀번호</label><input placeholder="비밀번호" type="password" name="manager_pass" class="form-control mb-3" required="required" value="1234">
         </div>
         
         <div class="mb-5">아이디 : <span class="text-primary">hamtori</span> | 비밀번호 : <span class="text-primary">1234</span></div>
